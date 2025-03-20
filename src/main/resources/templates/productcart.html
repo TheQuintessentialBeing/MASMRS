@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="base :: baseheader">
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+<div class="container">
+
+    <h4>Product(s) In Cart</h4>
+
+    <div th:unless="${products.isEmpty()}">
+        Your total is <b>$ <span th:text="${total}"></span></b> and you will be charged <b>6%</b> tax at check out.
+
+        <a th:href="@{/product/order}">
+            <button type="submit" class="btn btn-light cs-action-button" style="margin-left: 100px ">Order</button>
+        </a>
+        <a th:href="@{/product/emptycart}">
+            <button type="submit" class="btn btn-light cs-action-button" style="margin-left: 30px; margin-right: 10px;">
+                Clear
+            </button>
+        </a>
+        <hr class="css-horizontal-line">
+        <table class="table .table-bordered">
+            <tr>
+                <th> Code</th>
+                <th> Name</th>
+                <th> Vendor</th>
+                <th> Unit Price</th>
+                <th> Quantity</th>
+                <th> Total Price</th>
+                <th style="width: 120px"> Delivery Date</th>
+                <th> Delivery Time</th>
+                <th style="align-items: center;"> Actions</th>
+            </tr>
+            <tr th:if="${products.isEmpty()}"> You don't have items in your cart</tr>
+            <tr th:each="c: ${products}">
+                <td>[[${c.productCode}]]</td>
+                <td>[[${c.productName}]]</td>
+                <td>[[${c.productVendor}]]</td>
+                <td>$[[${c.buyPrice}]]</td>
+                <td>[[${c.itemsQuantity}]]</td>
+                <td>$[[${c.totalPrice}]]</td>
+                <td>[[${c.deliveryDate}]]</td>
+                <td>[[${c.deliveryTime}]]</td>
+
+                <td>
+                    <a class="btn btn-light cs-action-btn"
+                       th:href="@{/product/cart/more/{productcode}(productcode=${c.productCode})}"><span>
+<!--                            <i class="bi bi-file-plus"></i></i>-->
+                             Add(+)
+                        </span>
+                    </a>
+                </td>
+                <td>
+                    <a
+                            class="btn btn-light cs-action-btn"
+                            th:href="@{/product/cart/reduce/{productcode}(productcode=${c.productCode})}">
+                        <!--                            <i class="bi bi-file-minus"></i>-->
+                        Minus(-)
+                    </a>
+                </td>
+
+                <td>
+                    <a class="btn btn-light cs-action-btn"
+                       th:href="@{/product/cart/remove/{productcode}(productcode=${c.productCode})}">
+                        <!--                            <i class="bi bi-trash3"></i>-->
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script src="../js/cs.js"></script>
+</body>
+</html>
