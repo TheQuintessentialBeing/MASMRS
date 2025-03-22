@@ -1,20 +1,54 @@
 package dev.cs.studentreportcard.controllers;
+import dev.cs.studentreportcard.models.Students;
 import dev.cs.studentreportcard.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 @Controller
-@RequestMapping("/student")
-public class StudentController {
+@RequestMapping("/students")
+public class StudentsController {
 
     @Autowired
     private StudentService studentService;
-    public StudentController(StudentService studentService) {
+    public StudentsController(StudentService studentService) {
         this.studentService = studentService;
     }
-    public StudentController(){}
+    public StudentsController(){}
+
+    /*This method shows all students POSTMAN*/
+/*
+    @GetMapping("/list")
+    public ResponseEntity<List<Students>> showAllStudents(){
+        List<Students> students= new ArrayList<>();
+        students = studentService.listAllStudents();
+        System.out.println("Testing Student conteroller list if it returns anything");
+        return new  ResponseEntity<>(students,HttpStatus.OK);
+    }
+*/
+
+
+    @GetMapping("/list")
+    public String showAllStudents(HttpServletRequest request, Model model) {
+        int page = 0;
+        int size = 5;
+        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+            page = Integer.parseInt(request.getParameter("page")) - 1;
+        }
+        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+            size = Integer.parseInt(request.getParameter("size"));
+        }
+        model.addAttribute("students", studentService.listAllStudentsToPage(PageRequest.of(page, size)));
+        return "students";
+    }
+
 
 /*
 

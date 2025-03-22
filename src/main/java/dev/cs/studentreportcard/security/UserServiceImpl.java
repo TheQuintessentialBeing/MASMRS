@@ -21,13 +21,14 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
     public User save(UserRegistrationDto registration) {
         User user = new User();
         user.setFirstName(registration.getFirstName());
         user.setLastName(registration.getLastName());
         user.setEmail(registration.getEmail());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user.setRoles(Arrays.asList(new Role("Student")));
+        user.setRoles(Arrays.asList(new Role("ROLE_STUDENT")));
         return userRepository.save(user);
     }
     @Autowired

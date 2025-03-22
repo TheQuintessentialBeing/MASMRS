@@ -1,4 +1,6 @@
 package dev.cs.studentreportcard.security;
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 import java.util.Collection;
 @Entity
@@ -19,6 +21,7 @@ public class User {
                     name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
+   /* @Value("${app.default.role}") think how to change from the config file for user's role instead of adding as hard coded in the UserServiceImpl.java class like user.setRoles(Arrays.asList(new Role("Admin")));*/
     private Collection<Role> roles;
     public User() {
     }

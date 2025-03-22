@@ -1,18 +1,26 @@
 package dev.cs.studentreportcard.models;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+
+
+import lombok.*;
+        import lombok.experimental.FieldDefaults;
+import javax.persistence.*;
+        import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity // make it JPA entity
-@Table(name = "Student") // change to any name in database from here
+@Table(name = "Students") // change to any name in database from here
 @FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
-@SequenceGenerator(name = "customerNumber_Seq", initialValue = 1000, allocationSize = 1)
-public class Student {
+@SequenceGenerator(name = "studentNumber_Seq", initialValue = 1000, allocationSize = 1)
+public class Students {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customerNumber_Seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentNumber_Seq")
     @Setter(AccessLevel.PRIVATE)
     Integer studentId;
     //TODo    @Getter(AccessLevel.PRIVATE)

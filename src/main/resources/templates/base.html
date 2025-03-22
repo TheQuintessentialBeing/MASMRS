@@ -20,38 +20,43 @@
 </head>
 <body>
 <div th:fragment="navlinks">
+    <!--Profile (For all NOT logged-in or visitor users)-->
     <div sec:authorize="!isAuthenticated()">
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar
                    bg-dark ftco-navbar-light">
             <div class="container">
                 <a class="navbar-brand" href="/"><span class="mr-1"></span> <i class="bi bi-bag-heart-fill"></i>
                     Student<br><small>Records</small></a>
-                <img width="60px" height="60px" border-radius="50%" object-fit=cover src="../img/miraf.jpg" alt="Miraf Logo">
+                <img width="60px" height="60px" border-radius="50%" object-fit=cover src="../img/miraf.jpg"
+                     alt="Miraf Logo">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                      <!--  <li class="nav-item">
-                            <a class="nav-link" href="/product">Product</a>
-                        </li>
-                     -->  <li class="nav-item">
-                            <a href="/" th:href="@{/registration}" class="nav-link">Register</a></span>
-                        </li>
-                        <li class="nav-item">
+                        <!--TODO turn on lateron -->
+                        <!-- <li class="nav-item">
+                             <a class="nav-link" href="/">Home</a>
+                         </li>-->
+                                      <li class="nav-item">
                             <a href="/login" class="nav-link">Log in</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="/contactus" class="nav-link">Contact us</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/aboutus" class="nav-link">About us</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
-    <div sec:authorize="isAuthenticated()">
+    <!--Profile (For all logged-in users)-->
+    <div sec:authorize="isAuthenticated() ">
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar
                    bg-dark ftco-navbar-light" id="ftco-navbar2">
             <div class="container">
@@ -60,65 +65,68 @@
                         aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="oi oi-menu"></span> Menu
                 </button>
-
                 <div class="collapse navbar-collapse" id="ftco-nav2">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <!--TODO turn on lateron -->
+                       <!-- <li class="nav-item">
                             <a class="nav-link" href="/">Home</a>
+                        </li>-->
+                        <!-- Students Only -->
+                        <li sec:authorize="hasRole('ROLE_STUDENT')" class="nav-item">
+                            <a class="nav-link" href="/records/search">Records</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/student">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/student/mycart">Admin</a>
-                        </li>
-
-                        <li sec:authorize="hasRole('Admin')">
+                        <!-- Teachers Only -->
+                        <li sec:authorize="hasRole('ROLE_TEACHER')">
 
                             <div class="dropdown" style="display: inline!important;">
                                 <button class="btn btn-secondary dropdown-toggle css-custom-dbcolor" type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false">
-
-                                    Admin Dashboard
+                                    Student Record Dashboard
                                 </button>
 
                                 <ul class="dropdown-menu">
                                     <li><a class="nav-link css-custom-color" href="/student/add">Add record</a></li>
                                     <li><a class="nav-link css-custom-color" href="/student/edit">Edit record</a></li>
-                                    <li><a class="nav-link css-custom-color" href="/student/delete">Delete record</a></li>
-                                    <li><a class="nav-link css-custom-color" href="/student/delete">View record</a></li>
-                                    <li>
-                                        <a style="cursor:not-allowed; color:currentColor;opacity: 0.5; text-decoration: none"
-
-                                           class="nav-link disabled css-custom-color" href="/employee">Employee</a></li>
-
-                                    <li>
-                                        <a style="cursor:not-allowed; color:currentColor;opacity: 0.5; text-decoration: none"
-                                           class="nav-link disabled css-custom-color" href="/statistics">Statistics</a>
+                                    <li><a class="nav-link css-custom-color" href="/student/delete">Delete record</a>
                                     </li>
+                                    <li><a class="nav-link css-custom-color" href="/student/delete">View record</a></li>
                                 </ul>
                             </div>
                         </li>
+                        <!-- Admins & HR Only Note for multiple roles use hasAnyRole -->
+                        <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_HR')" class="nav-item">
+                            <a class="nav-link" href="/employees">Employees</a>
+                        </li>
+                        <!-- Directors and Admins Only -->
+                        <li sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_DIRECTORS')" class="nav-item">
+                            <a class="nav-link" href="/statistics">Student Stats </a>
+                        </li>
                         <li class="nav-item">
                             <a sec:authentication="name" class="nav-link"></a>
+                       <!-- the above line is from spring framework auhentication name is read from the login -->
                         </li>
                         <li class="nav-item">
                             <a th:href="@{/logout}" class="nav-link">Log out</a>
                         </li>
+                        <!--TODO turn on later on-->
+                       <!-- <li sec:authorize="hasRole('ROLE_STUDENT')" class="nav-item">
+                            <a href="/contactus" class="nav-link">Contact us</a>
+                        </li>
+
+                        <li sec:authorize="hasRole('ROLE_STUDENT')" class="nav-item">
+                            <a href="/aboutus" class="nav-link">About us</a>
+                        </li>-->
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
 </div>
-</div>
 <!--footer of every page -->
 <div th:fragment="footer">
     <footer class="css-footer">
-        <p class="css-footer-items">&copy; 2025 Mieraf Academy Project .......
-            <!--            <i class="bi bi-facebook"></i><i class="bi bi-twitter"></i><i class="bi bi-instagram"></i>-->
-        </p>
+        <p class="css-footer-items"> &copy; 2025 Mieraf Academy Student Mgt and Records </p>
     </footer>
 </div>
 </body>

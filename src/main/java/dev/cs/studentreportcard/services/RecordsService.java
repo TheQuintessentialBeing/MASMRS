@@ -1,44 +1,47 @@
 package dev.cs.studentreportcard.services;
 
-import dev.cs.studentreportcard.models.Students;
-import dev.cs.studentreportcard.repositories.StudentRepository;
+import dev.cs.studentreportcard.models.Records;
+
+import dev.cs.studentreportcard.repositories.RecordsRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 @Service
-public class StudentService {
+public class RecordsService {
     @Autowired
-    StudentRepository studentRepository;
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    RecordsRepository recordsRepository;
+    public RecordsService(RecordsRepository studentRepository) {
+        this.recordsRepository = recordsRepository;
     }
-    public StudentService(){}
-    public void doSomething() {
-        System.out.println("Service is working!");
-    }
+    public RecordsService(){}
 
-    //CRUD
-    public List<Students> listAllStudents() {
-        return studentRepository.findAll();
+   public Page<Records> listAllRecords(PageRequest pageRequest) {
+
+        return recordsRepository.findAll(pageRequest);
     }
 
-    public Page<Students> listAllStudentsToPage(PageRequest pageRequest){
+    public Page<Records> searchStudentByStudentId(Integer studentid) {
+        Pageable p = PageRequest.of(0, 5);
+        List<Records> finalList = new ArrayList<>();
+        List<Records> list = recordsRepository.findAll();
+        finalList = list
+                    .stream()
+                    .filter(rr -> rr.getStudentId().equals(studentid))
+                    .collect(Collectors.toList());
+        final int start = (int) p.getOffset();
+        final int end = Math.min((start + p.getPageSize()), finalList.size());
+        final PageImpl<Records> page = new PageImpl<>(finalList.subList(start, end), p, finalList.size());
+        return page;
 
-
-        return studentRepository.findAll(pageRequest);
     }
-
-
-/*
-    public Student getStudentByStudentId(@Param("studentid") int studentId) {
-        return studentRepository.findByStudentId(studentId);
-    }
-
-
     /*
     //CRUD
     public Page<Student> listAllStudents(PageRequest pageRequest) {
@@ -128,5 +131,6 @@ public class StudentService {
    */
 
 
-    }
+}
+
 

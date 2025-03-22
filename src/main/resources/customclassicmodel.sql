@@ -1,8 +1,14 @@
-use kdb
+use db
 select * from role;
-delete from role where id > 9;
-
+delete from role where id > 0;
 select * from user;
+delete from user;
+select * from user;
+
+select * from users_roles;
+
+delete  from users_roles;
+
 INSERT INTO `role`(`id`, `name`)
 values(1,'Admin'),
       (2,'Teacher'),

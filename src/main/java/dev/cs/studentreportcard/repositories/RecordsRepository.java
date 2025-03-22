@@ -1,12 +1,15 @@
 package dev.cs.studentreportcard.repositories;
 
-import dev.cs.studentreportcard.models.Students;
+import dev.cs.studentreportcard.models.Records;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface StudentRepository extends JpaRepository<Students,Integer> {
+public interface RecordsRepository extends JpaRepository<Records,Integer> {
+
+    //Student findByProductCode();
+
 
     /*@Query(name = "sqlSearchProductByProductCode")
     Product findByProductCode(@Param("productcode") String productCode);
@@ -22,9 +25,11 @@ public interface StudentRepository extends JpaRepository<Students,Integer> {
     @Transactional
     @Query("UPDATE Product p set p.quantityInStock= p.quantityInStock +:quantityInStock Where p.productCode=:productcode")
     void increaseStockQuantityBatch(@Param("quantityInStock") short quantityInStock, @Param("productcode") String productcode);
-*/
-    // student
 
+    // student
+*/
     @Query(name="SqlSearchStudentByStudentId")
-    Students findByStudentId(@Param ("studentId") Integer studentId);
+    Records findByRecordsId(@Param("studentId") Integer studentId);
+
 }
+
