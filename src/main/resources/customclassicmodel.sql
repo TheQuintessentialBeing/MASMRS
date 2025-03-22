@@ -1,26 +1,31 @@
-create database kdb;
-use kdb;
+use db
 select * from role;
-delete from role where id > 9;
-
+delete from role where id > 0;
 select * from user;
+delete from user;
+select * from user;
+
+select * from users_roles;
+
+delete  from users_roles;
+
 INSERT INTO `role`(`id`, `name`)
 values(1,'Admin'),
       (2,'Teacher'),
       (3,'Student'),
-      (4,'Guest'),
+      (4,'Guest')
 
 
 
 use cs;
 
-Delete from cs.student;
-INSERT INTO cs.student
+Delete from cs.customer;
+INSERT INTO cs.customer
 select c.customerNumber, c.addressLine1, c.addressLine2, c.city, c.contactFirstName, c.contactLastName,
        c.country, c.creditLimit, c.customerName, c.phone,
        c.postalCode, c.salesRepEmployeeNumber, c.state from classicmodels.customers as c ;
 
-select c.* from cs.student as c;
+select c.* from cs.customer as c;
 /**/
 
 INSERT INTO cs.Orders

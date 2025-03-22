@@ -5,16 +5,44 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+
+
+/* TODO clean up this part later on - it is an alternative way but ignore it
+                http
+                        .authorizeRequests()
+                        .antMatchers("/", "/home", "/registration", "/css/**", "/js/**", "/img/**").permitAll() // Public access
+                        .antMatchers("/admin/**").hasRole("Admin") // Admin-only
+                        .antMatchers("/student/**").hasRole("Student") // Student-only
+                        .antMatchers("/teacher/**").hasRole("Teacher") // Teacher-only
+                        .anyRequest().authenticated() // All other pages require authentication
+                        .and()
+                        .formLogin()
+                        .loginPage("/login") // Custom login page
+                        .defaultSuccessUrl("/") // Redirect after successful login
+                        .permitAll()
+                        .and()
+                        .logout()
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
+                        .permitAll();
+*/
+
+
+
+         http
                 .authorizeRequests()
                 .antMatchers(
                         "/registration**",
@@ -22,13 +50,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/img/**",
                         "/webjars/**"
-                            ).permitAll()
-                .anyRequest().permitAll()
+                       /* "/student/index/**"*/
+                            )
+                  .permitAll()
+                //.anyRequest().permitAll() // allows all pages with out authentication -- do not restrict at all so use the ff line
+                       .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/product") // as landing page
+                .defaultSuccessUrl("/") // as landing page
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
