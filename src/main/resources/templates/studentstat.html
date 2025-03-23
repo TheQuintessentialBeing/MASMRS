@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head th:replace="base :: baseheader">
+    <title>Product List</title>
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+
+<h1>Student Statistics</h1>
+
+<td border="1">
+    <thead>
+    <tr>
+        <th>Student ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Academic Year</th>
+        <th>Grade</th>
+        <th>Section</th>
+        <th>Semester 1 Total</th>
+        <th>Semester 2 Total</th>
+        <th>Total Sum</th>
+        <th>Rank</th>
+        <th>Subjects</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stat : ${statistics}">
+        <td th:text="${stat.studentId}"></td>
+        <td th:text="${stat.firstName}"></td>
+        <td th:text="${stat.lastName}"></td>
+        <td th:text="${stat.academicYear}"></td>
+        <td th:text="${stat.grade}"></td>
+        <td th:text="${stat.section}"></td>
+        <td th:text="${stat.semester1Sum}"></td>
+        <td th:text="${stat.semester2Sum}"></td>
+        <td th:text="${stat.totalSum}"></td>
+        <td th:text="${stat.rank}"></td>
+        <td>
+            <tbody border="1">
+                <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Q1</th>
+                    <th>Q2</th>
+                    <th>Semester I Average</th>
+                    <th>Q3</th>
+                    <th>Q4</th>
+                    <th>Semester II Average</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subject : ${stat.subjectRecords}">
+                    <td th:text="${subject.subject}"></td>
+                    <td th:text="${subject.q1}"></td>
+                    <td th:text="${subject.q2}"></td>
+                    <td th:text="${subject.semesterIAverage}"></td>
+                    <td th:text="${subject.q3}"></td>
+                    <td th:text="${subject.q4}"></td>
+                    <td th:text="${subject.semesterIIAverage}"></td>
+                </tr>
+            </tbody>
+        </td>
+   </tr>
+  </tbody>
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>
+
+
+

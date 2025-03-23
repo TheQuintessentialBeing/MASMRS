@@ -2,42 +2,86 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">
 <head th:replace="base :: baseheader">
     <title>Product List</title>
-    <script>
 
-        function searchTerm() {
-            if (inputVal().length != 0)
-                window.document.location.href = "/records/search/" + inputVal();
-            <!--else
-                window.document.location.href = "/product"-->
-        }
-
-        function inputVal() {
-            return document.getElementById("input").value;
-        }
-    </script>
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
 
 <div class="container">
-    <h4>Products</h4>
+    <h4>Student Records View</h4>
 
     <div class="input-group" style="width: 25%; margin-bottom: 20px">
-        <input id="input" class="form-control rounded " placeholder="Student Id eg. 1001" aria-label="Search"
+        <input id="input" class="form-control rounded " placeholder="enter student id" aria-label="Search"
                aria-describedby="search-addon"/>
         <button id="inputbtn" onclick="searchTerm()" type="button" class="btn btn-light cs-action-button">
 
-            search
+            [View All]
+        </button>
+        <button id="reportbtn" onclick="viewTerm()" type="button" class="btn btn-light cs-action-button">
+
+            [Generate Report]
         </button>
     </div>
+    <script>
+        // Function to handle the click event for searching
+        function searchTerm() {
+            // Get the input value
+            let inputValue = inputVal();
 
+            // Check if the input value is not empty
+            if (inputValue.length != 0) {
+                // Use a confirmation dialog to ask the user if they want to proceed
+                const userConfirmed = window.confirm("Do you want to proceed and search for the term: " + inputValue + "?");
 
+                // If the user clicks "OK" (confirmed), proceed with the action
+                if (userConfirmed) {
+                    // alert('Search was confirmed!');
+                    // Redirect to the search page with the input value
+                    window.location.href = "/records/search/" + inputValue;
+                } else {
+                     alert("You cancelled the search for Student Id :" + inputValue());
+                }
+            } else {
+                // Optional: Add an alert for empty input when trying to search
+                alert("Please enter Student Id eg. 1234 format.");
+            }
+        }
 
+        // Function to handle the click event for viewing the data
+        function viewTerm() {
+            // Get the input value
+            let inputValue = inputVal();
 
-    <div>
-        <p>no results dipalacyed until you search and hit bsearch button </p>
+            // Check if the input value is not empty
+            if (inputValue.length != 0) {
+                // Use a confirmation dialog to ask the user if they want to proceed
+                const userConfirmed = window.confirm("Do you want to proceed and view for student Id : " + inputValue + "?");
+
+                // If the user clicks "OK" (confirmed), proceed with the action
+                if (userConfirmed) {
+                    // alert('View was confirmed!');
+                    // Redirect to the view page with the input value
+                    window.location.href = "/records/search/" + inputValue;
+                } else {
+                    alert("You cancelled the search for Student Id :" + inputValue());
+                }
+            } else {
+                // Optional: Add an alert for empty input when trying to view
+              alert("Please enter Student Id eg. 1234 format.");
+            }
+        }
+
+        // Function to get the value from the input field with id "input"
+        function inputVal() {
+            return document.getElementById("input").value;  // Return the value of the input field
+        }
+    </script>
+
+   <div>
+        <p>No results displayed until you search and click search button </p>
     </div>
 </div>
+
 <!--<div th:replace="base :: footer " id="testme"></div>-->
 <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
