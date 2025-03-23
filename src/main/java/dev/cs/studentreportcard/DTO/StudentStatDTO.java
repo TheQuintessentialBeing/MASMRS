@@ -17,9 +17,11 @@ public class StudentStatDTO {
     private Integer grade;
     private String section;
     private Double semester1Sum;
+    /*TODO qlSum, q2Sum ,q1Rank, q2Rank group by AC, Grade,Section, quarter */
     private Double semester2Sum;
     private Double totalSum;
     private Integer rank;
+
     private List<SubjectRecordDTO> subjectRecords; // List of subjects for each student
 
    }
