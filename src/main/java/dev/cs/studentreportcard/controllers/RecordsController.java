@@ -33,7 +33,7 @@ public class RecordsController {
     public RecordsController(RecordsService recordsService, StudentRepository studentRepository) {
 
         this.recordsService = recordsService;
-        this.studentRepository= studentRepository;
+        this.studentRepository = studentRepository;
     }
 
     public RecordsController() {
@@ -47,29 +47,28 @@ public class RecordsController {
         return "rsearch";
     }
 
-/*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
-    @GetMapping("/search/{studentid}")
+    /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
+   /* @GetMapping("/search/{studentid}")
     public ResponseEntity<List<Records>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/Testing: /records/search/studentdIdn is hit");
-        Optional<Students> studentids = studentRepository.findAll().stream().filter(x->x.getStudentId() == studentId).findFirst();
+        Optional<Students> studentids = studentRepository.findAll().stream().filter(x -> x.getStudentId() == studentId).findFirst();
+        System.out.println(studentids.get().getStudentId());
+        // var x = recordsService.searchRecordsByStudentId(studentids.orElseGet());
+        // System.out.println("Testing results : " + x);
+        // model.addAttribute("records", x);
+        // return new ResponseEntity<>(x, HttpStatus.OK);
+    }*/
 
-       // var x = recordsService.searchRecordsByStudentId(studentids.orElseGet());
-       // System.out.println("Testing results : " + x);
-       // model.addAttribute("records", x);
-       // return new ResponseEntity<>(x, HttpStatus.OK);
-    }
-
-   /* TODO - Testeed for webpage */
-/*    @GetMapping("/search/{studentid}")
+    /* TODO - Testeed for webpage */
+    @GetMapping("/search/{studentid}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/TBDeleted - Testing: /records/search/studendIdn is hit");
         model.addAttribute("records", recordsService.searchRecordsByStudentId(studentId));
        return "rsearchresult";
-    }*/
-   // Postmat
+    }
+    // Postmat
     @GetMapping("/stat")
-    public List<StudentStatDTO> getStatistics(){
-
+    public List<StudentStatDTO> getStatistics() {
         return recordsService.getStudentStatisticsWithRank();
     }
 

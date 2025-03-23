@@ -10,7 +10,7 @@ CREATE TABLE records_seq (
 
 use kdb
 select u.id as User_ID, u.first_name as "First Name" ,
-      u.last_name as "Last Name", u.email as "User's Email", r.name as   "User_Role"
+      u.last_name as "Last Name", u.email as "User Email", r.name as   "User_Role"
       from kdb.user u
       inner join users_roles on u.id = user_id
       inner join role r on r.id = role_id

@@ -19,12 +19,12 @@ import java.time.LocalDate;
         initialValue = 1001,               // Start value
         allocationSize = 1                 // Increment by 1
 )
-/*We need to run this on the db as jpa don't create sequence automatically
+/*TODO Tobe aware We need to run this on the db as jpa don't create sequence automatically
 CREATE TABLE records_seq (
     id BIGINT AUTO_INCREMENT PRIMARY KEY
 ) AUTO_INCREMENT = 1001;
 */
-public class Records {
+public class Records { /*TODO entities shall be singular but db names shall be plural*/
 
     @Id
     @GeneratedValue(
@@ -37,7 +37,7 @@ public class Records {
     //FK - Relationship TODO
     @Setter
     @Getter
-    @ManyToOne
+    @ManyToOne // Records(many records) will match (One Student) Remember : Student Id must exist in Students Table before it is used/insert in Records table
     @JoinColumn( name= "studentId")
     Students student;
     @Column(length = 50)
@@ -50,7 +50,6 @@ public class Records {
     Integer grade;
     @Column(nullable = false, length = 2)
     String section;
-
     @Column( precision = 5, scale = 2)
     @Min(0)
     @Max(100)
@@ -67,9 +66,9 @@ public class Records {
     @Min(0)
     @Max(100)
     double q4;
-    @Column(columnDefinition = "varchar(50) default NULL")
+    @Column(nullable = false) // TODO this could be manytoOne or use the table design we drafted.
     Integer updatedBy;
-    @Column(nullable = true) // null for now till testing
+    @Column(nullable = true) // TODO this should nullable=false and shoud pick today's date while the user enters data on the page/form
     Date updateDate;
     @Column(length = 150)
     String comment;

@@ -2,6 +2,7 @@ package dev.cs.studentreportcard.services;
 import dev.cs.studentreportcard.DTO.StudentStatDTO;
 import dev.cs.studentreportcard.DTO.SubjectRecordDTO;
 import dev.cs.studentreportcard.models.Records;
+import dev.cs.studentreportcard.models.Students;
 import dev.cs.studentreportcard.repositories.RecordsRepository;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 @Service
 public class RecordsService {
@@ -28,9 +30,18 @@ public class RecordsService {
     }
 
     public List<Records> searchRecordsByStudentId(Integer studentid) {
-        List<Records> list = new ArrayList<>();
-         list = recordsRepository.findAll();
 
+        /*Logic
+        * 1. get studnet Id from student
+        */
+       /* Integer searchStudentId = studentRepository
+                .findAll()
+                .stream()
+                .map(Students::getStudentId)
+                .filter(studentId -> Objects.equals(studentId, studentid)).mapToInt()*/
+
+        /* 2. use the studet id in (step 1) to search the records associated in records*/
+        List<Records> list =  recordsRepository.findAll();
         System.out.println("Services ssssssssssssssssssssssssssssssssss:" + list);
         List<Records> finalList = list
                     .stream()
@@ -51,7 +62,7 @@ public class RecordsService {
             // Step 2: Process each student
             for (Records record : records) {
                 StudentStatDTO dto = new StudentStatDTO();
-                // Set student details
+                // Set student details for top level of the report
                 dto.setStudentId(record.getStudent().getStudentId());
 
                 dto.setFirstName(record.getStudent().getFirstName());
@@ -86,7 +97,7 @@ public class RecordsService {
                 dto.setTotalSum(semester1Sum + semester2Sum);
                 dto.setSubjectRecords(subjectRecords);
 
-                // Step 4: Calculate rank (this can be done by sorting or using a custom ranking system)
+                // TODO Step 4: Calculate rank (this can be done by sorting or using a custom ranking system)
                 // For simplicity, we are assigning rank 1 to all students
                 dto.setRank(1); // This can be implemented based on your business logic for ranking
 
