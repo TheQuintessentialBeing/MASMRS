@@ -1,4 +1,5 @@
 
+
 /*for sql sequence to work  JPA dont do it automatically so we need to
 run the following type of query for example for records table record_id is pk and sequence
 */
@@ -16,7 +17,10 @@ select u.id as User_ID, u.first_name as "First Name" ,
       inner join role r on r.id = role_id
       order by r.name,u.first_name , u.last_name asc;
 
-
+create database kdb;
+use kdb;
+select * from role;
+delete from role where id > 9;
 
 select * from role;
 delete from role where id > 0;
@@ -32,19 +36,19 @@ INSERT INTO `role`(`id`, `name`)
 values(1,'Admin'),
       (2,'Teacher'),
       (3,'Student'),
-      (4,'Guest')
+      (4,'Guest'),
 
 
 
 use cs;
 
-Delete from cs.customer;
-INSERT INTO cs.customer
+Delete from cs.student;
+INSERT INTO cs.student
 select c.customerNumber, c.addressLine1, c.addressLine2, c.city, c.contactFirstName, c.contactLastName,
        c.country, c.creditLimit, c.customerName, c.phone,
        c.postalCode, c.salesRepEmployeeNumber, c.state from classicmodels.customers as c ;
 
-select c.* from cs.customer as c;
+select c.* from cs.student as c;
 /**/
 
 INSERT INTO cs.Orders
