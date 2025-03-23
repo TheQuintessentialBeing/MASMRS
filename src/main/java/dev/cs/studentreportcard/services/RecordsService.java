@@ -1,9 +1,7 @@
 package dev.cs.studentreportcard.services;
-<<<<<<< HEAD
 import dev.cs.studentreportcard.DTO.StudentStatDTO;
 import dev.cs.studentreportcard.DTO.SubjectRecordDTO;
 import dev.cs.studentreportcard.models.Records;
-import dev.cs.studentreportcard.models.Students;
 import dev.cs.studentreportcard.repositories.RecordsRepository;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,37 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-=======
-
-import dev.cs.studentreportcard.models.Records;
-
-import dev.cs.studentreportcard.repositories.RecordsRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> b5d5a97 (modified classes, added html)
 import java.util.stream.Collectors;
 @Service
 public class RecordsService {
     @Autowired
     RecordsRepository recordsRepository;
-<<<<<<< HEAD
     StudentRepository studentRepository;
     public RecordsService(RecordsRepository recordsRepository, StudentRepository studentRepository) {
         this.recordsRepository = recordsRepository;
         this.studentRepository = studentRepository;
-=======
-    public RecordsService(RecordsRepository studentRepository) {
-        this.recordsRepository = recordsRepository;
->>>>>>> b5d5a97 (modified classes, added html)
     }
     public RecordsService(){}
 
@@ -51,20 +27,10 @@ public class RecordsService {
         return recordsRepository.findAll(pageRequest);
     }
 
-<<<<<<< HEAD
     public List<Records> searchRecordsByStudentId(Integer studentid) {
+        List<Records> list = new ArrayList<>();
+         list = recordsRepository.findAll();
 
-        /*Logic
-        * 1. get studnet Id from student
-        */
-       /* Integer searchStudentId = studentRepository
-                .findAll()
-                .stream()
-                .map(Students::getStudentId)
-                .filter(studentId -> Objects.equals(studentId, studentid)).mapToInt()*/
-
-        /* 2. use the studet id in (step 1) to search the records associated in records*/
-        List<Records> list =  recordsRepository.findAll();
         System.out.println("Services ssssssssssssssssssssssssssssssssss:" + list);
         List<Records> finalList = list
                     .stream()
@@ -85,7 +51,7 @@ public class RecordsService {
             // Step 2: Process each student
             for (Records record : records) {
                 StudentStatDTO dto = new StudentStatDTO();
-                // Set student details for top level of the report
+                // Set student details
                 dto.setStudentId(record.getStudent().getStudentId());
 
                 dto.setFirstName(record.getStudent().getFirstName());
@@ -120,7 +86,7 @@ public class RecordsService {
                 dto.setTotalSum(semester1Sum + semester2Sum);
                 dto.setSubjectRecords(subjectRecords);
 
-                // TODO Step 4: Calculate rank (this can be done by sorting or using a custom ranking system)
+                // Step 4: Calculate rank (this can be done by sorting or using a custom ranking system)
                 // For simplicity, we are assigning rank 1 to all students
                 dto.setRank(1); // This can be implemented based on your business logic for ranking
 
@@ -136,35 +102,22 @@ public class RecordsService {
 
 
     /*public Page<Records> searchStudentByStudentId(Integer studentid) {
-=======
-    public Page<Records> searchStudentByStudentId(Integer studentid) {
->>>>>>> b5d5a97 (modified classes, added html)
         Pageable p = PageRequest.of(0, 5);
         List<Records> finalList = new ArrayList<>();
         List<Records> list = recordsRepository.findAll();
         finalList = list
-<<<<<<< HEAD
                 .stream()
                 .filter(rr -> rr.getStudentId().equals(studentid))
                 .collect(Collectors.toList());
-=======
-                    .stream()
-                    .filter(rr -> rr.getStudentId().equals(studentid))
-                    .collect(Collectors.toList());
->>>>>>> b5d5a97 (modified classes, added html)
         final int start = (int) p.getOffset();
         final int end = Math.min((start + p.getPageSize()), finalList.size());
         final PageImpl<Records> page = new PageImpl<>(finalList.subList(start, end), p, finalList.size());
         return page;
 
-<<<<<<< HEAD
     }*/
 
 
 
-=======
-    }
->>>>>>> b5d5a97 (modified classes, added html)
     /*
     //CRUD
     public Page<Student> listAllStudents(PageRequest pageRequest) {

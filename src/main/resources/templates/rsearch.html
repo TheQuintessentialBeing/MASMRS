@@ -2,29 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">
 <head th:replace="base :: baseheader">
     <title>Product List</title>
-<<<<<<< HEAD
 
-=======
-    <script>
-
-        function searchTerm() {
-            if (inputVal().length != 0)
-                window.document.location.href = "/records/search/" + inputVal();
-            <!--else
-                window.document.location.href = "/product"-->
-        }
-
-        function inputVal() {
-            return document.getElementById("input").value;
-        }
-    </script>
->>>>>>> b5d5a97 (modified classes, added html)
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
 
 <div class="container">
-<<<<<<< HEAD
     <h4>Student Records View</h4>
 
     <div class="input-group" style="width: 25%; margin-bottom: 20px">
@@ -99,26 +82,6 @@
     </div>
 </div>
 
-=======
-    <h4>Products</h4>
-
-    <div class="input-group" style="width: 25%; margin-bottom: 20px">
-        <input id="input" class="form-control rounded " placeholder="Student Id eg. 1001" aria-label="Search"
-               aria-describedby="search-addon"/>
-        <button id="inputbtn" onclick="searchTerm()" type="button" class="btn btn-light cs-action-button">
-
-            search
-        </button>
-    </div>
-
-
-
-
-    <div>
-        <p>no results dipalacyed until you search and hit bsearch button </p>
-    </div>
-</div>
->>>>>>> b5d5a97 (modified classes, added html)
 <!--<div th:replace="base :: footer " id="testme"></div>-->
 <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
