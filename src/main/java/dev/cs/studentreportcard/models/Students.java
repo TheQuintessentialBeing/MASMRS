@@ -23,8 +23,6 @@ public class Students {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentNumber_Seq")
     @Setter(AccessLevel.PRIVATE)
     Integer studentId;
-    //TODo    @Getter(AccessLevel.PRIVATE)
-    //TODO    @ToString.Exclude private OtherClassName otherClassName;
     @Column(length = 50)
     String firstName;
     @Column(nullable = false, length = 50)

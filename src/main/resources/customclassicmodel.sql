@@ -1,4 +1,23 @@
-use db
+
+/*for sql sequence to work  JPA dont do it automatically so we need to
+run the following type of query for example for records table record_id is pk and sequence
+*/
+use kdb
+-- Create a sequence starting at 1001
+CREATE TABLE records_seq (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL
+) AUTO_INCREMENT = 1001;
+
+use kdb
+select u.id as User_ID, u.first_name as "First Name" ,
+      u.last_name as "Last Name", u.email as "User's Email", r.name as   "User_Role"
+      from kdb.user u
+      inner join users_roles on u.id = user_id
+      inner join role r on r.id = role_id
+      order by r.name,u.first_name , u.last_name asc;
+
+
+
 select * from role;
 delete from role where id > 0;
 select * from user;
