@@ -1,6 +1,5 @@
 package dev.cs.studentreportcard.controllers;
 
-<<<<<<< HEAD
 import dev.cs.studentreportcard.DTO.StudentStatDTO;
 import dev.cs.studentreportcard.models.Records;
 import dev.cs.studentreportcard.models.Students;
@@ -10,11 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-=======
-import dev.cs.studentreportcard.services.RecordsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
->>>>>>> b5d5a97 (modified classes, added html)
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-<<<<<<< HEAD
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
-=======
->>>>>>> b5d5a97 (modified classes, added html)
 
 @Controller
 @RequestMapping("/records")
@@ -36,14 +27,13 @@ public class RecordsController {
 
     @Autowired
     private RecordsService recordsService;
-<<<<<<< HEAD
     @Autowired
     private StudentRepository studentRepository;
 
     public RecordsController(RecordsService recordsService, StudentRepository studentRepository) {
 
         this.recordsService = recordsService;
-        this.studentRepository = studentRepository;
+        this.studentRepository= studentRepository;
     }
 
     public RecordsController() {
@@ -57,56 +47,32 @@ public class RecordsController {
         return "rsearch";
     }
 
-    /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
-   /* @GetMapping("/search/{studentid}")
+/*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
+    @GetMapping("/search/{studentid}")
     public ResponseEntity<List<Records>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/Testing: /records/search/studentdIdn is hit");
-        Optional<Students> studentids = studentRepository.findAll().stream().filter(x -> x.getStudentId() == studentId).findFirst();
-        System.out.println(studentids.get().getStudentId());
-        // var x = recordsService.searchRecordsByStudentId(studentids.orElseGet());
-        // System.out.println("Testing results : " + x);
-        // model.addAttribute("records", x);
-        // return new ResponseEntity<>(x, HttpStatus.OK);
-    }*/
+        Optional<Students> studentids = studentRepository.findAll().stream().filter(x->x.getStudentId() == studentId).findFirst();
 
-    /* TODO - Testeed for webpage */
-    @GetMapping("/search/{studentid}")
+       // var x = recordsService.searchRecordsByStudentId(studentids.orElseGet());
+       // System.out.println("Testing results : " + x);
+       // model.addAttribute("records", x);
+       // return new ResponseEntity<>(x, HttpStatus.OK);
+    }
+
+   /* TODO - Testeed for webpage */
+/*    @GetMapping("/search/{studentid}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/TBDeleted - Testing: /records/search/studendIdn is hit");
         model.addAttribute("records", recordsService.searchRecordsByStudentId(studentId));
        return "rsearchresult";
-    }
-    // Postmat
+    }*/
+   // Postmat
     @GetMapping("/stat")
-    public List<StudentStatDTO> getStatistics() {
+    public List<StudentStatDTO> getStatistics(){
+
         return recordsService.getStudentStatisticsWithRank();
     }
 
-=======
-    public RecordsController(RecordsService recordsService) {
-        this.recordsService = recordsService;
-    }
-    public RecordsController(){}
-    /*this page should have a search button and a search text
-    * wheen user hits search button it should display the result
-    * in another method /search/{studentId}*/
-    @GetMapping("/search")
-    public String searchRecords() {
-        //var x = recordsService.searchStudentByStudentId(studentid);
-       // model.addAttribute("records", x);
-
-        return "rsearch";
-    }
-
-    @GetMapping("/search/{studentid}")
-    public String searchRecords(@PathVariable("studentid") Integer studentid, Model model) {
-
-        System.out.println("/Testing: /records/search/studendIdn is hit");
-        var x = recordsService.searchStudentByStudentId(studentid);
-        model.addAttribute("records", x);
-        return "recordslist";
-    }
->>>>>>> b5d5a97 (modified classes, added html)
 
     /*
     @GetMapping("index")

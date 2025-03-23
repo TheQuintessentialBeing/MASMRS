@@ -5,21 +5,22 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-<<<<<<< HEAD
 
 import java.util.List;
 @Repository
 public interface RecordsRepository extends JpaRepository<Records,Integer> {
+
+
+
        // stat that is all sections
         @Query("SELECT r FROM Records r JOIN r.student s WHERE r.academicYear = :year AND r.grade = :grade AND r.section = :section")
         List<Records> findRecordsByYearGradeAndSection(String year, String grade, String section);
         // student record for all years , grades, sections
         @Query("SELECT r FROM Records r WHERE r.student.studentId = :studentId")
         List<Records> findByStudentId(Long studentId);
-=======
-@Repository
-public interface RecordsRepository extends JpaRepository<Records,Integer> {
->>>>>>> b5d5a97 (modified classes, added html)
+
+
+
 
     //Student findByProductCode();
 

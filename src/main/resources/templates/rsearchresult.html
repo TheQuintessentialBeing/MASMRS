@@ -11,7 +11,7 @@
         <hr class="css-horizontal-line">
         <table class="table .table-bordered ">
             <tr>
-
+               <!-- <th>Student Id</th>-->
                 <th>Subject</th>
                 <th>A/Year</th>
                 <th>Grade</th>
@@ -24,7 +24,7 @@
 
             </tr>
             <tr th:each="s: ${records}">
-
+              <!--  <td>[[${s.Student.student}]]</td>-->
                 <td>[[${s.subject}]]</td>
                 <td>[[${s.academicYear}]]</td>
                 <td>[[${s.grade}]]</td>
