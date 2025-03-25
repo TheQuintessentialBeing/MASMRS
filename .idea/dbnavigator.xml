@@ -9,6 +9,24 @@
     <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
+  <component name="DBNavigator.Project.DataExportManager">
+    <export-instructions>
+      <create-header value="true" />
+      <friendly-headers value="true" />
+      <quote-values-containing-separator value="true" />
+      <quote-all-values value="false" />
+      <value-separator value="" />
+      <begin-quote value="&quot;" />
+      <end-quote value="&quot;" />
+      <file-name value="Result 136.html" />
+      <file-location value="dfdfd" />
+      <scope value="GLOBAL" />
+      <destination value="FILE" />
+      <format value="HTML" />
+      <charset value="UTF-8" />
+      <charset value="UTF-8" />
+    </export-instructions>
+  </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
     <assistants>
       <assistant-state connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" default-profile-name="" selected-profile-name="" selected-model-name="" assistant-type="GENERIC" selected-action="SHOW_SQL" availability="UNAVAILABLE" acknowledgement="NONE">
@@ -43,12 +61,16 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="kdb" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/templates/workingquery.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
     <mapping file-url="file://$PROJECT_DIR$/src/main/resources/customclassicmodel.sql" connection-id="" session-id="MAIN" current-schema="" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
