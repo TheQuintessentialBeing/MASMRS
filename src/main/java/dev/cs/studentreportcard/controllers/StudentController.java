@@ -1,33 +1,28 @@
 package dev.cs.studentreportcard.controllers;
-import dev.cs.studentreportcard.models.Students;
 import dev.cs.studentreportcard.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 @Controller
 @RequestMapping("/students")
-public class StudentsController {
+public class StudentController {
 
     @Autowired
     private StudentService studentService;
-    public StudentsController(StudentService studentService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
-    public StudentsController(){}
+    public StudentController(){}
 
     /*This method shows all students POSTMAN*/
 /*
     @GetMapping("/list")
-    public ResponseEntity<List<Students>> showAllStudents(){
-        List<Students> students= new ArrayList<>();
+    public ResponseEntity<List<Student>> showAllStudents(){
+        List<Student> students= new ArrayList<>();
         students = studentService.listAllStudents();
         System.out.println("Testing Student conteroller list if it returns anything");
         return new  ResponseEntity<>(students,HttpStatus.OK);

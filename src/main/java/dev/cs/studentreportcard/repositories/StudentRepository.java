@@ -1,12 +1,12 @@
 package dev.cs.studentreportcard.repositories;
 
-import dev.cs.studentreportcard.models.Students;
+import dev.cs.studentreportcard.models.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface StudentRepository extends JpaRepository<Students,Integer> {
+public interface StudentRepository extends JpaRepository<Student,Integer> {
 
     /*@Query(name = "sqlSearchProductByProductCode")
     Product findByProductCode(@Param("productcode") String productCode);
@@ -26,5 +26,5 @@ public interface StudentRepository extends JpaRepository<Students,Integer> {
     // student
 
     @Query(name="SqlSearchStudentByStudentId")
-    Students findByStudentId(@Param ("studentId") Integer studentId);
+    Student findByStudentId(@Param ("studentId") Integer studentId);
 }

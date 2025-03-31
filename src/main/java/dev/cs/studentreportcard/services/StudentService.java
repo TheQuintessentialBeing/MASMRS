@@ -1,11 +1,10 @@
 package dev.cs.studentreportcard.services;
 
-import dev.cs.studentreportcard.models.Students;
+import dev.cs.studentreportcard.models.Student;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +21,11 @@ public class StudentService {
     }
 
     //CRUD
-    public List<Students> listAllStudents() {
+    public List<Student> listAllStudents() {
         return studentRepository.findAll();
     }
 
-    public Page<Students> listAllStudentsToPage(PageRequest pageRequest){
+    public Page<Student> listAllStudentsToPage(PageRequest pageRequest){
 
 
         return studentRepository.findAll(pageRequest);
