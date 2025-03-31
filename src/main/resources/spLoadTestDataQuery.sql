@@ -1,42 +1,21 @@
-
-select u.id as User_ID, u.first_name as "First Name" ,
-      u.last_name as "Last Name", u.email as "Users Email", r.name as   "User_Role"
-      from kdb.user u
-      inner join users_roles on u.id = user_id
-      inner join role r on r.id = role_id
-      order by r.name,u.first_name , u.last_name asc;
-
-select * from Student where student_id in (1,2);
-delete from Student where student_id in (1,2);
 use nowdb;
+CREATE PROCEDURE `spLoadTestData` ()
 
-SELECT r.student_id, r.academic_year, r.grade, r.section, r.subject, r.q1, r.q2, r.q3, r.q4
-FROM records r
-JOIN students s ON r.student_id = s.student_id
-WHERE r.academic_year = '2023' AND r.grade = 'A' AND r.section = 'A';
+-- check if Student table has no records already - display appropraite messages
+-- BEGIN
+-- DECLARE students_row_count INT;
+-- IF EXISTS ( SELECT 1 FROM students LIMIT 1 )THEN DELETE FROM students;
+-- SELECT 'students table was not empty and data deleted.' AS Message;
+-- ELSE
+--  SELECT 'studenrs table was already empty.' AS Message;
 
-SELECT student_id, subject,
-       AVG((q1 + q2) / 2) AS semester_1_avg,
-       AVG((q3 + q4) / 2) AS semester_2_avg
-FROM records
-GROUP BY student_id, subject;
+-- END IF;
+-- Inserting data into students table
+-- SET SQL_SAFE_UPDATE =0; -- it tries to avoid accidental delete when where clause is not mentioned ; so 0 is to turn off this feature 1 is to turn ON
+-- Delete  from student_records where student_id >0;
+-- SET SQL_SAFE_UPDATE =0;
+-- Delete  from students where record_id >0;
 
-use nowdb;
--- deleting data from db
--- Note: always select data and see before you delete it
---       If tables are related first delete the child ( the table with foreign key
---       then delete the table with primary key
--- child table ( dependent table )
-select * from nowdb.student_records;
-delete  from nowdb.student_records;
-select * from nowdb.student_records;
--- parent table
-select * from nowdb.students;
-delete   from nowdb.students;
-select * from nowdb.students;
-
-
--- above rows are working and should be enterd before records as student_id fkey is needed
 insert into nowdb.students (student_id, first_name, middle_name, last_name, date_of_birth, gender, registration_date, photo, kifle_ketema, kebele, house_number, phone, comment,is_active)
 values
  (1001, 'Kidus', 'Kagnew', 'Eshetu', '1993-02-03', 'M', '2005-10-24', null, 'Bole', 1, 'kebele 12', '0911-354-520', '4/9/2020',true)
@@ -174,27 +153,36 @@ values
 ,(1101, 'Tizta', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true);
 
 
--- StudentRecord data for from 2014 at least 3 students in each section ( section varies by year ) and for 3 subjects
---- includes some new  or drop out students in each year each semester
---- included the frist 14 students as a sampel - you can add all the students and also add subjects and also drop or add in each year for possible scinious
+-- verify if student data is loaded successfully
+-- if possible show failure msg if student id does not exist before we add record details below
+--  at the end show how many rows are in the table , how many of them has details , and dont have details
+-- if there are rejections of data entry b/c student is not already registered
+
+-- Get number of students inserted
+
+-- SET students_row_count = ROW_COUNT();
+
+-- Show Message count of records inserted
+
+-- SELECT concat('Inseted ', students_row_count,' row(s) into students table.' ) AS Result;
 
 
--- 2014 - 9 - Section A
-use nowdb;
-go
-CREATE PROCEDURE loadRecordsData
-BEGIN
-DECLARE row_count INT;
-IF EXISTS ( SELECT 1 FROM records LIMIT 1 )
-   THEN DELETE FROM records
-   SELECT 'records table was not empty and data deleted.' AS Message;
-ELSE
-   SELECT 'records table was already empty.' AS Message;
 
-END IF
+
+-- BELOW is to lead to student_records table
+-- BEGIN
+-- DECLARE row_count INT;
+-- IF EXISTS ( SELECT 1 FROM student_records LIMIT 1 )THEN DELETE FROM records;
+ --   SELECT 'records table was not empty and data deleted.' AS Message;
+-- ELSE
+   -- SELECT 'records table was already empty.' AS Message;
+
+-- END IF;
 -- Inserting data into records table
+
+
 INSERT INTO student_records
-(records_id,student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_by, comment) values
+(record_id,fk_student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_by, comment) values
  (1       , 1001      , 2014        ,9     ,'English',    'A'  , 1, 2, 77, 80, 1, 'Admitted in 2014')
 ,(2       , 1001      , 2014        ,9     ,'Math',       'A'  , 3, 4, 80, 80, 1, 'Admitted in 2014')
 ,(3       , 1001	  , 2014        ,9     ,'Physics',    'A'  , 5, 60, 80, 80, 1,  'Admitted in 2014')
@@ -309,7 +297,7 @@ INSERT INTO student_records
 ,(66      , 1002      , 2017        ,12    ,'Physics',    'B'  , 12, 90, 0.0, 0.0, 1, 'Admitted in 2017')
 
 ,(67      , 1003      , 2017        ,12    ,'English',    'B'  , 14, 90, 0, 80, 1, 'Admitted in 2017')
-,(68        , 1003      , 2017        ,12    ,'Physics',    'B'  , 16, 90, 80, 80, 1, 'Admitted in 2017')
+,(68      , 1003      , 2017        ,12    ,'Physics',    'B'  , 16, 90, 80, 80, 1, 'Admitted in 2017')
 
 ,(69      , 1004      , 2017        ,12    ,'English',    'B'  , 18, 90, 0, 80, 1, 'Admitted in 2017')
 ,(70      , 1004      , 2017        ,12    ,'Math',       'B'  , 20, 90, 80, 80, 1, 'Admitted in 2017')
@@ -364,16 +352,10 @@ INSERT INTO student_records
 
 -- Get number of records inserted
 
-SET row_count = ROW_COUNT();
+-- SET row_count = ROW_COUNT();
 
 -- Show Message count of records inserted
 
-SELECT concat('Inseted ', row_count,' row(s) into records table.' ) AS Result;
-END; -- this line closes the BEGIN statement above
+-- SELECT concat('Inseted ', row_count,' row(s) into records table.' ) AS Result;
+-- END;
 
--- executing the following statment will run the above procedure line by line
--- optionally we can also delete student table in the above procedure -- rem records should be deleted first
--- we can call the foll statment to execute but the above create stoded procedure should be run and created in the database
--- b/c it should exist like a table once and called any times even inside another stored procedures
--- stored prcedures can also take parameters / filtering condition and also return results like a programming
--- there are also functions for more specific purposes

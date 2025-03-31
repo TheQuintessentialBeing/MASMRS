@@ -5,6 +5,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import java.time.LocalDate;
 @Table(name = "Students") // change to any name in database from here
 @FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
 @SequenceGenerator(name = "studentNumber_Seq", initialValue = 1000, allocationSize = 1)
-public class Students {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentNumber_Seq")
     @Setter(AccessLevel.PRIVATE)
@@ -45,16 +47,8 @@ public class Students {
     String comment;
     @Column(nullable = false)
     boolean isActive;
-
-   /* @Transient
-    public int getAge() {
-
-        if (DateOfBirth == null) {
-            return 0;//
-        } else
-
-            return Period.between(DateOfBirth, LocalDate.now()).getYears();
-
-    }*/
+    // the mappedBy = student ; this must match the Student student declaration in StudentRecord class
+    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL)
+    List<StudentRecord> records = new ArrayList<>();
 
 }

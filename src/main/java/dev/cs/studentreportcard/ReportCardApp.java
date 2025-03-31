@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class ReportCard {
+public class ReportCardApp {
     public static void main(String[] args) {
         System.out.println("[School Management & Recording System Application is loading ..........] " + Util.orderDate());
-        SpringApplication.run(ReportCard.class, args);
+        SpringApplication.run(ReportCardApp.class, args);
     }
 }

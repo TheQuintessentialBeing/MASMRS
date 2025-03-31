@@ -1,17 +1,17 @@
 package dev.cs.studentreportcard.models;
 
+import dev.cs.studentreportcard.DTO.StudentRecordHeader;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.sql.Date;
-import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity // make it JPA entity
-@Table(name = "Records") // make table name "Result" in db
+@Table(name = "StudentRecords") // make table name "Result" in db
 @FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
 @SequenceGenerator(
         name = "recordsNumber_Seq",        // Unique sequence name
@@ -24,7 +24,7 @@ CREATE TABLE records_seq (
     id BIGINT AUTO_INCREMENT PRIMARY KEY
 ) AUTO_INCREMENT = 1001;
 */
-public class Records { /*TODO entities shall be singular but db names shall be plural*/
+public class StudentRecord { /*TODO entities shall be singular but db names shall be plural*/
 
     @Id
     @GeneratedValue(
@@ -32,14 +32,11 @@ public class Records { /*TODO entities shall be singular but db names shall be p
             generator = "recordsNumber_Seq"
     )
     @Setter(AccessLevel.PRIVATE)
-    private Integer recordsId;
-
+    private Integer recordId;
     //FK - Relationship TODO
     @Setter
     @Getter
-    @ManyToOne // Records(many records) will match (One Student) Remember : Student Id must exist in Students Table before it is used/insert in Records table
-    @JoinColumn( name= "studentId")
-    Students student;
+
     @Column(length = 50)
     String subject;
     @Column(nullable = false, length = 50)
@@ -73,5 +70,14 @@ public class Records { /*TODO entities shall be singular but db names shall be p
     @Column(length = 150)
     String comment;
 
+    @ManyToOne // StudentRecord(many records) will match (One Student) Remember : Student Id must exist in Student Table before it is used/insert in StudentRecord table
+    @JoinColumn( name= "FK_StudentId", referencedColumnName = "studentId")// in production this should be set , nullable = true)
+    // FK_StudentId is name of the foreign key
+    // studentId is the primary key of the parent table i,e Student
+    Student student;
+    // studnet is here to navigate b/n the tables
+  // @ManyToOne
+  // @JoinColumn(name="studentRecordHeaderId", referencedColumnName = "student_id", nullable = true)
+  // StudentRecordHeader studentRecordHeader;
 }
 

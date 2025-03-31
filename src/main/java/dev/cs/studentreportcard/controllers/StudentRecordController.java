@@ -1,75 +1,83 @@
 package dev.cs.studentreportcard.controllers;
 
-import dev.cs.studentreportcard.DTO.StudentStatDTO;
-import dev.cs.studentreportcard.models.Records;
-import dev.cs.studentreportcard.models.Students;
+import dev.cs.studentreportcard.DTO.StudentRecordHeader;
+import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRepository;
-import dev.cs.studentreportcard.services.RecordsService;
+import dev.cs.studentreportcard.services.StudentRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/records")
-public class RecordsController {
+public class StudentRecordController {
 
     @Autowired
-    private RecordsService recordsService;
+    private StudentRecordService studentRecordService;
     @Autowired
     private StudentRepository studentRepository;
 
-    public RecordsController(RecordsService recordsService, StudentRepository studentRepository) {
+    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository) {
 
-        this.recordsService = recordsService;
+        this.studentRecordService = studentRecordService;
         this.studentRepository = studentRepository;
     }
 
-    public RecordsController() {
+    public StudentRecordController() {
     }
+
+
+      @GetMapping("/search/test")
+    public ResponseEntity<List<StudentRecordHeader>> showAllReports() {
+        System.out.println("/Testing: /records/search/test");
+        var x = studentRecordService.getStudentRecordReport();
+          System.out.println("x:" + x);
+        return new ResponseEntity<>(x, HttpStatus.OK);
+    }
+
 
     /*this page should have a search button and a search text
      * wheen user hits search button it should display the result
      * in another method /search/{studentId}*/
+    /*
     @GetMapping("/search")
     public String searchRecords() {
         return "rsearch";
     }
-
+    */
     /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
    /* @GetMapping("/search/{studentid}")
-    public ResponseEntity<List<Records>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
+    public ResponseEntity<List<StudentRecord>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/Testing: /records/search/studentdIdn is hit");
-        Optional<Students> studentids = studentRepository.findAll().stream().filter(x -> x.getStudentId() == studentId).findFirst();
+        Optional<Student> studentids = studentRepository.findAll().stream().filter(x -> x.getStudentId() == studentId).findFirst();
         System.out.println(studentids.get().getStudentId());
-        // var x = recordsService.searchRecordsByStudentId(studentids.orElseGet());
+        // var x = studentRecordService.searchRecordsByStudentId(studentids.orElseGet());
         // System.out.println("Testing results : " + x);
         // model.addAttribute("records", x);
         // return new ResponseEntity<>(x, HttpStatus.OK);
     }*/
 
     /* TODO - Testeed for webpage */
+
+    /*
     @GetMapping("/search/{studentid}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/TBDeleted - Testing: /records/search/studendIdn is hit");
-        model.addAttribute("records", recordsService.searchRecordsByStudentId(studentId));
+        model.addAttribute("records", studentRecordService.searchRecordsByStudentId(studentId));
        return "rsearchresult";
-    }
+    }*/
+    /*
     // Postmat
     @GetMapping("/stat")
-    public List<StudentStatDTO> getStatistics() {
-        return recordsService.getStudentStatisticsWithRank();
+    public List<StudentRecordHeader> getStatistics() {
+        return studentRecordService.getStudentStatisticsWithRank();
     }
 
 
@@ -85,7 +93,7 @@ public class RecordsController {
         if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
             size = Integer.parseInt(request.getParameter("size"));
         }
-        model.addAttribute("records", recordsService.listAllRecords(PageRequest.of(page,size)));
+        model.addAttribute("records", studentRecordService.listAllRecords(PageRequest.of(page,size)));
 
         System.out.println("Test records");
        return "recordslist";
