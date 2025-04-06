@@ -1,4 +1,7 @@
-
+-- user - register login log
+-- student using studnet and year - report
+-- program - load excel data to database.
+-- passive ( TODO)
 select u.id as User_ID, u.first_name as "First Name" ,
       u.last_name as "Last Name", u.email as "Users Email", r.name as   "User_Role"
       from kdb.user u

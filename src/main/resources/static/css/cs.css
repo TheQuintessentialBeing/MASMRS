@@ -22,11 +22,12 @@ a {
 /*buttons in all pages */
 .cs-action-button {
     box-sizing: border-box !important;
-    width: 80px !important;
+    /*width: px !important;*/
     height: 40px !important;
     cursor: pointer !important;
     color: black !important;
     background-color: transparent;
+
 
 }
 

@@ -48,7 +48,7 @@ public class Student {
     @Column(nullable = false)
     boolean isActive;
     // the mappedBy = student ; this must match the Student student declaration in StudentRecord class
-    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL)
-    List<StudentRecord> records = new ArrayList<>();
+    // @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL)
+    // List<StudentRecord> records = new ArrayList<>();
 
 }

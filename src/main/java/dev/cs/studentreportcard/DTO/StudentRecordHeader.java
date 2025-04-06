@@ -1,79 +1,298 @@
 package dev.cs.studentreportcard.DTO;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import dev.cs.studentreportcard.models.StudentRecord;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
-import java.awt.*;
+
 import java.util.Date;
 import java.util.List;
-@Data
-//@Entity
-//@Immutable  // Hibernate annotation to prevent updates on the view we only create it
-//@Table(name = "vw_student_records_header2")  // Map the entity to the view
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)  // Ignore null value
 public class StudentRecordHeader {
-    @Id
-    @Column(name="student_id")
     private Integer studentId;
-    @Column(name="first_name")
     private String firstName;
-    @Column(name="middle_name")
     private String middleName;
-    @Column(name="last_name")
     private String lastName;
-    @Column(name="date_of_birth")
     private Date dateOfBirth;
-    @Column(name="gender")
+
+   //TODO restrinct to one character
     private Character gender;
-    @Column(name="academic_year")
+
     private String academicYear;
-    @Column(name="grade")
     private Integer grade;
-    @Column(name="section")
+
+    // TODO this could be changed to like gender to Character
     private String section;
-    @Column(name="NumberOfSubjects")
+
+    // Calculated fields
     private Integer numberOfSubjects;
 
-    // quarter 1,2 and semester 1
+    // quarter 1 semester 1
     private double quarterOneSum;
     private Integer quarterOneRank;
 
+    // quarter  2 semester 1
     private double quarterTwoSum;
     private Integer quarterTwoRank;
-
     private Integer semesterOneRank;
 
-    // quarter 3,4 and semester 2
+    // quarter 3 semester 2
     private double quarterThreeSum;
     private Integer quarterThreeRank;
 
+    // quarter 4  semester 2
     private double quarterFourSum;
     private Integer quarterFourRank;
-
     private Integer semesterTwoRank;
 
-    // rank from all section
+    // rank from all section and percentile
     private Integer allSectionRank;
     private Integer totalNumberOfStudents;
-
-    // percentile
     private Integer allSectionPercentile;
 
+    // student photo and status
     private byte[] photo;
     private boolean isActive;
-    private Double semester1Sum;
 
-    //@OneToMany(mappedBy = "studentRecordHeader", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
-    // @OneToMany(mappedBy = "studentRecordHeader", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
-    private List<StudentRecord> detailStudentRows; // List of subjects for each student
+    private List<StudentRecord> detailrows ;
+    public StudentRecordHeader() {
 
+    }
+    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender, String academicYear, Integer grade, String section, Integer numberOfSubjects, double quarterOneSum, Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank, Integer semesterOneRank, double quarterThreeSum, Integer quarterThreeRank, double quarterFourSum, Integer quarterFourRank, Integer semesterTwoRank, Integer allSectionRank, Integer totalNumberOfStudents, Integer allSectionPercentile, byte[] photo, boolean isActive) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.academicYear = academicYear;
+        this.grade = grade;
+        this.section = section;
+        this.numberOfSubjects = numberOfSubjects;
+        this.quarterOneSum = quarterOneSum;
+        this.quarterOneRank = quarterOneRank;
+        this.quarterTwoSum = quarterTwoSum;
+        this.quarterTwoRank = quarterTwoRank;
+        this.semesterOneRank = semesterOneRank;
+        this.quarterThreeSum = quarterThreeSum;
+        this.quarterThreeRank = quarterThreeRank;
+        this.quarterFourSum = quarterFourSum;
+        this.quarterFourRank = quarterFourRank;
+        this.semesterTwoRank = semesterTwoRank;
+        this.allSectionRank = allSectionRank;
+        this.totalNumberOfStudents = totalNumberOfStudents;
+        this.allSectionPercentile = allSectionPercentile;
+        this.photo = photo;
+        this.isActive = isActive;
+    }
+
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public void setGender(Character gender) {
+        this.gender = gender;
+    }
+
+    public String getAcademicYear() {
+        return academicYear;
+    }
+
+    public void setAcademicYear(String academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public Integer getNumberOfSubjects() {
+        return numberOfSubjects;
+    }
+
+    public void setNumberOfSubjects(Integer numberOfSubjects) {
+        this.numberOfSubjects = numberOfSubjects;
+    }
+
+    public double getQuarterOneSum() {
+        return quarterOneSum;
+    }
+
+    public void setQuarterOneSum(double quarterOneSum) {
+        this.quarterOneSum = quarterOneSum;
+    }
+
+    public Integer getQuarterOneRank() {
+        return quarterOneRank;
+    }
+
+    public void setQuarterOneRank(Integer quarterOneRank) {
+        this.quarterOneRank = quarterOneRank;
+    }
+
+    public double getQuarterTwoSum() {
+        return quarterTwoSum;
+    }
+
+    public void setQuarterTwoSum(double quarterTwoSum) {
+        this.quarterTwoSum = quarterTwoSum;
+    }
+
+    public Integer getQuarterTwoRank() {
+        return quarterTwoRank;
+    }
+
+    public void setQuarterTwoRank(Integer quarterTwoRank) {
+        this.quarterTwoRank = quarterTwoRank;
+    }
+
+    public Integer getSemesterOneRank() {
+        return semesterOneRank;
+    }
+
+    public void setSemesterOneRank(Integer semesterOneRank) {
+        this.semesterOneRank = semesterOneRank;
+    }
+
+    public double getQuarterThreeSum() {
+        return quarterThreeSum;
+    }
+
+    public void setQuarterThreeSum(double quarterThreeSum) {
+        this.quarterThreeSum = quarterThreeSum;
+    }
+
+    public Integer getQuarterThreeRank() {
+        return quarterThreeRank;
+    }
+
+    public void setQuarterThreeRank(Integer quarterThreeRank) {
+        this.quarterThreeRank = quarterThreeRank;
+    }
+
+    public double getQuarterFourSum() {
+        return quarterFourSum;
+    }
+
+    public void setQuarterFourSum(double quarterFourSum) {
+        this.quarterFourSum = quarterFourSum;
+    }
+
+    public Integer getQuarterFourRank() {
+        return quarterFourRank;
+    }
+
+    public void setQuarterFourRank(Integer quarterFourRank) {
+        this.quarterFourRank = quarterFourRank;
+    }
+
+    public Integer getSemesterTwoRank() {
+        return semesterTwoRank;
+    }
+
+    public void setSemesterTwoRank(Integer semesterTwoRank) {
+        this.semesterTwoRank = semesterTwoRank;
+    }
+
+    public Integer getAllSectionRank() {
+        return allSectionRank;
+    }
+
+    public void setAllSectionRank(Integer allSectionRank) {
+        this.allSectionRank = allSectionRank;
+    }
+
+    public Integer getTotalNumberOfStudents() {
+        return totalNumberOfStudents;
+    }
+
+    public void setTotalNumberOfStudents(Integer totalNumberOfStudents) {
+        this.totalNumberOfStudents = totalNumberOfStudents;
+    }
+
+    public Integer getAllSectionPercentile() {
+        return allSectionPercentile;
+    }
+
+    public void setAllSectionPercentile(Integer allSectionPercentile) {
+        this.allSectionPercentile = allSectionPercentile;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<StudentRecord> getDetailrows() {
+        return detailrows;
+    }
+
+    public void setDetailrows(List<StudentRecord> detailrows) {
+        this.detailrows = detailrows;
+    }
 }
 

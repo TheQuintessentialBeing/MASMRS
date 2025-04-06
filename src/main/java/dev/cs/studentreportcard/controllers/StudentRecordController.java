@@ -1,6 +1,7 @@
 package dev.cs.studentreportcard.controllers;
 
 import dev.cs.studentreportcard.DTO.StudentRecordHeader;
+import dev.cs.studentreportcard.models.Student;
 import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import dev.cs.studentreportcard.services.StudentRecordService;
@@ -14,65 +15,84 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/records")
 public class StudentRecordController {
 
     @Autowired
-    private StudentRecordService studentRecordService;
-    @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private StudentRecordService studentRecordService;
 
+    @Autowired
     public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository) {
 
         this.studentRecordService = studentRecordService;
         this.studentRepository = studentRepository;
     }
 
-    public StudentRecordController() {
-    }
-
-
-      @GetMapping("/search/test")
-    public ResponseEntity<List<StudentRecordHeader>> showAllReports() {
-        System.out.println("/Testing: /records/search/test");
-        var x = studentRecordService.getStudentRecordReport();
-          System.out.println("x:" + x);
-        return new ResponseEntity<>(x, HttpStatus.OK);
-    }
-
-
     /*this page should have a search button and a search text
      * wheen user hits search button it should display the result
      * in another method /search/{studentId}*/
-    /*
     @GetMapping("/search")
     public String searchRecords() {
+        System.out.println("hitting the records/search page");
         return "rsearch";
     }
-    */
-    /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
-   /* @GetMapping("/search/{studentid}")
-    public ResponseEntity<List<StudentRecord>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
-        System.out.println("/Testing: /records/search/studentdIdn is hit");
-        Optional<Student> studentids = studentRepository.findAll().stream().filter(x -> x.getStudentId() == studentId).findFirst();
-        System.out.println(studentids.get().getStudentId());
-        // var x = studentRecordService.searchRecordsByStudentId(studentids.orElseGet());
-        // System.out.println("Testing results : " + x);
-        // model.addAttribute("records", x);
-        // return new ResponseEntity<>(x, HttpStatus.OK);
+
+    // DONE ? is wildcard and extending Object is optional
+    @GetMapping("/search/{studentId}/{academicYear}")
+    public String showAllReports(@PathVariable("studentId") Integer studentId, @PathVariable("academicYear") String academicYear, Model model) {
+        System.out.println("hitting site http://localhost:8081/records/search/1001/2014");
+        List<StudentRecordHeader> records = studentRecordService.getStudentRecordReport(studentId, academicYear);
+
+        for (StudentRecordHeader studentRecordHeader : records) {
+            System.out.println("Frist Name :" + studentRecordHeader.getFirstName());
+
+            for (StudentRecord studentRecord : studentRecordHeader.getDetailrows()) {
+                System.out.println("Subject : " + studentRecord.getSubject());
+                System.out.println("Grade :" + studentRecord.getGrade());
+            }
+
+        }
+        System.out.println("size of records " + records.size());
+        if (records != null)
+            model.addAttribute("records", records);
+        // return ResponseEntity.ok("No student report for student Id {" + studentId + "} and academic year {"+ academic_year);
+        return "rsearchresult";
+    }
+
+
+    /*  @GetMapping("/search/{studentid}{academicyear}")
+    public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
+        System.out.println("/TBDeleted - Testing: /records/search/studendId is hit");
+        model.addAttribute("records", studentRecordService.getStudentRecordReport(studentId,academicyear));
+       return "rsearchresult";
     }*/
+
+
+    // DONE ? is wildcard and extending Object is optional
+    @GetMapping("post/search/test/{studentId}/{academic_year}")
+    public ResponseEntity<? extends Object> showAllReportspost(@PathVariable("studentId") Integer studentId, @PathVariable("academic_year") String academic_year) {
+        List<StudentRecordHeader> singleStudentReport = studentRecordService.getStudentRecordReport(studentId, academic_year);
+        if (singleStudentReport == null) {
+            return ResponseEntity.ok("No student report for student Id {" + studentId + "} and academic year {" + academic_year);
+        }
+        return new ResponseEntity<>(singleStudentReport, HttpStatus.OK);
+    }
+
+    /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
+    //  @GetMapping("/search/{studentid}")
+    // public ResponseEntity<List<StudentRecord>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
+
+    //    return new ResponseEntity<>(x, HttpStatus.OK);
+    // }
 
     /* TODO - Testeed for webpage */
 
-    /*
-    @GetMapping("/search/{studentid}")
-    public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
-        System.out.println("/TBDeleted - Testing: /records/search/studendIdn is hit");
-        model.addAttribute("records", studentRecordService.searchRecordsByStudentId(studentId));
-       return "rsearchresult";
-    }*/
+
     /*
     // Postmat
     @GetMapping("/stat")
