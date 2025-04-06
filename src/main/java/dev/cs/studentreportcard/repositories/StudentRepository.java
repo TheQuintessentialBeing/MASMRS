@@ -25,6 +25,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
 */
     // student
 
-    @Query(name="SqlSearchStudentByStudentId")
+  /*  @Query(name="SqlSearchStudentByStudentId")
     Student findByStudentId(@Param ("studentId") Integer studentId);
+*/
 }

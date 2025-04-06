@@ -64,6 +64,7 @@
     <mapping file-url="file://$PROJECT_DIR$/src/main/resources/spLoadTestDataQuery.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
     <mapping file-url="file://$PROJECT_DIR$/src/main/resources/workingquery.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
     <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/customclassicmodel.sql" connection-id="" session-id="MAIN" current-schema="" />
     <mapping file-url="file://$PROJECT_DIR$/src/main/resources/schema.sql" connection-id="b28da80e-daae-43e8-ab2d-ac1f9bde58c6" session-id="MAIN" current-schema="nowdb" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
