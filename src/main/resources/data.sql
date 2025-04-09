@@ -1,45 +1,24 @@
--- user - register login log
--- student using studnet and year - report
--- program - load excel data to database.
--- passive ( TODO)
-select u.id as User_ID, u.first_name as "First Name" ,
-      u.last_name as "Last Name", u.email as "Users Email", r.name as   "User_Role"
-      from kdb.user u
-      inner join users_roles on u.id = user_id
-      inner join role r on r.id = role_id
-      order by r.name,u.first_name , u.last_name asc;
+DELETE FROM employee;
 
-select * from Student where student_id in (1,2);
-delete from Student where student_id in (1,2);
-use nowdb;
-
-SELECT r.student_id, r.academic_year, r.grade, r.section, r.subject, r.q1, r.q2, r.q3, r.q4
-FROM records r
-JOIN students s ON r.student_id = s.student_id
-WHERE r.academic_year = '2023' AND r.grade = 'A' AND r.section = 'A';
-
-SELECT student_id, subject,
-       AVG((q1 + q2) / 2) AS semester_1_avg,
-       AVG((q3 + q4) / 2) AS semester_2_avg
-FROM records
-GROUP BY student_id, subject;
+INSERT INTO employee (name, role) VALUES ('Bili', 'Developer');
 
 use nowdb;
--- deleting data from db
--- Note: always select data and see before you delete it
---       If tables are related first delete the child ( the table with foreign key
---       then delete the table with primary key
--- child table ( dependent table )
-select * from nowdb.student_records;
-delete  from nowdb.student_records;
-select * from nowdb.student_records;
--- parent table
-select * from nowdb.students;
-delete   from nowdb.students;
-select * from nowdb.students;
+CREATE PROCEDURE `nowdb`.`spLoadTestData` ()
+-- check if Student table has no records already - display appropraite messages
+-- BEGIN
+-- DECLARE students_row_count INT;
+-- IF EXISTS ( SELECT 1 FROM students LIMIT 1 )THEN DELETE FROM students;
+-- SELECT 'students table was not empty and data deleted.' AS Message;
+-- ELSE
+-- SELECT 'students table was already empty.' AS Message;
 
+-- END IF;
+-- Inserting data into students table
+-- SET SQL_SAFE_UPDATE =0; -- it tries to avoid accidental delete when where clause is not mentioned ; so 0 is to turn off this feature 1 is to turn ON
+-- Delete  from student_records where student_id >0;
+-- SET SQL_SAFE_UPDATE =0;
+-- Delete  from students where record_id >0;
 
--- above rows are working and should be enterd before records as student_id fkey is needed
 insert into nowdb.students (student_id, first_name, middle_name, last_name, date_of_birth, gender, registration_date, photo, kifle_ketema, kebele, house_number, phone, comment,is_active)
 values
  (1001, 'Kidus', 'Kagnew', 'Eshetu', '1993-02-03', 'M', '2005-10-24', null, 'Bole', 1, 'kebele 12', '0911-354-520', '4/9/2020',true)
@@ -176,28 +155,36 @@ values
 ,(1100, 'Zerihun', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true)
 ,(1101, 'Tizta', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true);
 
+-- verify if student data is loaded successfully
+-- if possible show failure msg if student id does not exist before we add record details below
+--  at the end show how many rows are in the table , how many of them has details , and dont have details
+-- if there are rejections of data entry b/c student is not already registered
 
--- StudentRecord data for from 2014 at least 3 students in each section ( section varies by year ) and for 3 subjects
---- includes some new  or drop out students in each year each semester
---- included the frist 14 students as a sampel - you can add all the students and also add subjects and also drop or add in each year for possible scinious
+-- Get number of students inserted
+
+-- SET students_row_count = ROW_COUNT();
+
+-- Show Message count of records inserted
+
+-- SELECT concat('Inseted ', students_row_count,' row(s) into students table.' ) AS Result;
 
 
--- 2014 - 9 - Section A
-use nowdb;
-go
-CREATE PROCEDURE loadRecordsData
-BEGIN
-DECLARE row_count INT;
-IF EXISTS ( SELECT 1 FROM records LIMIT 1 )
-   THEN DELETE FROM records
-   SELECT 'records table was not empty and data deleted.' AS Message;
-ELSE
-   SELECT 'records table was already empty.' AS Message;
 
-END IF
+
+-- BELOW is to lead to student_records table
+-- BEGIN
+-- DECLARE row_count INT;
+-- IF EXISTS ( SELECT 1 FROM student_records LIMIT 1 )THEN DELETE FROM records;
+ --   SELECT 'records table was not empty and data deleted.' AS Message;
+-- ELSE
+   -- SELECT 'records table was already empty.' AS Message;
+
+-- END IF;
 -- Inserting data into records table
+
+
 INSERT INTO student_records
-(records_id,student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_by, comment) values
+(record_id, student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_by, comment) values
  (1       , 1001      , 2014        ,9     ,'English',    'A'  , 1, 2, 77, 80, 1, 'Admitted in 2014')
 ,(2       , 1001      , 2014        ,9     ,'Math',       'A'  , 3, 4, 80, 80, 1, 'Admitted in 2014')
 ,(3       , 1001	  , 2014        ,9     ,'Physics',    'A'  , 5, 60, 80, 80, 1,  'Admitted in 2014')
@@ -221,7 +208,8 @@ INSERT INTO student_records
 ,(16      , 1006      , 2014        ,9     ,'English',    'B'  , 99, 90, 77, 80, 1, 'Admitted in 2014')
 ,(17      , 1006      , 2014        ,9     ,'Math',       'B'  , 97, 90, 80, 80, 1, 'Admitted in 2014')
 ,(18      , 1006      , 2014        ,9     ,'Physics',    'B'  , 95, 90, 80, 80, 1,  'Admitted in 2014')
---
+
+
 
 -- 2015 - 10 - Section A & B
 -- insert into StudentRecord
@@ -244,15 +232,15 @@ INSERT INTO student_records
 
 ,(31      , 1005      , 2015        ,10    ,'English',    'A'  , 69, 90, 77, 80, 1, 'Admitted in 2014')
 ,(32      , 1005      , 2015        ,10    ,'Math',       'A'  , 67, 90, 80, 80, 1, 'Admitted in 2014')
-,(33      , 1005      , 2015        ,10    ,'Physics',    'A'  , 65, 90, 80, 80, 1,  'Admitted in 2014')
+,(33      , 1005      , 2015        ,10    ,'Physics',    'A'  , 65, 90, 80, 80, 1, 'Admitted in 2014')
 
 ,(34      , 1006      , 2015        ,10    ,'English',    'B'  , 63, 90, 77, 80, 1, 'Admitted in 2014')
 ,(35      , 1006      , 2015        ,10    ,'Math',       'B'  , 61, 90, 80, 80, 1, 'Admitted in 2014')
-,(36      , 1006      , 2015        ,10    ,'Physics',    'B'  , 59, 90, 80, 80, 1,  'Admitted in 2014')
+,(36      , 1006      , 2015        ,10    ,'Physics',    'B'  , 59, 90, 80, 80, 1, 'Admitted in 2014')
 -- Admitted in  students in 2015
 ,(37      , 1007     , 2015         ,10    ,'English',    'A'  , 57, 90, 77, 80, 1, 'Admitted in 2015')
 ,(38      , 1007     , 2015         ,10    ,'Math',       'A'  , 55, 90, 80, 80, 1, 'Admitted in 2015')
-,(39      , 1007     , 2015         ,10    ,'Physics',    'A'  , 53, 90, 80, 80, 1,  'Admitted in 2015')
+,(39      , 1007     , 2015         ,10    ,'Physics',    'A'  , 53, 90, 80, 80, 1, 'Admitted in 2015')
 
 -- 2016 - 11 - Section A & B
 -- insert into StudentRecord
@@ -263,7 +251,7 @@ INSERT INTO student_records
 -- ,(       ,1001      , 2016       ,11    ,'Math',       'B'  , 100, 90, 80, 80, 1, 'Admitted in 2014') -- drop out
 -- ,(       ,1001		, 2016      ,11    ,'Physics',    'A'  , 10, 90, 80, 80, 1,  'Admitted in 2014')
 
- ,(40      , 1002      , 2016        ,11    ,'English',    'A'  , 51, 90, 77, 80, 1, 'Admitted in 2014')
+,(40      , 1002      , 2016        ,11    ,'English',    'A'  , 51, 90, 77, 80, 1, 'Admitted in 2014')
 ,(41      , 1002      , 2016        ,11    ,'Math',       'A'  , 49, 90, 80, 80, 1, 'Admitted in 2014')
 ,(42      , 1002      , 2016        ,11    ,'Physics',    'A'  , 47, 90, 80, 80, 1, 'Admitted in 2014')
 
@@ -277,25 +265,25 @@ INSERT INTO student_records
 
 ,(49      , 1005      , 2016        ,11    ,'English',    'C'  , 33, 90, 77, 80, 1, 'Admitted in 2014')
 ,(50      , 1005      , 2016        ,11    ,'Math',       'C'  , 31, 90, 80, 80, 1, 'Admitted in 2014')
-,(51      , 1005      , 2016        ,11    ,'Physics',    'C'  , 29, 90, 80, 80, 1,  'Admitted in 2014')
+,(51      , 1005      , 2016        ,11    ,'Physics',    'C'  , 29, 90, 80, 80, 1, 'Admitted in 2014')
 
 ,(52      , 1006      , 2016        ,11    ,'English',    'B'  , 27, 90, 77, 80, 1, 'Admitted in 2014')
 ,(53      , 1006      , 2016        ,11    ,'Math',       'B'  , 25, 90, 80, 80, 1, 'Admitted in 2014')
-,(54      , 1006      , 2016        ,11    ,'Physics',    'B'  , 23, 90, 80, 80, 1,  'Admitted in 2014')
+,(54      , 1006      , 2016        ,11    ,'Physics',    'B'  , 23, 90, 80, 80, 1, 'Admitted in 2014')
 
 ,(55      , 1007      , 2016        ,11    ,'English',    'B'  , 19, 90, 77, 80, 1, 'Admitted in 2015')
 ,(56      , 1007      , 2016        ,11    ,'Math',       'B'  , 17, 90, 80, 80, 1, 'Admitted in 2015')
-,(57      , 1007      , 2016        ,11    ,'Physics',    'B'  , 17, 90, 80, 80, 1,  'Admitted in 2015')
+,(57      , 1007      , 2016        ,11    ,'Physics',    'B'  , 17, 90, 80, 80, 1, 'Admitted in 2015')
 
 -- Admitted in  2016 1st semester
 
 ,(58      , 1008      , 2016        ,11    ,'English',    'C'  , 19, 90, 77, 80, 1, 'Admitted in 2015')
 ,(59      , 1008      , 2016        ,11    ,'Math',       'C'  , 17, 90, 80, 80, 1, 'Admitted in 2015')
-,(60      , 1008      , 2016        ,11    ,'Physics',    'C'  , 17, 90, 80, 80, 1,  'Admitted in 2015')
+,(60      , 1008      , 2016        ,11    ,'Physics',    'C'  , 17, 90, 80, 80, 1, 'Admitted in 2015')
 -- Admitted in  2016 2nd semester q1 and q2 are 0
 ,(61      , 1009      , 2016        ,11    ,'English',    'B'  , 0, 0, 77, 80, 1, 'Admitted in 2015')
 ,(62      , 1009      , 2016        ,11    ,'Math',       'B'  , 0, 0, 80, 80, 1, 'Admitted in 2015')
-,(63      , 1009      , 2016        ,11    ,'Physics',    'B'  , 0, 0, 80, 80, 1,  'Admitted in 2015')
+,(63      , 1009      , 2016        ,11    ,'Physics',    'B'  , 0, 0, 80, 80, 1, 'Admitted in 2015')
 
 -- select * from records where records_id > 60
 -- 2017 - 12 - Section A & B & C
@@ -312,7 +300,7 @@ INSERT INTO student_records
 ,(66      , 1002      , 2017        ,12    ,'Physics',    'B'  , 12, 90, 0.0, 0.0, 1, 'Admitted in 2017')
 
 ,(67      , 1003      , 2017        ,12    ,'English',    'B'  , 14, 90, 0, 80, 1, 'Admitted in 2017')
-,(68        , 1003      , 2017        ,12    ,'Physics',    'B'  , 16, 90, 80, 80, 1, 'Admitted in 2017')
+,(68      , 1003      , 2017        ,12    ,'Physics',    'B'  , 16, 90, 80, 80, 1, 'Admitted in 2017')
 
 ,(69      , 1004      , 2017        ,12    ,'English',    'B'  , 18, 90, 0, 80, 1, 'Admitted in 2017')
 ,(70      , 1004      , 2017        ,12    ,'Math',       'B'  , 20, 90, 80, 80, 1, 'Admitted in 2017')
@@ -343,40 +331,108 @@ INSERT INTO student_records
 -- 2017 added q1
 ,(83      , 1009     , 2017         ,12    ,'English',    'B'  , 38, 90, 0, 0, 1, 'Admitted in 2017')
 ,(84      , 1009     , 2017         ,12    ,'Math',       'B'  , 40, 90, 0, 0, 1, 'Admitted in 2017')
-,(85      , 1009     , 2017         ,12    ,'Physics',    'B'  , 42, 90, 0, 0, 1,  'Admitted in 2017')
+,(85      , 1009     , 2017         ,12    ,'Physics',    'B'  , 42, 90, 0, 0, 1, 'Admitted in 2017')
 
 ,(86      , 1010     , 2017         ,12    ,'English',    'C'  , 44, 90, 0, 0, 1, 'Admitted in 2017')
 ,(87      , 1010     , 2017         ,12    ,'Math',       'C'  , 46, 90, 0, 0, 1, 'Admitted in 2017')
-,(88      , 1010     , 2017         ,12    ,'Physics',    'C'  , 48, 90, 0, 0, 1,  'Admitted in 2017')
+,(88      , 1010     , 2017         ,12    ,'Physics',    'C'  , 48, 90, 0, 0, 1, 'Admitted in 2017')
 
-,(89      , 1011     , 2017         ,12    ,'English',    'B'  , 50, 90, 0, 0, 1, 'Admitted in 2017')
-,(90      , 1011     , 2017         ,12    ,'Math',       'B'  , 52, 90, 0, 0, 1, 'Admitted in 2017')
+,(89      , 1011     , 2017         ,12    ,'English',    'B'  , 50, 90, 0, 0, 1,  'Admitted in 2017')
+,(90      , 1011     , 2017         ,12    ,'Math',       'B'  , 52, 90, 0, 0, 1,  'Admitted in 2017')
 ,(91      , 1011     , 2017         ,12    ,'Physics',    'B'  , 54, 90, 0, 0, 1,  'Admitted in 2017')
 
-,(92      , 1012     , 2017         ,12    ,'English',    'B'  , 56, 90, 0, 0, 1, 'Admitted in 2017')
+,(92      , 1012     , 2017         ,12    ,'English',    'B'  , 56, 90, 0, 0, 1,  'Admitted in 2017')
 ,(93      , 1012     , 2017         ,12    ,'Math',       'B'  , 100, 90, 0, 0, 1, 'Admitted in 2017')
 ,(94      , 1012     , 2017         ,12    ,'Physics',    'B'  , 10, 90, 0, 0, 1,  'Admitted in 2017')
 
-,(95      , 1013     , 2017         ,12    ,'English',    'B'  , 58, 90, 0, 0, 1, 'Admitted in 2017')
-,(96      , 1013     , 2017         ,12    ,'Math',       'B'  , 60, 90, 0, 0, 1, 'Admitted in 2017')
+,(95      , 1013     , 2017         ,12    ,'English',    'B'  , 58, 90, 0, 0, 1,  'Admitted in 2017')
+,(96      , 1013     , 2017         ,12    ,'Math',       'B'  , 60, 90, 0, 0, 1,  'Admitted in 2017')
 ,(97      , 1013     , 2017         ,12    ,'Physics',    'B'  , 62, 90, 0, 0, 1,  'Admitted in 2017')
 
 ,(98      , 1014     , 2017         ,12    ,'English',    'B'  , 64, 90, 0, 0, 1, 'Admitted in 2017')
 ,(99      , 1014     , 2017         ,12    ,'Math',       'B'  , 66, 90, 0, 0, 1, 'Admitted in 2017')
-,(100     , 1014     , 2017         ,12    ,'Physics',    'B'  , 68, 90, 0, 0, 1,  'Admitted in 2017');
+,(100     , 1014     , 2017         ,12    ,'Physics',    'B'  , 68, 90, 0, 0, 1, 'Admitted in 2017')
+
+
+-- additional testing
+
+
+-- additional
+,(101       , 1001      , 2014        ,9     ,'IT',          'A'  , 1, 2, 77, 81, 48, 'Admitted in 2014')
+,(102       , 1001      , 2014        ,9     ,'Biology',     'A'  , 3, 4, 80, 80, 56, 'Admitted in 2014')
+,(103       , 1001	    , 2014        ,9     ,'Chemistry',   'A'  , 5, 60, 80, 70, 88,  'Admitted in 2014')
+
+,(104       , 1002      , 2014        ,9     ,'IT',          'A'  , 7, 90, 77, 70, 18, 'Admitted in 2014')
+,(105       , 1002      , 2014        ,9     ,'Biology',     'A'  , 9, 90, 80, 60, 19, 'Admitted in 2014')
+,(106       , 1002      , 2014        ,9     ,'Chemistry',   'A'  , 11, 90, 74, 45, 61, 'Admitted in 2014')
+
+,(107       , 1003      , 2014        ,9     ,'IT',          'A'  , 13, 90, 77, 80, 21, 'Admitted in 2014')
+,(108       , 1003      , 2014        ,9     ,'Biology',     'A'  , 15, 90, 10, 80, 51, 'Admitted in 2014')
+,(109       , 1003      , 2014        ,9     ,'Chemistry',   'A'  , 17, 90, 30, 39, 61, 'Admitted in 2014')
+			--  B
+,(110      , 1004      , 2014        ,9     ,'IT',           'B'  , 19, 90, 77, 80, 71, 'Admitted in 2014')
+,(111      , 1004      , 2014        ,9     ,'Biology',      'B'  , 21, 90, 18, 80, 91, 'Admitted in 2014')
+,(112      , 1004      , 2014        ,9     ,'Chemistry',    'B'  , 23, 90, 50, 53, 88, 'Admitted in 2014')
+
+,(113      , 1005      , 2014        ,9     ,'IT',           'B'  , 25, 90, 77, 50, 12, 'Admitted in 2014')
+,(114      , 1005      , 2014        ,9     ,'Biology',      'B'  , 27, 90, 80, 80, 65, 'Admitted in 2014')
+,(115      , 1005      , 2014        ,9     ,'Chemistry',    'B'  , 29, 90, 80, 80, 45,  'Admitted in 2014')
+
+,(116      , 1006      , 2014        ,9     ,'IT',           'B'  , 99, 90, 77, 80, 89, 'Admitted in 2014')
+,(117      , 1006      , 2014        ,9     ,'Biology',      'B'  , 97, 90, 80, 80, 88, 'Admitted in 2014')
+,(118      , 1006      , 2014        ,9     ,'Chemistry',    'B'  , 95, 90, 80, 80, 89,  'Admitted in 2014')
+
+,(119       , 1014      , 2014        ,9     ,'English',    'A'  , 71, 2, 77, 80, 12, 'Admitted in 2014')
+,(120       , 1014      , 2014        ,9     ,'Math',       'A'  , 30, 40, 80, 80, 13, 'Admitted in 2014')
+,(121       , 1014	    , 2014         ,9     ,'Physics',    'A'  , 55, 60, 80, 80, 21,  'Admitted in 2014')
+,(122       , 1014      , 2014        ,9     ,'IT',          'A'  , 41, 32, 77, 80, 11, 'Admitted in 2014')
+,(123       , 1014      , 2014        ,9     ,'Biology',     'A'  , 83, 4, 80, 80, 56, 'Admitted in 2014')
+,(124       , 1014	    , 2014        ,9     ,'Chemistry',   'A'  , 15, 60, 80, 80, 55,  'Admitted in 2014')
+
+,(125       , 1016      , 2014        ,9     ,'English',    'A'  , 27, 90, 77, 80, 32, 'Admitted in 2014')
+,(126       , 1016      , 2014        ,9     ,'Math',       'A'  , 90, 90, 80, 80, 69, 'Admitted in 2014')
+,(127       , 1016      , 2014        ,9     ,'Physics',    'A'  , 11, 90, 80, 80, 53, 'Admitted in 2014')
+,(128       , 1016      , 2014        ,9     ,'IT',          'A'  , 37, 90, 77, 80, 48, 'Admitted in 2014')
+,(129       , 1016      , 2014        ,9     ,'Biology',     'A'  , 93, 90, 80, 80, 89, 'Admitted in 2014')
+,(130       , 1016      , 2014        ,9     ,'Chemistry',   'A'  , 11, 90, 80, 80, 51, 'Admitted in 2014')
+
+,(131       , 1017      , 2014        ,9     ,'English',    'A'  , 13, 90, 77, 80, 31, 'Admitted in 2014')
+,(132      , 1017      , 2014        ,9     ,'Math',       'A'  ,  55, 90, 80, 80, 11, 'Admitted in 2014')
+,(133       , 1017      , 2014        ,9     ,'Physics',    'A'  , 27, 90, 80, 80, 21, 'Admitted in 2014')
+,(134       , 1017      , 2014        ,9     ,'IT',          'A'  , 18, 90, 77, 80, 81, 'Admitted in 2014')
+,(135       , 1017      , 2014        ,9     ,'Biology',     'A'  , 75, 90, 80, 80, 71, 'Admitted in 2014')
+,(136       , 1017      , 2014        ,9     ,'Chemistry',   'A'  , 78, 90, 80, 80, 51, 'Admitted in 2014')
+
+
+,(137      , 1018      , 2014        ,9     ,'English',    'B'  , 19, 80, 77, 80, 41, 'Admitted in 2014')
+,(138      , 1018      , 2014        ,9     ,'Math',       'B'  , 21, 60, 80, 80, 18, 'Admitted in 2014')
+,(139      , 1018      , 2014        ,9     ,'Physics',    'B'  , 23, 50, 80, 80, 12, 'Admitted in 2014')
+,(140      , 1018      , 2014        ,9     ,'IT',           'B'  , 19, 32, 77, 80, 1, 'Admitted in 2014')
+,(141      , 1018      , 2014        ,9     ,'Biology',      'B'  , 21, 45, 80, 80, 10, 'Admitted in 2014')
+,(142      , 1018      , 2014        ,9     ,'Chemistry',    'B'  , 23, 80, 80, 80, 12, 'Admitted in 2014')
+
+,(143      , 1019      , 2014        ,9     ,'English',    'B'  , 25, 50, 77, 80, 18, 'Admitted in 2014')
+,(144      , 1019      , 2014        ,9     ,'Math',       'B'  , 27, 40, 80, 80, 19, 'Admitted in 2014')
+,(145      , 1019      , 2014        ,9     ,'Physics',    'B'  , 29, 30, 80, 80, 18,  'Admitted in 2014')
+,(146      , 1019      , 2014        ,9     ,'IT',           'B'  , 25, 70, 77, 80, 21, 'Admitted in 2014')
+,(147      , 1019      , 2014        ,9     ,'Biology',      'B'  , 27, 90, 80, 80, 31, 'Admitted in 2014')
+,(148      , 1019      , 2014        ,9     ,'Chemistry',    'B'  , 29, 90, 80, 80, 21,  'Admitted in 2014')
+
+,(149      , 1020      , 2014        ,9     ,'English',    'B'  , 99, 30, 77, 80, 19, 'Admitted in 2014')
+,(150      , 1020      , 2014        ,9     ,'Math',       'B'  , 97, 22, 80, 80, 31, 'Admitted in 2014')
+,(151      , 1020      , 2014        ,9     ,'Physics',    'B'  , 95, 17, 80, 80, 11,  'Admitted in 2014')
+
+,(152      , 1020      , 2014        ,9     ,'IT',           'B'  , 99, 75, 77, 80, 81, 'Admitted in 2014')
+,(153      , 1020      , 2014        ,9     ,'Biology',      'B'  , 97, 12, 80, 80, 61, 'Admitted in 2014')
+,(154      , 1020      , 2014        ,9     ,'Chemistry',    'B'  , 95, 88, 80, 80, 81,  'Admitted in 2014');
 
 -- Get number of records inserted
 
-SET row_count = ROW_COUNT();
+-- SET row_count = ROW_COUNT();
 
 -- Show Message count of records inserted
 
-SELECT concat('Inseted ', row_count,' row(s) into records table.' ) AS Result;
-END; -- this line closes the BEGIN statement above
+-- SELECT concat('Inseted ', row_count,' row(s) into records table.' ) AS Result;
+-- END;
 
--- executing the following statment will run the above procedure line by line
--- optionally we can also delete student table in the above procedure -- rem records should be deleted first
--- we can call the foll statment to execute but the above create stoded procedure should be run and created in the database
--- b/c it should exist like a table once and called any times even inside another stored procedures
--- stored prcedures can also take parameters / filtering condition and also return results like a programming
--- there are also functions for more specific purposes
+

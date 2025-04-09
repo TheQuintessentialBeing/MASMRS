@@ -24,12 +24,8 @@ CREATE TABLE records_seq (
 ) AUTO_INCREMENT = 1001;
 */
 public class StudentRecord { /*TODO entities shall be singular but db names shall be plural*/
-
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "recordsNumber_Seq"
-    )
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.PRIVATE)
     private Integer recordId;
     @Column(name = "student_id")

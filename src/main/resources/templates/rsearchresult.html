@@ -1,27 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base :: baseheader">
     <title>Product List</title>
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
 <div class="container">
-    <h4>Search Results for Student Id : XXX JS </h4>
-    <div th:unless="${records.isEmpty()}">
-        <hr class="css-horizontal-line">
-        <table class="table .table-bordered ">
-               <tr bgcolor="#00ffff">
-                    <th>Student's Name:</th>
-                </tr>
-              <div th:each="child : ${records.detailrows}">
-                <p th:text="${child.subject}"></p>
+    <!-- <h4>Report generated for Student Id : th:text ${studentId} & A/Year : ${academicYear}</h4>-->
+    <div th:if="${errorMessage !=null }">
+        <p th:text="${errorMessage}" style="color:red;"></p>
+    </div>
+    <div th:if="${errorMessage == null }">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+            <!-- Left side: Student name -->
+            <div>
+                <p> Student Name: [[${header.lastName}]] , [[${header.firstName}]] [[${header.middleName}]]</p>
+                <p> Dob: [[${header.dateOfBirth}]] Gender: [[${header.gender}]]</p>
+                <p> A/Y: [[${header.academicYear}]] Grade: [[${header.grade}]]- [[${header.section}]] </p>
+                <p>
             </div>
+            <!--<div>
+                <h4>Ranks</h4>
+                <p> Semester I : [[${header.semesterOneRank}]] </p>
+                <p> Semester II: [[${header.semesterTwoRank}]] </p>
+                <p> All Section : [[${header.allSectionRank}]] </p>
+            </div>-->
+
+            <!-- Right side: Buttons -->
+            <div>
+                <button th:disabled id="downloadbtn" onclick="searchPrint()" type="button"
+                        class="btn btn-light cs-action-button">
+                    Download (pdf)
+                </button>
+                <button th:disabled id="printbtn" onclick="searchPrint()" type="button"
+                        class="btn btn-light cs-action-button">
+                    Print
+                </button>
+            </div>
+
+        </div>
+
+        <table class="table .table-bordered">
+            <tr>
+                <th>Subjects</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+            </tr>
+            <tr th:each="c: ${detail}">
+                <td>[[${c.subject}]]</td>
+                <td>[[${c.q1}]]</td>
+                <td>[[${c.q2}]]</td>
+                <td>[[${c.q3}]]</td>
+                <td>[[${c.q4}]]</td>
+            </tr>
+            <tr>
+                <td>Sum</td>
+                <td> [[${header.quarterOneSum}]]</td>
+                <td> [[${header.quarterTwoSum}]]</td>
+                <td> [[${header.quarterThreeSum}]]</td>
+                <td> [[${header.quarterFourSum}]]</td>
+            </tr>
+            <tr>
+                <td>Rank</td>
+                <td> [[${header.quarterOneRank}]] / [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterTwoRank}]] / [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterThreeRank}]] / [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterFourRank}]] / [[${header.numberOfSubjects}]]</td>
             </tr>
         </table>
+
+       <p> <b> Ranks </b> Semester I : [[${header.semesterOneRank}]]  Semester II: [[${header.semesterTwoRank}]]    All Section : [[${header.allSectionRank}]] </p>
+
+        <p> Disclaimer : Printing this report or viewing it without the proper access, is violetion of privacy.</p>
     </div>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </div>
-<!--<div th:replace="base :: footer " id="testme"></div>-->
-<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
-<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<p th:text="${printingDate}"></p>
 </body>
 </html>

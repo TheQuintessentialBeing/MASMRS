@@ -1,10 +1,9 @@
 package dev.cs.studentreportcard.controllers;
 
 import dev.cs.studentreportcard.DTO.StudentRecordHeader;
-import dev.cs.studentreportcard.models.Student;
-import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import dev.cs.studentreportcard.services.StudentRecordService;
+import dev.cs.studentreportcard.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/records")
@@ -31,9 +29,8 @@ public class StudentRecordController {
 
         this.studentRecordService = studentRecordService;
         this.studentRepository = studentRepository;
-    }
-
-    /*this page should have a search button and a search text
+      }
+     /*this page should have a search button and a search text
      * wheen user hits search button it should display the result
      * in another method /search/{studentId}*/
     @GetMapping("/search")
@@ -45,22 +42,18 @@ public class StudentRecordController {
     // DONE ? is wildcard and extending Object is optional
     @GetMapping("/search/{studentId}/{academicYear}")
     public String showAllReports(@PathVariable("studentId") Integer studentId, @PathVariable("academicYear") String academicYear, Model model) {
-        System.out.println("hitting site http://localhost:8081/records/search/1001/2014");
-        List<StudentRecordHeader> records = studentRecordService.getStudentRecordReport(studentId, academicYear);
+        StudentRecordHeader hr = studentRecordService.generateStudentGradeReport(studentId, academicYear);
 
-        for (StudentRecordHeader studentRecordHeader : records) {
-            System.out.println("Frist Name :" + studentRecordHeader.getFirstName());
-
-            for (StudentRecord studentRecord : studentRecordHeader.getDetailrows()) {
-                System.out.println("Subject : " + studentRecord.getSubject());
-                System.out.println("Grade :" + studentRecord.getGrade());
-            }
-
+        // Add both of them even if they are nulls
+        model.addAttribute("header", hr);
+        model.addAttribute("detail", (hr != null) ? hr.getDetailrows() : null);
+        model.addAttribute("studentId", studentId);
+        model.addAttribute("academicYear", academicYear);
+        model.addAttribute("printingDate", Util.orderDate());
+        if (hr == null || hr.getDetailrows() == null) {
+            model.addAttribute("errorMessage", "No records found for student Id (" + studentId + ") in academic year (" + academicYear +") please search with the correct data");
         }
-        System.out.println("size of records " + records.size());
-        if (records != null)
-            model.addAttribute("records", records);
-        // return ResponseEntity.ok("No student report for student Id {" + studentId + "} and academic year {"+ academic_year);
+
         return "rsearchresult";
     }
 
@@ -76,7 +69,7 @@ public class StudentRecordController {
     // DONE ? is wildcard and extending Object is optional
     @GetMapping("post/search/test/{studentId}/{academic_year}")
     public ResponseEntity<? extends Object> showAllReportspost(@PathVariable("studentId") Integer studentId, @PathVariable("academic_year") String academic_year) {
-        List<StudentRecordHeader> singleStudentReport = studentRecordService.getStudentRecordReport(studentId, academic_year);
+        StudentRecordHeader singleStudentReport = studentRecordService.generateStudentGradeReport(studentId, academic_year);
         if (singleStudentReport == null) {
             return ResponseEntity.ok("No student report for student Id {" + studentId + "} and academic year {" + academic_year);
         }

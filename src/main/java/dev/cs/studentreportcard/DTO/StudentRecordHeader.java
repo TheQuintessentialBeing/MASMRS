@@ -55,11 +55,17 @@ public class StudentRecordHeader {
     private byte[] photo;
     private boolean isActive;
 
+    private Integer Q1TotalStudents;
+    private Integer Q2TotalStudents;
+    private Integer Q3TotalStudents;
+    private Integer Q4TotalStudents;
+
+
     private List<StudentRecord> detailrows ;
     public StudentRecordHeader() {
 
     }
-    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender, String academicYear, Integer grade, String section, Integer numberOfSubjects, double quarterOneSum, Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank, Integer semesterOneRank, double quarterThreeSum, Integer quarterThreeRank, double quarterFourSum, Integer quarterFourRank, Integer semesterTwoRank, Integer allSectionRank, Integer totalNumberOfStudents, Integer allSectionPercentile, byte[] photo, boolean isActive) {
+    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender, String academicYear, Integer grade, String section, Integer numberOfSubjects, double quarterOneSum, Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank, Integer semesterOneRank, double quarterThreeSum, Integer quarterThreeRank, double quarterFourSum, Integer quarterFourRank, Integer semesterTwoRank, Integer allSectionRank, Integer totalNumberOfStudents, Integer allSectionPercentile, byte[] photo, boolean isActive, Integer Q1TotalStudents, Integer Q2TotalStudents ,Integer Q3TotalStudents, Integer Q4TotalStudents ) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -85,6 +91,10 @@ public class StudentRecordHeader {
         this.allSectionPercentile = allSectionPercentile;
         this.photo = photo;
         this.isActive = isActive;
+        this.Q1TotalStudents = Q1TotalStudents;
+        this.Q2TotalStudents = Q2TotalStudents;
+        this.Q3TotalStudents = Q3TotalStudents;
+        this.Q4TotalStudents = Q4TotalStudents;
     }
 
     public Integer getStudentId() {
