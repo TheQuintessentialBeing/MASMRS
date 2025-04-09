@@ -149,7 +149,7 @@ values
 ,(1098, 'Birtukan', 'Hagos', 'Birhan', '1995-10-02', 'F', '2018-12-06', null, 'Yeka', 2, 'kebele 1', '0991-282-1592', '5/5/2021',true)
 ,(1099, 'Tsedale', 'Bulo', 'Ahmed', '1995-10-02', 'F', '2018-12-06', null, 'Yeka', 2, 'kebele 2', '0191-282-1592', '5/5/2021',true)
 ,(1100, 'Zerihun', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true)
-,(1101, 'Tizta', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true)
+,(1101, 'Tizta', 'Fentaw', 'Muluneh', '1992-03-10', 'M', '2022-11-06', null, 'Mexico', 3, 'kebele 1', '0974-546-9306', '12/29/2021',true);
 
 -- verify if student data is loaded successfully
 -- if possible show failure msg if student id does not exist before we add record details below
@@ -354,7 +354,7 @@ INSERT INTO student_records
 
 
 -- additional
- (101       , 1001      , 2014        ,9     ,'IT',          'A'  , 1, 2, 77, 81, 48, 'Admitted in 2014')
+,(101       , 1001      , 2014        ,9     ,'IT',          'A'  , 1, 2, 77, 81, 48, 'Admitted in 2014')
 ,(102       , 1001      , 2014        ,9     ,'Biology',     'A'  , 3, 4, 80, 80, 56, 'Admitted in 2014')
 ,(103       , 1001	    , 2014        ,9     ,'Chemistry',   'A'  , 5, 60, 80, 70, 88,  'Admitted in 2014')
 
@@ -378,7 +378,7 @@ INSERT INTO student_records
 ,(117      , 1006      , 2014        ,9     ,'Biology',      'B'  , 97, 90, 80, 80, 88, 'Admitted in 2014')
 ,(118      , 1006      , 2014        ,9     ,'Chemistry',    'B'  , 95, 90, 80, 80, 89,  'Admitted in 2014')
 
- (119       , 1014      , 2014        ,9     ,'English',    'A'  , 71, 2, 77, 80, 12, 'Admitted in 2014')
+,(119       , 1014      , 2014        ,9     ,'English',    'A'  , 71, 2, 77, 80, 12, 'Admitted in 2014')
 ,(120       , 1014      , 2014        ,9     ,'Math',       'A'  , 30, 40, 80, 80, 13, 'Admitted in 2014')
 ,(121       , 1014	    , 2014         ,9     ,'Physics',    'A'  , 55, 60, 80, 80, 21,  'Admitted in 2014')
 ,(122       , 1014      , 2014        ,9     ,'IT',          'A'  , 41, 32, 77, 80, 11, 'Admitted in 2014')
@@ -420,19 +420,7 @@ INSERT INTO student_records
 
 ,(152      , 1020      , 2014        ,9     ,'IT',           'B'  , 99, 75, 77, 80, 81, 'Admitted in 2014')
 ,(153      , 1020      , 2014        ,9     ,'Biology',      'B'  , 97, 12, 80, 80, 61, 'Admitted in 2014')
-,(154      , 1020      , 2014        ,9     ,'Chemistry',    'B'  , 95, 88, 80, 80, 81,  'Admitted in 2014')
-
-
-
-
-
-
-
-
-
-
-
---
+,(154      , 1020      , 2014        ,9     ,'Chemistry',    'B'  , 95, 88, 80, 80, 81,  'Admitted in 2014');
 
 -- Get number of records inserted
 
