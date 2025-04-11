@@ -1,11 +1,17 @@
 package dev.cs.studentreportcard.controllers;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import dev.cs.studentreportcard.DTO.StudentRecordHeader;
+import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRepository;
 import dev.cs.studentreportcard.services.StudentRecordService;
 import dev.cs.studentreportcard.utility.Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,23 +20,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+import javax.servlet.http.HttpSession;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/records")
 public class StudentRecordController {
 
+    HttpSession session;
     @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
     @Autowired
-    private StudentRecordService studentRecordService;
+    private final StudentRecordService studentRecordService;
 
     @Autowired
-    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository) {
+    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository, HttpSession session) {
 
         this.studentRecordService = studentRecordService;
         this.studentRepository = studentRepository;
-      }
-     /*this page should have a search button and a search text
+        this.session = session;
+    }
+
+    /*this page should have a search button and a search text
      * wheen user hits search button it should display the result
      * in another method /search/{studentId}*/
     @GetMapping("/search")
@@ -51,14 +64,168 @@ public class StudentRecordController {
         model.addAttribute("academicYear", academicYear);
         model.addAttribute("printingDate", Util.orderDate());
         if (hr == null || hr.getDetailrows() == null) {
-            model.addAttribute("errorMessage", "No records found for student Id (" + studentId + ") in academic year (" + academicYear +") please search with the correct data");
+            model.addAttribute("errorMessage", "No records found for student Id (" + studentId + ") in academic year (" + academicYear + ") please search with the correct id and academic year");
         }
-
+        session.setAttribute("hr", hr);
+        //session.setAttribute("dt",hr.getDetailrows());
         return "rsearchresult";
     }
 
 
-    /*  @GetMapping("/search/{studentid}{academicyear}")
+    @GetMapping("/report/download")
+    public ResponseEntity<byte[]> downloadReport() throws Exception {
+
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            // Create a PDF document (using iText or similar library)
+            Document document = new Document();
+            PdfWriter.getInstance(document, byteArrayOutputStream);
+            document.open();
+
+            // Fetch the report data
+            StudentRecordHeader bio = (StudentRecordHeader) session.getAttribute("hr");
+
+            // Define custom font
+            //Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE);
+            //Chunk nameChunk = new Chunk("Name: John Doe", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+
+            // Title
+            Paragraph reportTitle = new Paragraph("School of Mieraf Academy Student's Report", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK));
+            reportTitle.setSpacingAfter(20f);
+            reportTitle.setAlignment(Element.ALIGN_CENTER);
+            document.add(reportTitle);
+
+
+            // sub titles
+            Font subtitle = FontFactory.getFont(FontFactory.TIMES_ITALIC, 12, BaseColor.BLACK);
+
+            // row 1
+            PdfPTable row1 = new PdfPTable(2);
+            row1.setWidthPercentage(100); // take full width
+
+            // Remove borders (optional)
+            PdfPCell leftCell1 = new PdfPCell(new Paragraph(bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName(), subtitle));
+            leftCell1.setBorder(Rectangle.NO_BORDER);
+            leftCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+
+            row1.addCell(leftCell1);
+            //row1.addCell(rightCell1);
+            document.add(row1);
+
+            // row 2
+            PdfPTable row2 = new PdfPTable(2);
+            row2.setWidthPercentage(100); // take full width
+
+            // Remove borders (optional)
+            PdfPCell leftCell3 = new PdfPCell(new Paragraph("DoB:" + bio.getDateOfBirth() + " Gender: " + bio.getGender(), subtitle));
+            leftCell3.setBorder(Rectangle.NO_BORDER);
+            leftCell3.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell rightcell4 = new PdfPCell(new Paragraph("Semester I Rank : " + bio.getSemesterOneRank(), subtitle));
+            rightcell4.setBorder(Rectangle.NO_BORDER);
+            rightcell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+
+            row2.addCell(leftCell3);
+            row2.addCell(rightcell4);
+            document.add(row2);
+
+            // row 3
+            PdfPTable row3 = new PdfPTable(2);
+            row2.setWidthPercentage(100); // take full width
+
+            // Remove borders (optional)
+            PdfPCell leftCell5 = new PdfPCell(new Paragraph(" Academic Year :" + bio.getAcademicYear() + "Grade:" + bio.getGrade() + bio.getSection(), subtitle));
+            leftCell5.setBorder(Rectangle.NO_BORDER);
+            leftCell5.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell rightcell6 = new PdfPCell(new Paragraph("Semester II Rank: " + bio.getSemesterTwoRank(), subtitle));
+            rightcell6.setBorder(Rectangle.NO_BORDER);
+            rightcell6.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            row3.addCell(leftCell5);
+            row3.addCell(rightcell6);
+            document.add(row3);
+
+
+            // Adding line break
+            document.add(new Paragraph(Chunk.NEWLINE));
+
+            // Create table with three column TODO make dynamic later on
+            PdfPTable trows = new PdfPTable(6);
+            trows.setWidthPercentage(100);
+
+            // Table header
+            Stream.of("Subject", "Quarter-I", "Quarter-II", "Quarter-III", "Quarter-IV", "Year Avg.").forEach(h -> {
+                PdfPCell c = new PdfPCell(new Phrase(h));
+                c.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(c);
+            });
+
+            for (StudentRecord r : bio.getDetailrows()) {
+                trows.addCell(r.getSubject());
+                trows.addCell(String.format("%.1f", r.getQ1()));
+                trows.addCell(String.format("%.1f", r.getQ2()));
+                trows.addCell(String.format("%.1f", r.getQ3()));
+                trows.addCell(String.valueOf(r.getQ4()));
+                trows.addCell(String.valueOf((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0));
+            }
+            double totalSum = (bio.getQuarterFourSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
+            // sum and quarter ranks
+            Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), totalSum).forEach(d -> {
+                PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
+                k.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(k);
+            });
+
+            Stream.of("Sec Rank", bio.getQuarterOneRank(), bio.getQuarterTwoRank(), bio.getQuarterThreeRank(), bio.getQuarterFourRank(), 0).forEach(d -> {
+                PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
+                k.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(k);
+            });
+
+
+            Stream.of("All Sec Rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
+                PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
+                k.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(k);
+            });
+
+
+            Stream.of("# of Student", bio.getQ1StudentCount(), bio.getQ2StudentCount(), bio.getQ3StudentCount(), bio.getQ4StudentCount(), bio.getQ4StudentCount()).forEach(d -> {
+                PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
+                k.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(k);
+            });
+
+
+            document.add(trows);
+
+            document.add(Chunk.NEWLINE);
+            Paragraph p = new Paragraph("Report Date: " + new java.util.Date(), FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 12, BaseColor.GRAY));
+            document.add(p);
+
+            document.add(new Paragraph("Disclaimer : Printing this report or viewing it without the proper access, is violation of privacy."));
+            document.add(new Paragraph(""));
+            document.add(new Paragraph("@2025 Report generated by School of Mieraf Academy Student Records & Management Systems."));
+
+            document.close();
+            // Send the PDF as a response
+            byte[] pdfBytes = byteArrayOutputStream.toByteArray();
+
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.add("Content-Disposition", "attachment; filename=sales-report.pdf");
+
+            return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+/*  @GetMapping("/search/{studentid}{academicyear}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/TBDeleted - Testing: /records/search/studendId is hit");
         model.addAttribute("records", studentRecordService.getStudentRecordReport(studentId,academicyear));
@@ -67,7 +234,7 @@ public class StudentRecordController {
 
 
     // DONE ? is wildcard and extending Object is optional
-    @GetMapping("post/search/test/{studentId}/{academic_year}")
+  /*  @GetMapping("post/search/test/{studentId}/{academic_year}")
     public ResponseEntity<? extends Object> showAllReportspost(@PathVariable("studentId") Integer studentId, @PathVariable("academic_year") String academic_year) {
         StudentRecordHeader singleStudentReport = studentRecordService.generateStudentGradeReport(studentId, academic_year);
         if (singleStudentReport == null) {
@@ -75,7 +242,7 @@ public class StudentRecordController {
         }
         return new ResponseEntity<>(singleStudentReport, HttpStatus.OK);
     }
-
+*/
     /*    *//*TODO - Postman test passed localhost:8081/records/search/4 */
     //  @GetMapping("/search/{studentid}")
     // public ResponseEntity<List<StudentRecord>> searchRecords(@PathVariable("studentid") Integer studentId, Model model) {

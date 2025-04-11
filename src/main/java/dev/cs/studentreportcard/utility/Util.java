@@ -23,6 +23,7 @@ public final class Util {
         return (int) (Math.random() * 5);
 
     }
+    // TODO - investigate more of the HttpServletRequest
     public static String getCookieValueByName(HttpServletRequest request, String cookieKey) {
         String emailValue = "";
         var cookies = request.getCookies();

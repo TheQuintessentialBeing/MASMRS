@@ -3,12 +3,10 @@ package dev.cs.studentreportcard.services;
 import dev.cs.studentreportcard.DTO.StudentRecordHeader;
 import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRecordRepository;
-import dev.cs.studentreportcard.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 import java.util.stream.Collectors;
@@ -17,22 +15,13 @@ public class StudentRecordService {
     @Autowired
     StudentRecordRepository studentRecordRepository;
 
+    //@Autowired
+    // StudentRecordHeader studentReport;
     @Autowired
     //StudentRepository studentRepository;
-    public StudentRecordService(StudentRecordRepository studentRecordRepository,
-                                StudentRepository studentRepository) {
+    public StudentRecordService(StudentRecordRepository studentRecordRepository) {
         this.studentRecordRepository = studentRecordRepository;
-        //this.studentRepository = studentRepository;
     }
-
-    public StudentRecordService() {
-    }
-
-    public Page<StudentRecord> listAllRecords(PageRequest pageRequest) {
-
-        return studentRecordRepository.findAll(pageRequest);
-    }
-
 
     public StudentRecordHeader generateStudentGradeReport(Integer studentId, String academicYear) {
 
@@ -54,7 +43,14 @@ public class StudentRecordService {
         // listOfStudentRecordForAcademicYear is don't have detail records so attaching it is important
         if (studentReport == null) return null;
         studentReport.setDetailrows(listOfStudentRecordForAcademicYear);
+
         return studentReport;
+    }
+
+    public StudentRecordHeader generatePDF(HttpSession session) {
+        StudentRecordHeader h = (StudentRecordHeader) session.getAttribute("session");
+
+        return h;
     }
 
     public List<StudentRecord> findStudentRecordByIdAndAcademicYear(Integer studentId, String academicYear) {
@@ -63,7 +59,7 @@ public class StudentRecordService {
     }
 
     public List<StudentRecordHeader> getAllStudentRecordHeaders(List<Object[]> headers) {
-        // TODO we need to decide on : -
+        //  TODO we need to decide on : -
         //  gender and section can be a single character to save database size
         // another option is limit them to 1 and see if they have value of string or character and cast accordingly
         List<StudentRecordHeader> allStudentRecordHeaders = headers.stream().map(r -> new StudentRecordHeader(
@@ -92,10 +88,15 @@ public class StudentRecordService {
                 (r[22] != null) ? ((Number) r[22]).intValue() : null,                        // 22 NTILE()      Over25NTileRank
                 (r[23] != null) ? null : null,                                               // 23 s.photo
                 (r[24] != null) ? ((Boolean) r[24]).booleanValue() : null,                   // 24 s.is_Active
-                (r[25] != null) ? ((Number) r[25]).intValue() : null,                         //
-                (r[26] != null) ? ((Number) r[26]).intValue() : null,                         //
-                (r[27] != null) ? ((Number) r[27]).intValue() : null,                         //
-                (r[28] != null) ? ((Number) r[28]).intValue() : null                          //
+                (r[25] != null) ? ((Number) r[25]).intValue() : null,                        // 25
+                (r[26] != null) ? ((Number) r[26]).intValue() : null,                        // 26
+                (r[27] != null) ? ((Number) r[27]).intValue() : null,                        // 27
+                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28
+                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28
+                (r[30] != null) ? ((Number) r[30]).intValue() : null,                        // 28
+                (r[31] != null) ? ((Number) r[31]).intValue() : null,                        // 28
+                (r[32] != null) ? ((Number) r[32]).intValue() : null                         // 28
+
         )).collect(Collectors.toList());
         return allStudentRecordHeaders;
     }

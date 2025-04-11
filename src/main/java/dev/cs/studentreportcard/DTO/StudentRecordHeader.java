@@ -55,17 +55,36 @@ public class StudentRecordHeader {
     private byte[] photo;
     private boolean isActive;
 
-    private Integer Q1TotalStudents;
-    private Integer Q2TotalStudents;
-    private Integer Q3TotalStudents;
-    private Integer Q4TotalStudents;
+    private Integer Q1StudentCount;
 
+    private Integer Q2StudentCount;
+
+    private Integer Q3StudentCount;
+
+    private Integer Q4StudentCount;
+    private  Integer Q1AllSectionRank;
+    private  Integer Q2AllSectionRank;
+    private  Integer Q3AllSectionRank;
+    private  Integer Q4AllSectionRank;
 
     private List<StudentRecord> detailrows ;
     public StudentRecordHeader() {
 
     }
-    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender, String academicYear, Integer grade, String section, Integer numberOfSubjects, double quarterOneSum, Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank, Integer semesterOneRank, double quarterThreeSum, Integer quarterThreeRank, double quarterFourSum, Integer quarterFourRank, Integer semesterTwoRank, Integer allSectionRank, Integer totalNumberOfStudents, Integer allSectionPercentile, byte[] photo, boolean isActive, Integer Q1TotalStudents, Integer Q2TotalStudents ,Integer Q3TotalStudents, Integer Q4TotalStudents ) {
+
+    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender,
+                               String academicYear, Integer grade, String section,
+                               Integer numberOfSubjects, double quarterOneSum,
+                               Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank,
+                               Integer semesterOneRank, double quarterThreeSum,
+                               Integer quarterThreeRank, double quarterFourSum,
+                               Integer quarterFourRank, Integer semesterTwoRank,
+                               Integer allSectionRank, Integer totalNumberOfStudents,
+                               Integer allSectionPercentile, byte[] photo, boolean isActive,
+                               Integer Q1StudentCount,
+                               Integer Q2StudentCount, Integer Q3StudentCount, Integer Q4StudentCount ,
+                               Integer Q1AllSectionRank ,Integer Q2AllSectionRank,Integer Q3AllSectionRank,Integer Q4AllSectionRank
+    ) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -91,10 +110,18 @@ public class StudentRecordHeader {
         this.allSectionPercentile = allSectionPercentile;
         this.photo = photo;
         this.isActive = isActive;
-        this.Q1TotalStudents = Q1TotalStudents;
-        this.Q2TotalStudents = Q2TotalStudents;
-        this.Q3TotalStudents = Q3TotalStudents;
-        this.Q4TotalStudents = Q4TotalStudents;
+       this.Q1StudentCount= Q1StudentCount;
+    this.Q2StudentCount= Q2StudentCount;
+    this.Q3StudentCount= Q3StudentCount;
+    this.Q4StudentCount= Q4StudentCount;
+
+    this.Q1AllSectionRank= Q1AllSectionRank;
+        this.Q2AllSectionRank= Q2AllSectionRank;
+
+        this.Q3AllSectionRank= Q3AllSectionRank;
+
+        this.Q4AllSectionRank= Q4AllSectionRank;
+
     }
 
     public Integer getStudentId() {
@@ -281,6 +308,70 @@ public class StudentRecordHeader {
         this.allSectionPercentile = allSectionPercentile;
     }
 
+    public Integer getQ1StudentCount() {
+        return Q1StudentCount;
+    }
+
+    public void setQ1StudentCount(Integer q1StudentCount) {
+        Q1StudentCount = q1StudentCount;
+    }
+
+    public Integer getQ2StudentCount() {
+        return Q2StudentCount;
+    }
+
+    public void setQ2StudentCount(Integer q2StudentCount) {
+        Q2StudentCount = q2StudentCount;
+    }
+
+    public Integer getQ3StudentCount() {
+        return Q3StudentCount;
+    }
+
+    public void setQ3StudentCount(Integer q3StudentCount) {
+        Q3StudentCount = q3StudentCount;
+    }
+
+    public Integer getQ4StudentCount() {
+        return Q4StudentCount;
+    }
+
+    public void setQ4StudentCount(Integer q4StudentCount) {
+        Q4StudentCount = q4StudentCount;
+    }
+
+    public Integer getQ1AllSectionRank() {
+        return Q1AllSectionRank;
+    }
+
+    public void setQ1AllSectionRank(Integer q1AllSectionRank) {
+        Q1AllSectionRank = q1AllSectionRank;
+    }
+
+    public Integer getQ2AllSectionRank() {
+        return Q2AllSectionRank;
+    }
+
+    public void setQ2AllSectionRank(Integer q2AllSectionRank) {
+        Q2AllSectionRank = q2AllSectionRank;
+    }
+
+    public Integer getQ3AllSectionRank() {
+        return Q3AllSectionRank;
+    }
+
+    public void setQ3AllSectionRank(Integer q3AllSectionRank) {
+        Q3AllSectionRank = q3AllSectionRank;
+    }
+
+    public Integer getQ4AllSectionRank() {
+        return Q4AllSectionRank;
+    }
+
+    public void setQ4AllSectionRank(Integer q4AllSectionRank) {
+        Q4AllSectionRank = q4AllSectionRank;
+    }
+
     public byte[] getPhoto() {
         return photo;
     }
@@ -304,5 +395,7 @@ public class StudentRecordHeader {
     public void setDetailrows(List<StudentRecord> detailrows) {
         this.detailrows = detailrows;
     }
+
+
 }
 
