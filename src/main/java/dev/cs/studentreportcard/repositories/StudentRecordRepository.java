@@ -1,18 +1,15 @@
 package dev.cs.studentreportcard.repositories;
-import dev.cs.studentreportcard.DTO.StudentRecordHeader;
 import dev.cs.studentreportcard.models.StudentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
-
 @Repository
 public interface StudentRecordRepository extends JpaRepository<StudentRecord,Integer> {
     // stat that is all sections
     // Note : No spaces are allowed in the query , also no space in the where close right side after : and the variable in this case i
+    // TODO refactor this to NamedQueries
     @Query(value = """
             SELECT s.student_id ,  -- // 0
                    s.first_name ,  -- // 1
@@ -39,10 +36,15 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord,Int
                    NTILE(4) OVER (PARTITION BY r.academic_year, r.grade ORDER BY sum(q1+ q2 +q3 + q4) DESC) Over25NTileRank , -- //22
                    s.photo, -- // 23
                    s.is_Active , -- //24
-                   sub.Q1TotalStudents Q1TotalStudents , -- //25
-                   sub.Q2TotalStudents Q2TotalStudents , -- //26
-                   sub.Q3TotalStudents Q3TotalStudents , -- //27
-                   sub.Q4TotalStudents Q4TotalStudents -- //28
+                   sub.Q1TotalStudents Q1StudentCount , -- //25
+                   sub.Q2TotalStudents Q2StudentCount , -- //26
+                   sub.Q3TotalStudents Q3StudentCount , -- //27
+                   sub.Q4TotalStudents Q4TotalStudents ,  -- //28
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q1)Desc) Q1AllSectionRank, -- // 29
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q2)Desc) Q2AllSectionRank, -- // 30
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q3)Desc) Q3AllSectionRank, -- // 31
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q4)Desc) Q4AllSectionRank  -- // 32
+                             
             FROM students s
             LEFT JOIN student_records r ON s.student_id = r.student_id
             INNER JOIN
@@ -82,6 +84,4 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord,Int
             AND r.academic_year = :academic_year""" , nativeQuery = true)
     List<StudentRecord> findStudentRecordByIdAndAcademicYear(@PathVariable("student_id") Integer student_id,
                                                              @PathVariable("academic_year") String academic_year);
-
-
 }
