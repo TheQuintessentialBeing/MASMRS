@@ -3,11 +3,31 @@
 <head th:replace="base :: baseheader">
     <title>Product List</title>
 </head>
+    <style>
+        @media print {
+          body {
+            margin: 0;
+            padding: 0;
+          }
 
-
+          .printable-page {
+            width: 8.27in; /* A4 width */
+            height: 11.69in; /* A4 height */
+            padding: 1in;
+            border: 2px solid black;
+            box-sizing: border-box;
+            page-break-after: always;
+          }
+        }
+        .printable-page {
+          margin: 20px auto;
+          background: white;
+        }
+    </style>
 <body>
 <div th:replace="base :: navlinks"></div>
-<div class="container">
+<!--<div class="container" class="printable-page">-->
+    <div class="printable-page">
     <div th:if="${errorMessage !=null }">
         <p th:text="${errorMessage}" style="color:red;"></p>
     </div>
@@ -31,23 +51,27 @@
             </div>
             <!-- Right side: Buttons -->
             <div style="padding:20px; color:black;">
-                <button th:disabled id="downloadbtn" onclick="searchPrint()" type="button"
+                <button th:disabled id="printbtn" onclick="printPDF()" type="button"
                         class="btn btn-light cs-action-button">
-                   Print
+                   Print/Download
                 </button>
                 <a href="/records/report/download" target="_blank">
                 <button  type="button" class="btn btn-light cs-action-button">
-                 Download (pdf)
+                 Email (pdf)
                 </button></a>
+                <button onclick="emailInvoice()">Email Me the Invoice</button>
+
+
+
             </div>
         </div>
         <table class="table .table-bordered">
             <tr>
-                <th>Subjects</th>
-                <th>Q1</th>
-                <th>Q2</th>
-                <th>Q3</th>
-                <th>Q4</th>
+                <th>Subject(s)</th>
+                <th>Quarter I</th>
+                <th>Quarter II</th>
+                <th>Quarter III</th>
+                <th>Quarter IV</th>
             </tr>
             <tr th:each="c: ${detail}">
                 <td>[[${c.subject}]]</td>
@@ -75,6 +99,27 @@
             Section : [[${header.allSectionRank}]] </p>
         <p>Disclaimer : Printing this report or viewing it without the proper access, is violation of privacy. </p>
     </div>
+    <script>
+             function printPDF() {
+                const pdfWindow = window.open("/records/report/download", "_blank");
+                pdfWindow.focus();
+
+                // Wait for the PDF to load before printing
+                pdfWindow.onload = () => {
+                    pdfWindow.print();
+                };
+            }
+
+             function emailInvoice() {
+                        fetch('/records/email-invoice', {
+                            method: 'POST'
+                        })
+                        .then(response => response.text())
+                        .then(data => alert(data))
+                        .catch(err => alert('Error: ' + err));
+                    }
+
+    </script>
     <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </div>

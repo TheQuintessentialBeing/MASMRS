@@ -1,10 +1,14 @@
 package dev.cs.studentreportcard.controllers;
+
+import dev.cs.studentreportcard.services.CsvDataLoadingService;
 import dev.cs.studentreportcard.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 @Controller
@@ -12,13 +16,31 @@ import javax.servlet.http.HttpServletRequest;
 public class StudentController {
 
     @Autowired
+    private CsvDataLoadingService csvDataLoadingService;
+    @Autowired
     private StudentService studentService;
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+
+    public StudentController(StudentService studentService, CsvDataLoadingService csvDataLoadingService) {
+        this.studentService        = studentService;
+        this.csvDataLoadingService = csvDataLoadingService;
     }
-    public StudentController(){}
- // top student from every class
+
+    public StudentController() {
+    }
+    // top student from every class
     /*This method shows all students POSTMAN*/
+
+
+    @GetMapping("/load-csv")
+    public ResponseEntity<String> loadCsv() {
+        // csvDataLoadingService.loadCsvStudentData();
+        // System.out.println("Controller called for student data....");
+        csvDataLoadingService.loadStudentRecordData();
+        System.out.println("Controller called for Student Record data....");
+        return ResponseEntity.ok("data is loaded");
+    }
+
+
 /*
     @GetMapping("/list")
     public ResponseEntity<List<Student>> showAllStudents(){
@@ -91,10 +113,10 @@ public class StudentController {
     }
     */
 /****
-     * display cart items selected by the user
-     * @param model
-     * @return
-     *//*
+ * display cart items selected by the user
+ * @param model
+ * @return
+ *//*
 
     // customers can see what they have in their cart
     @GetMapping("/mycart")

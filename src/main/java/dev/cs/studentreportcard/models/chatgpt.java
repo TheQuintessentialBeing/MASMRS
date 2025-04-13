@@ -1,14 +1,99 @@
 package dev.cs.studentreportcard.models;
 
-import dev.cs.studentreportcard.DTO.StudentRecordHeader;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 public class chatgpt {
 
 /*
--- Database Script
+@RestController
+@RequestMapping("/api")
+public class SampleController {
+
+    // 1. Return OK with plain text
+    @GetMapping("/message")
+    public ResponseEntity<String> getMessage() {
+        return ResponseEntity.ok("Hello World");
+    }
+
+    // 2. Return OK with object
+    @GetMapping("/data")
+    public ResponseEntity<MyDTO> getData() {
+        MyDTO myDto = new MyDTO("Test", 123);
+        return ResponseEntity.ok(myDto);
+    }
+
+    // 3. Return OK with list
+    @GetMapping("/all")
+    public ResponseEntity<List<MyDTO>> getAll() {
+        List<MyDTO> list = List.of(new MyDTO("One", 1), new MyDTO("Two", 2));
+        return ResponseEntity.ok(list);
+    }
+
+    // 4. Return CREATED (201)
+    @PostMapping("/create")
+    public ResponseEntity<MyDTO> create() {
+        MyDTO createdDto = new MyDTO("New", 999);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdDto);
+    }
+
+    // 5. Return NO_CONTENT (204)
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> delete() {
+        return ResponseEntity.noContent().build();
+    }
+
+    // 6. Return NOT_FOUND (404)
+    @GetMapping("/notfound")
+    public ResponseEntity<String> getById() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found");
+    }
+
+    // 7. Return BAD_REQUEST (400)
+    @PostMapping("/bad")
+    public ResponseEntity<String> createInvalid() {
+        return ResponseEntity.badRequest().body("Invalid input");
+    }
+
+    // 8. Return INTERNAL_SERVER_ERROR (500)
+    @GetMapping("/error")
+    public ResponseEntity<String> handleError() {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+    }
+
+    // 9. Return CUSTOM STATUS (202 Accepted)
+    @PostMapping("/custom")
+    public ResponseEntity<String> customStatus() {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Request accepted");
+    }
+
+    // 10. Return with Headers
+    @GetMapping("/headers")
+    public ResponseEntity<String> withHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Custom-Header", "value");
+        return new ResponseEntity<>("Response with header", headers, HttpStatus.OK);
+    }
+}
+
+// Dummy DTO class for illustration
+class MyDTO {
+    private String name;
+    private int value;
+
+    public MyDTO(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+
+ Database Script
 CREATE TABLE parents (
         id BIGINT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) NOT NULL
@@ -639,7 +724,6 @@ full_integration_pdf_path*/
 
  }
 */
-
 
 }
 
