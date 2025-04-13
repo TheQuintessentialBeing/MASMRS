@@ -17,44 +17,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-
-/* TODO clean up this part later on - it is an alternative way but ignore it
-                http
-                        .authorizeRequests()
-                        .antMatchers("/", "/home", "/registration", "/css/**", "/js/**", "/img/**").permitAll() // Public access
-                        .antMatchers("/admin/**").hasRole("Admin") // Admin-only
-                        .antMatchers("/student/**").hasRole("Student") // Student-only
-                        .antMatchers("/teacher/**").hasRole("Teacher") // Teacher-only
-                        .anyRequest().authenticated() // All other pages require authentication
-                        .and()
-                        .formLogin()
-                        .loginPage("/login") // Custom login page
-                        .defaultSuccessUrl("/") // Redirect after successful login
-                        .permitAll()
-                        .and()
-                        .logout()
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true)
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                        .logoutSuccessUrl("/")
-                        .permitAll();
-*/
-
-
-
-         http
-                .authorizeRequests()
+     http
+             .csrf().disable()
+               .authorizeRequests()
                 .antMatchers(
                         "/registration**",
                         "/js/**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**"
-                       /* "/student/index/**"*/
-                            )
+                        )
                   .permitAll()
-                //.anyRequest().permitAll() // allows all pages with out authentication -- do not restrict at all so use the ff line
-                       .anyRequest().permitAll()
+                 // .anyRequest().permitAll() // allows all pages with out authentication -- do not restrict at all so use the ff line
+                 // .requestMatchers("/email-invoice").permitAll()
+                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

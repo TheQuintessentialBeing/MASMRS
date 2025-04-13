@@ -13,42 +13,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
-import java.util.List;
+import java.security.Principal;
 import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/records")
 public class StudentRecordController {
-
-    HttpSession session;
+    // @Autowired creates the beans or objects ( new ...) by spring framework
     @Autowired
     private final StudentRepository studentRepository;
     @Autowired
     private final StudentRecordService studentRecordService;
+    @Autowired
+    private final JavaMailSender mailSender;
+
+    // This is to hold student data while we move from page to page eg. search to download
+    // search page put data in session variable and download page read from the variables
+    HttpSession session;
 
     @Autowired
-    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository, HttpSession session) {
+    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository, HttpSession session, JavaMailSender mailSender) {
 
         this.studentRecordService = studentRecordService;
-        this.studentRepository = studentRepository;
-        this.session = session;
+        this.studentRepository    = studentRepository;
+        this.session              = session;
+        this.mailSender           = mailSender;
+
     }
 
-    /*this page should have a search button and a search text
-     * wheen user hits search button it should display the result
-     * in another method /search/{studentId}*/
+    /* //This method will have an input textboxes for student id and academic year to search for a report.
+       // for page should have a search button and a search text, a clickable button
+     */
     @GetMapping("/search")
-    public String searchRecords() {
-        System.out.println("hitting the records/search page");
+    public String searchStudentRecord() {
         return "rsearch";
     }
 
@@ -71,20 +81,24 @@ public class StudentRecordController {
         return "rsearchresult";
     }
 
-
     @GetMapping("/report/download")
     public ResponseEntity<byte[]> downloadReport() throws Exception {
+       /* response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=sales-report.pdf");
+        */
 
+        // this method is to prepare a pdf report and add a functionality to download
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            // Create a PDF document (using iText or similar library)
+            // Create a PDF document (using iText or similar library) requires adding IText in pom.xml file
             Document document = new Document();
             PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
 
-            // Fetch the report data
+            // Fetch the report data from a session (
             StudentRecordHeader bio = (StudentRecordHeader) session.getAttribute("hr");
+            final String reportName = bio.getFirstName() + bio.getLastName() + "_" + bio.getStudentId() + "_" + bio.getAcademicYear() + bio.getGrade() + bio.getSection();
 
             // Define custom font
             //Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE);
@@ -109,9 +123,12 @@ public class StudentRecordController {
             leftCell1.setBorder(Rectangle.NO_BORDER);
             leftCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 
+            PdfPCell rightcell2 = new PdfPCell(new Paragraph("Rank : " + bio.getSemesterOneRank(), subtitle));
+            rightcell2.setBorder(Rectangle.NO_BORDER);
+            rightcell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
             row1.addCell(leftCell1);
-            //row1.addCell(rightCell1);
+            row1.addCell(rightcell2);
             document.add(row1);
 
             // row 2
@@ -204,12 +221,16 @@ public class StudentRecordController {
             document.add(trows);
 
             document.add(Chunk.NEWLINE);
-            Paragraph p = new Paragraph("Report Date: " + new java.util.Date(), FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 12, BaseColor.GRAY));
+            Paragraph p = new Paragraph("Report generated on " + new java.util.Date(), FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY));
             document.add(p);
-
-            document.add(new Paragraph("Disclaimer : Printing this report or viewing it without the proper access, is violation of privacy."));
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(new Paragraph("Disclaimer : \n \t \tPrinting this report without the proper access, is violation of privacy.", FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY)));
             document.add(new Paragraph(""));
-            document.add(new Paragraph("@2025 Report generated by School of Mieraf Academy Student Records & Management Systems."));
+            document.add(new Paragraph(" @2025 Report generated by School of Mieraf Academy Student Records & Management Systems.", FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY)));
 
             document.close();
             // Send the PDF as a response
@@ -217,13 +238,49 @@ public class StudentRecordController {
 
             HttpHeaders headers = new HttpHeaders();
 
-            headers.add("Content-Disposition", "attachment; filename=sales-report.pdf");
+            headers.add("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
 
             return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @PostMapping("/email-invoice")
+    public ResponseEntity<String> emailInvoice(Principal principal) throws MessagingException {
+        {
+            try {
+                // Step 1: Get logged-in user's email
+                String toEmail = principal.getName(); // or fetch from DB using username
+
+                // Step 2: Generate the PDF
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                // myPdfService.generateInvoicePdf(baos);
+                ResponseEntity<byte[]> x = downloadReport();
+                // byte[] pdfBytes = baos.toByteArray();
+
+                // Step 3: Send it
+                MimeMessage message = mailSender.createMimeMessage();
+
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                helper.setTo(toEmail);
+                helper.setSubject("Your Invoice");
+                helper.setText("Hello, please find your invoice attached.", true);
+
+                // helper.addAttachment("invoice.pdf", new ByteArrayResource(x));
+                // helper.addAttachment("invoce", x);
+                mailSender.send(message);
+                return ResponseEntity.ok("Email sent!");
+            } catch (Exception e) {
+                return ResponseEntity.status(500).body("Error: " + e.getMessage());
+            }
+        }
+    }
+
+
+
+
+
 
 /*  @GetMapping("/search/{studentid}{academicyear}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
@@ -310,12 +367,7 @@ public class StudentRecordController {
         response.sendRedirect("/product/");
     }
     */
-/****
- * display cart items selected by the user
- * @param model
- * @return
- *//*
-
+/*
     // customers can see what they have in their cart
     @GetMapping("/mycart")
     public String showItemInCart(Model model) {
@@ -449,4 +501,5 @@ public class StudentRecordController {
 
     }
 */
+
 }
