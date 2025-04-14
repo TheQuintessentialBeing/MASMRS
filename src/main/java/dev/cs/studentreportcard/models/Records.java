@@ -5,14 +5,18 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+<<<<<<< HEAD
 import java.sql.Date;
 import java.time.LocalDate;
+=======
+>>>>>>> b5d5a97 (modified classes, added html)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity // make it JPA entity
 @Table(name = "Records") // make table name "Result" in db
 @FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
+<<<<<<< HEAD
 @SequenceGenerator(
         name = "recordsNumber_Seq",        // Unique sequence name
         sequenceName = "records_seq",      // Database sequence name
@@ -40,16 +44,34 @@ public class Records { /*TODO entities shall be singular but db names shall be p
     @ManyToOne // Records(many records) will match (One Student) Remember : Student Id must exist in Students Table before it is used/insert in Records table
     @JoinColumn( name= "studentId")
     Students student;
+=======
+@SequenceGenerator(name = "recordsNumber_Seq", initialValue = 1000, allocationSize = 1)
+public class Records {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recordsNumber_Seq")
+    @Setter(AccessLevel.PRIVATE)
+    Integer recordsId;
+    //FK - Relationship TODO
+    Integer studentId;
+>>>>>>> b5d5a97 (modified classes, added html)
     @Column(length = 50)
     String subject;
     @Column(nullable = false, length = 50)
     String academicYear;
+<<<<<<< HEAD
     @Min(9)
     @Max(12)
     @Column(nullable = false)
     Integer grade;
     @Column(nullable = false, length = 2)
     String section;
+=======
+    @Column(nullable = false, length = 1)
+    String grade;
+    @Column(nullable = false, length = 2)
+    String section;
+
+>>>>>>> b5d5a97 (modified classes, added html)
     @Column( precision = 5, scale = 2)
     @Min(0)
     @Max(100)
@@ -57,6 +79,7 @@ public class Records { /*TODO entities shall be singular but db names shall be p
     @Column( precision = 5, scale = 2)
     @Min(0)
     @Max(100)
+<<<<<<< HEAD
     double q2;
     @Column( precision = 5, scale = 2)
     @Min(0)
@@ -73,5 +96,22 @@ public class Records { /*TODO entities shall be singular but db names shall be p
     @Column(length = 150)
     String comment;
 
+=======
+    Integer q2;
+    @Column( precision = 5, scale = 2)
+    @Min(0)
+    @Max(100)
+    Integer q3;
+    @Column( precision = 5, scale = 2)
+    @Min(0)
+    @Max(100)
+    Integer q4;
+    @Column(columnDefinition = "varchar(50) default NULL")
+    String updatedBy;
+    @Column(nullable = false, length = 50)
+    String updateDate;
+    @Column(length = 150)
+    String comment;
+>>>>>>> b5d5a97 (modified classes, added html)
 }
 
