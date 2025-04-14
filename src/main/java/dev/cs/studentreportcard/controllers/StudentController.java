@@ -1,56 +1,95 @@
 package dev.cs.studentreportcard.controllers;
 
-import dev.cs.studentreportcard.services.CsvDataLoadingService;
+import dev.cs.studentreportcard.models.Student;
+import dev.cs.studentreportcard.services.CSVDataLoadingService;
 import dev.cs.studentreportcard.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 @Controller
 @RequestMapping("/students")
 public class StudentController {
 
     @Autowired
-    private CsvDataLoadingService csvDataLoadingService;
+    private CSVDataLoadingService csvDataLoadingService;
     @Autowired
     private StudentService studentService;
 
-    public StudentController(StudentService studentService, CsvDataLoadingService csvDataLoadingService) {
+    public StudentController(StudentService studentService, CSVDataLoadingService csvDataLoadingService) {
         this.studentService        = studentService;
         this.csvDataLoadingService = csvDataLoadingService;
     }
 
     public StudentController() {
     }
+
     // top student from every class
     /*This method shows all students POSTMAN*/
-
-
-    @GetMapping("/load-csv")
-    public ResponseEntity<String> loadCsv() {
-        // csvDataLoadingService.loadCsvStudentData();
-        // System.out.println("Controller called for student data....");
-        csvDataLoadingService.loadStudentRecordData();
+// Working post man
+    @GetMapping("/loadstudents")
+    public ResponseEntity<String> loadStudentCsv() throws IOException {
+        csvDataLoadingService.loadCsvStudentDataFile();
         System.out.println("Controller called for Student Record data....");
-        return ResponseEntity.ok("data is loaded");
+        return ResponseEntity.ok("Student data inserted successfully!");
     }
 
+    // Working post man
+    @GetMapping("/loadstudentrecords")
+    public ResponseEntity<String> loadStudentRecordCsv() throws IOException {
+        csvDataLoadingService.loadStudentRecordDataFile();
+        return ResponseEntity.ok("Student record data inserted successfully!");
+    }
 
-/*
-    @GetMapping("/list")
-    public ResponseEntity<List<Student>> showAllStudents(){
-        List<Student> students= new ArrayList<>();
+    //  TODO  CRUD - Create
+    @PostMapping("/add")
+    public String saveStudent(@ModelAttribute("Student") Student Student, BindingResult result, Model model) {
+        //TODO exception handling if Student already exists
+        studentService.saveStudent(Student);
+        model.addAttribute("Student", new Student());
+        // model.addAttribute("Studentlines", Studentcodes);
+        return "redirect:/Student/admin";
+    }
+
+    @GetMapping("/delete/{Studentcode}")
+    public String deleteStudent(@PathVariable Integer Studentcode) {
+        studentService.deleteStudent(Studentcode);
+        return "redirect:/Student/admin";
+    }
+
+    @GetMapping("/edit/{Studentcode}")
+    public ModelAndView editStudent(@PathVariable("StudentId") Integer Studentcode) {
+        ModelAndView editview = new ModelAndView("Studentadd");
+        Set<String> Studentcodes = new HashSet<>();
+        //for (StudentLine pl : StudentLineService.findAllStudentLine()) {
+        //    Studentcodes.add(pl.getStudentLine());
+        // }
+        editview.addObject("Studentlines", Studentcodes);
+        Student Student = studentService.findStudentByStudentId(Studentcode);
+        editview.addObject("Student", Student);
+        return editview;
+    }
+
+    //  TODO CRUD - Read
+    @GetMapping("/listptm")
+    public ResponseEntity<List<Student>> showAllStudents() {
+        List<Student> students = new ArrayList<>();
         students = studentService.listAllStudents();
         System.out.println("Testing Student conteroller list if it returns anything");
-        return new  ResponseEntity<>(students,HttpStatus.OK);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
-*/
-
 
     @GetMapping("/list")
     public String showAllStudents(HttpServletRequest request, Model model) {
@@ -65,190 +104,11 @@ public class StudentController {
         model.addAttribute("students", studentService.listAllStudentsToPage(PageRequest.of(page, size)));
         return "students";
     }
+    // TODO CRUD - update
+//  TODO  CRUD - Delete
+//  TODO  Advanced - Search
+//  TODO Student Stats
+//  TODO Top Student
+//  TODO  Forever Scorer by Subject this or across the years ( 1 or more)
 
-
-/*
-
-    @GetMapping()
-    public String showAllProducts(HttpServletRequest request, Model model) {
-        int page = 0;
-        int size = 5;
-        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-            page = Integer.parseInt(request.getParameter("page")) - 1;
-        }
-        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-            size = Integer.parseInt(request.getParameter("size"));
-        }
-        model.addAttribute("products", productService.listAllProducts(PageRequest.of(page, size)));
-        return "productlist";
-    }
-
-    @GetMapping("/page")
-    public String showAllProductByPage(HttpServletRequest request, @RequestParam("page") int page, Model model) {
-        int size = 5;
-        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-            page = Integer.parseInt(request.getParameter("page")) - 1;
-        }
-        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-            size = Integer.parseInt(request.getParameter("size"));
-        }
-        model.addAttribute("products", productService.listAllProducts(PageRequest.of(page, size)));
-        return "productlist";
-    }
-
-    // dispaly products by page number
-    @GetMapping("/detail/{productcode}")
-    public String showProductDetail(@PathVariable String productcode, Model model) {
-        model.addAttribute("product", productService.getProductByProductCode(productcode));
-        return "productdetail";
-    }
-    */
-/*
-
-    @GetMapping("/cart/{productcode}")
-    public void addItemToCart(@PathVariable String productcode, HttpServletResponse response) throws IOException {
-        productService.addItemToVirtualCart(productcode);
-        productService.decreaseStockQuantity(productcode);
-        response.sendRedirect("/product/");
-    }
-    */
-/****
- * display cart items selected by the user
- * @param model
- * @return
- *//*
-
-    // customers can see what they have in their cart
-    @GetMapping("/mycart")
-    public String showItemInCart(Model model) {
-        List<ProductVirtualCartDTO> obj = productService.listAllCartItems();
-        if (obj != null) {
-            model.addAttribute("products", productService.listAllCartItems());
-        }
-        model.addAttribute("total", productService.totalCharges());
-        return "productcart";
-
-    }
-    // customers can see what they have in their cart
-    @GetMapping("/emptycart")
-    public void cleanVirtualCart(HttpServletResponse response) throws IOException {
-        productService.clearVirtualCart();
-        response.sendRedirect("/product/mycart");
-    }
-    // customers car remove products from cart
-    @GetMapping("/removeproduct/{productcode}")
-    public void removeItemfromCart(HttpServletResponse response, @PathVariable String productcode) throws IOException {
-        productService.removeItemFromVirtualCart(productcode);
-        response.sendRedirect("/product/mycart");
-    }
-    @GetMapping("/admin")
-    public String productDashboard(HttpServletRequest request, Model model) {
-
-
-        int page = 0;
-        int size = 5;
-        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-            page = Integer.parseInt(request.getParameter("page")) - 1;
-        }
-        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-            size = Integer.parseInt(request.getParameter("size"));
-        }
-        model.addAttribute("products", productService.listAllProducts(PageRequest.of(page, size)));
-        return "adminproduct";
-    }
-    @GetMapping("/admin/page")
-    public String productDashboardByPage(HttpServletRequest request, @RequestParam("page") int page, Model model) {
-        int size = 5;
-        if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-            page = Integer.parseInt(request.getParameter("page")) - 1;
-        }
-        if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-            size = Integer.parseInt(request.getParameter("size"));
-        }
-        model.addAttribute("products", productService.listAllProducts(PageRequest.of(page, size)));
-        return "adminproduct";
-    }
-    // Add
-    @GetMapping("/cart/reduce/{productcode}")
-    public String reduceCartQuantity(@PathVariable String productcode, Model model) throws IOException {
-        productService.reduceQuantityFromVirtualCart(productcode);
-        productService.increaseStockQuantity(productcode);
-        List<ProductVirtualCartDTO> obj = productService.listAllCartItems();
-        if (obj != null) {
-            model.addAttribute("products", productService.listAllCartItems());
-        }
-        model.addAttribute("total", productService.totalCharges());
-        return "productcart";
-    }
-    @GetMapping("/cart/more/{productcode}")
-    public String moreCartQuantity(@PathVariable String productcode, Model model) throws IOException {
-        Product underChange = productService.getProductByProductCode(productcode);
-        productService.addItemToVirtualCart(productcode);
-        productService.decreaseStockQuantity(productcode);
-        List<ProductVirtualCartDTO> obj = productService.listAllCartItems();
-        if (obj != null) {
-            model.addAttribute("products", productService.listAllCartItems());
-        }
-        model.addAttribute("total", productService.totalCharges());
-        return "productcart";
-    }
-    @GetMapping("/cart/remove/{productcode}")
-    public String removeProductFromCart(@PathVariable String productcode, Model model) throws IOException {
-        short returnQuantity = productService.getQuantityFromVirtualCart(productcode);
-        productService.increaseStockQuantityBatch(returnQuantity, productcode);
-        productService.removeItemFromVirtualCart(productcode);
-        List<ProductVirtualCartDTO> obj = productService.listAllCartItems();
-        if (obj != null) {
-            model.addAttribute("products", productService.listAllCartItems());
-        }
-        model.addAttribute("total", productService.totalCharges());
-        return "productcart";
-    }
-    @PostMapping("/add")
-    public String saveProduct(@ModelAttribute("product") Product product, BindingResult result, Model model) {
-        //TODO exception handling if product already exists
-        productService.saveProduct(product);
-        return "redirect:/product/admin";
-    }
-    @GetMapping("/delete/{productcode}")
-    public String deleteProduct(@PathVariable String productcode) {
-        productService.deleteProduct(productcode);
-        return "redirect:/product/admin";
-    }
-    @GetMapping("/add")
-    public String addProduct(Model model) {
-        Set<String> productcodes = new HashSet<>();
-       // for (ProductLine pl : productLineService.findAllProductLine()) {
-        //    productcodes.add(pl.getProductLine());
-
-       // }
-        model.addAttribute("product", new Product());
-        model.addAttribute("productlines", productcodes);
-        return "productadd";
-    }
-    @GetMapping("/edit/{productcode}")
-    public ModelAndView editProduct(@PathVariable("productcode") String productcode) {
-        ModelAndView editview = new ModelAndView("productadd");
-        Set<String> productcodes = new HashSet<>();
-        //for (ProductLine pl : productLineService.findAllProductLine()) {
-        //    productcodes.add(pl.getProductLine());
-       // }
-        editview.addObject("productlines", productcodes);
-        Product product = productService.findProductByProductCode(productcode);
-        editview.addObject("product", product);
-        return editview;
-    }
-    @GetMapping("/order")
-    public String saveMyOrders(HttpServletRequest request) {
-        productService.processMyOrders(request);
-        return "redirect:/product/";
-    }
-    @GetMapping("/search/{productname}")
-    public String searchProduct(@PathVariable("productname") String productname, Model model) {
-        var x = productService.searchProductByName(productname);
-        model.addAttribute("products", x);
-        return "productlist";
-
-    }
-*/
 }

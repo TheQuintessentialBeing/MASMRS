@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 @Repository
-public interface StudentRepository extends JpaRepository<Student,Integer> {
+public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     /*@Query(name = "sqlSearchProductByProductCode")
     Product findByProductCode(@Param("productcode") String productCode);
@@ -25,7 +25,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
 */
     // student
 
-  /*  @Query(name="SqlSearchStudentByStudentId")
-    Student findByStudentId(@Param ("studentId") Integer studentId);
-*/
+    @Query(name = "SqlSearchStudentByStudentId")
+    Student findByStudentId(@Param("studentId") Integer studentId);
+
 }

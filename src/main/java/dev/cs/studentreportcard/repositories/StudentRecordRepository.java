@@ -1,13 +1,14 @@
 package dev.cs.studentreportcard.repositories;
+
 import dev.cs.studentreportcard.models.StudentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 @Repository
-public interface StudentRecordRepository extends JpaRepository<StudentRecord,Integer> {
-    // stat that is all sections
+public interface StudentRecordRepository extends JpaRepository<StudentRecord, Integer> {
     // Note : No spaces are allowed in the query , also no space in the where close right side after : and the variable in this case i
     // TODO refactor this to NamedQueries
     @Query(value = """
@@ -44,7 +45,6 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord,Int
                    RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q2)Desc) Q2AllSectionRank, -- // 30
                    RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q3)Desc) Q3AllSectionRank, -- // 31
                    RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q4)Desc) Q4AllSectionRank  -- // 32
-                             
             FROM students s
             LEFT JOIN student_records r ON s.student_id = r.student_id
             INNER JOIN
@@ -74,14 +74,13 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord,Int
                      r.academic_year,
                      r.grade,
                      r.section
-            """ , nativeQuery=true)
-    List<Object[]> findRecordsByYearGradeAndSection();
+            """, nativeQuery = true)
+    List<Object[]> getAllStudentRecordByYearGradeSection();
 
-   @Query(value = """
+    @Query(value = """
             SELECT *
             FROM student_records r
             Where r.student_id = :student_id
-            AND r.academic_year = :academic_year""" , nativeQuery = true)
-    List<StudentRecord> findStudentRecordByIdAndAcademicYear(@PathVariable("student_id") Integer student_id,
-                                                             @PathVariable("academic_year") String academic_year);
+            AND r.academic_year = :academic_year""", nativeQuery = true)
+    List<StudentRecord> findStudentRecordByIdAndAcademicYear(@PathVariable("student_id") Integer student_id, @PathVariable("academic_year") String academic_year);
 }
