@@ -157,10 +157,10 @@ student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_b
 
 1014      , 2014        ,9     ,English,    A  , 71, 2, 77, 80, 12, 2014-09-01, Admitted in 2014
 1014      , 2014        ,9     ,Math,       A  , 30, 40, 80, 80, 13, 2014-09-01, Admitted in 2014
-1014	    , 2014         ,9     ,Physics,    A  , 55, 60, 80, 80, 21,  2014-09-01, Admitted in 2014
+1014	  , 2014        ,9     ,Physics,    A  , 55, 60, 80, 80, 21,  2014-09-01, Admitted in 2014
 1014      , 2014        ,9     ,IT,          A  , 41, 32, 77, 80, 11, 2014-09-01, Admitted in 2014
 1014      , 2014        ,9     ,Biology,     A  , 83, 4, 80, 80, 56, 2014-09-01, Admitted in 2014
-1014	    , 2014        ,9     ,Chemistry,   A  , 15, 60, 80, 80, 55,  2014-09-01, Admitted in 2014
+1014	  , 2014        ,9     ,Chemistry,   A  , 15, 60, 80, 80, 55,  2014-09-01, Admitted in 2014
 1016      , 2014        ,9     ,English,    A  , 27, 90, 77, 80, 32, 2014-09-01, Admitted in 2014
 1016      , 2014        ,9     ,Math,       A  , 90, 90, 80, 80, 69, 2014-09-01, Admitted in 2014
 1016      , 2014        ,9     ,Physics,    A  , 11, 90, 80, 80, 53, 2014-09-01, Admitted in 2014

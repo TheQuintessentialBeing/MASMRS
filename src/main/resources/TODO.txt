@@ -1,0 +1,8 @@
+1. move the add records in student repository ( done)
+2. use properties file to change file names
+3. stat that is all sections
+4. utilize sessions
+5. Deployment
+6. git repo
+7. top student from every class by gender
+8. score if it was last year

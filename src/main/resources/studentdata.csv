@@ -1,4 +1,4 @@
-student_id, first_name, middle_name, last_name,  date_of_birth, gender, registration_date,photo, kifle_ketema, kebele, house_number, phone          ,  comment,is_active
+student_id, first_name, middle_name, last_name,  date_of_birth, gender, registration_date,photo, kifle_ketema, kebele, house_number,phone,comment,is_active
 1001, Kidus, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-520, Optional,true
 1002, Betel, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
 1003, Abebe, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
