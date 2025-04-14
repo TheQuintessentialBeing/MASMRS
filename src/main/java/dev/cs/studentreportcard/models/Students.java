@@ -6,6 +6,14 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+<<<<<<< HEAD
+=======
+
+import lombok.*;
+        import lombok.experimental.FieldDefaults;
+import javax.persistence.*;
+        import java.time.LocalDate;
+>>>>>>> b5d5a97 (modified classes, added html)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

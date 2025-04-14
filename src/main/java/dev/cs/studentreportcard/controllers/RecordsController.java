@@ -1,5 +1,6 @@
 package dev.cs.studentreportcard.controllers;
 
+<<<<<<< HEAD
 import dev.cs.studentreportcard.DTO.StudentStatDTO;
 import dev.cs.studentreportcard.models.Records;
 import dev.cs.studentreportcard.models.Students;
@@ -9,6 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+=======
+import dev.cs.studentreportcard.services.RecordsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+>>>>>>> b5d5a97 (modified classes, added html)
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +23,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+<<<<<<< HEAD
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Optional;
+=======
+>>>>>>> b5d5a97 (modified classes, added html)
 
 @Controller
 @RequestMapping("/records")
@@ -27,6 +36,7 @@ public class RecordsController {
 
     @Autowired
     private RecordsService recordsService;
+<<<<<<< HEAD
     @Autowired
     private StudentRepository studentRepository;
 
@@ -72,6 +82,31 @@ public class RecordsController {
         return recordsService.getStudentStatisticsWithRank();
     }
 
+=======
+    public RecordsController(RecordsService recordsService) {
+        this.recordsService = recordsService;
+    }
+    public RecordsController(){}
+    /*this page should have a search button and a search text
+    * wheen user hits search button it should display the result
+    * in another method /search/{studentId}*/
+    @GetMapping("/search")
+    public String searchRecords() {
+        //var x = recordsService.searchStudentByStudentId(studentid);
+       // model.addAttribute("records", x);
+
+        return "rsearch";
+    }
+
+    @GetMapping("/search/{studentid}")
+    public String searchRecords(@PathVariable("studentid") Integer studentid, Model model) {
+
+        System.out.println("/Testing: /records/search/studendIdn is hit");
+        var x = recordsService.searchStudentByStudentId(studentid);
+        model.addAttribute("records", x);
+        return "recordslist";
+    }
+>>>>>>> b5d5a97 (modified classes, added html)
 
     /*
     @GetMapping("index")
