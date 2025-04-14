@@ -6,3 +6,5 @@
 6. git repo
 7. top student from every class by gender
 8. score if it was last year
+9. Standared Exception handling
+10. Student CRUD + Advance
