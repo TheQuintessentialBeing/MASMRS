@@ -1,9 +1,8 @@
 package dev.cs.studentreportcard.services;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import dev.cs.studentreportcard.DTO.StudentRecordHeader;
 import dev.cs.studentreportcard.models.StudentRecord;
 import dev.cs.studentreportcard.repositories.StudentRecordRepository;
@@ -16,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -114,93 +114,117 @@ public class StudentRecordService {
        /* response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "attachment; filename=sales-report.pdf");
         */
+        // Ethiopian calander adjustment - it could be further analayzed for months or use Ethiopian Calander API
+        // we can also add this in properties file
+        final int ethiopianCalenderAdjustment = 8;
+        int copyRightFromYear = LocalDate.now().minusYears(ethiopianCalenderAdjustment).getYear();
+        LocalDate reportDate = LocalDate.now().minusYears(ethiopianCalenderAdjustment);
+        Font footerFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY);
+        String reportFooterCompleteMessage = "Copy Right @ " + copyRightFromYear + " - " + (copyRightFromYear + 1) + " by SMASR & Management Systems. Report generated date " + reportDate + " E.C ";
 
         // this method is to prepare a pdf report and add a functionality to download
         byte[] pdfBytes = null;
+        final int rowWidthPercentage = 100;
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
             // Create a PDF document (using iText or similar library) requires adding IText in pom.xml file
-            Document document = new Document();
-            PdfWriter.getInstance(document, byteArrayOutputStream);
+            var document = new Document(PageSize.A4);
+            PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
 
-            // Fetch the report data from a session (
+            // Fetch the student record header report data from a session set by records/search page
             StudentRecordHeader bio = (StudentRecordHeader) httpSession.getAttribute("hr");
 
             // Define custom font
-            //Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE);
-            //Chunk nameChunk = new Chunk("Name: John Doe", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+            // Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE);
+            // Chunk nameChunk = new Chunk("Name: John Doe", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
 
             // Title
-            Paragraph reportTitle = new Paragraph("School of Mieraf Academy Student's Report", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK));
-            reportTitle.setSpacingAfter(20f);
-            reportTitle.setAlignment(Element.ALIGN_CENTER);
-            document.add(reportTitle);
+            Paragraph schoolName = new Paragraph("School of Mieraf Academy ", FontFactory.getFont(FontFactory.TIMES, 18, BaseColor.BLACK));
+            // schoolName.setSpacingAfter(20f);
+            schoolName.setAlignment(Element.ALIGN_CENTER);
+            document.add(schoolName);
+
+            Paragraph reportName = new Paragraph("Detailed Progress Student Report", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK));
+            reportName.setSpacingAfter(20f);
+            reportName.setAlignment(Element.ALIGN_CENTER);
+            document.add(reportName);
 
 
-            // sub titles
-            Font subtitle = FontFactory.getFont(FontFactory.TIMES_ITALIC, 12, BaseColor.BLACK);
+            //SolidBorder solidBorder = new SolidBorder(2);
+            // adding a header line
+            LineSeparator lineSeparator = new LineSeparator();
+            lineSeparator.setLineColor(BaseColor.BLACK);
+            lineSeparator.setLineWidth(2);
+            document.add(lineSeparator);
+            document.add(new Paragraph(Chunk.NEWLINE));
 
-            // row 1
-            PdfPTable row1 = new PdfPTable(2);
-            row1.setWidthPercentage(100); // take full width
+            // student header biograpy
+            Font fontOfStudentBiograpy = FontFactory.getFont(FontFactory.TIMES_ITALIC, 12, BaseColor.BLACK);
+
+            // rowOfStudentName
+            PdfPTable rowOfStudentName = new PdfPTable(2);
+            rowOfStudentName.setWidthPercentage(rowWidthPercentage); // 100 takes full width
+
+
+            PdfPCell leftCellStudentName = new PdfPCell(new Paragraph(bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName(), fontOfStudentBiograpy));
+            // Remove borders (optional)
+            leftCellStudentName.setBorder(Rectangle.NO_BORDER);
+            leftCellStudentName.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+            PdfPCell rightCellRanksText = new PdfPCell(new Paragraph("Rank(s)", fontOfStudentBiograpy));
+            rightCellRanksText.setBorder(Rectangle.NO_BORDER);
+            rightCellRanksText.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+            rowOfStudentName.addCell(leftCellStudentName);
+            rowOfStudentName.addCell(rightCellRanksText);
+            document.add(rowOfStudentName);
+
+            // rowOfStudentDobAndGender
+            PdfPTable rowOfStudentDobAndGender = new PdfPTable(2);
+            rowOfStudentDobAndGender.setWidthPercentage(rowWidthPercentage); // take full width
 
             // Remove borders (optional)
-            PdfPCell leftCell1 = new PdfPCell(new Paragraph(bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName(), subtitle));
-            leftCell1.setBorder(Rectangle.NO_BORDER);
-            leftCell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell leftCellStudentDobAndGenderValue = new PdfPCell(new Paragraph("DoB:" + bio.getDateOfBirth() + " Gender: " + bio.getGender(), fontOfStudentBiograpy));
+            leftCellStudentDobAndGenderValue.setBorder(Rectangle.NO_BORDER);
+            leftCellStudentDobAndGenderValue.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-            PdfPCell rightcell2 = new PdfPCell(new Paragraph("Rank : " + bio.getSemesterOneRank(), subtitle));
-            rightcell2.setBorder(Rectangle.NO_BORDER);
-            rightcell2.setHorizontalAlignment(Element.ALIGN_RIGHT);
-
-            row1.addCell(leftCell1);
-            row1.addCell(rightcell2);
-            document.add(row1);
-
-            // row 2
-            PdfPTable row2 = new PdfPTable(2);
-            row2.setWidthPercentage(100); // take full width
-
-            // Remove borders (optional)
-            PdfPCell leftCell3 = new PdfPCell(new Paragraph("DoB:" + bio.getDateOfBirth() + " Gender: " + bio.getGender(), subtitle));
-            leftCell3.setBorder(Rectangle.NO_BORDER);
-            leftCell3.setHorizontalAlignment(Element.ALIGN_LEFT);
-
-            PdfPCell rightcell4 = new PdfPCell(new Paragraph("Semester I Rank : " + bio.getSemesterOneRank(), subtitle));
-            rightcell4.setBorder(Rectangle.NO_BORDER);
-            rightcell4.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            PdfPCell rightCellSemesterOneRank = new PdfPCell(new Paragraph("Semester I: " + bio.getSemesterOneRank(), fontOfStudentBiograpy));
+            rightCellSemesterOneRank.setBorder(Rectangle.NO_BORDER);
+            rightCellSemesterOneRank.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
 
-            row2.addCell(leftCell3);
-            row2.addCell(rightcell4);
-            document.add(row2);
+            rowOfStudentDobAndGender.addCell(leftCellStudentDobAndGenderValue);
+            rowOfStudentDobAndGender.addCell(rightCellSemesterOneRank);
+            document.add(rowOfStudentDobAndGender);
 
             // row 3
-            PdfPTable row3 = new PdfPTable(2);
-            row2.setWidthPercentage(100); // take full width
+            PdfPTable rowOfStudentYearAndGrade = new PdfPTable(2);
+            rowOfStudentYearAndGrade.setWidthPercentage(rowWidthPercentage); // take full width
 
             // Remove borders (optional)
-            PdfPCell leftCell5 = new PdfPCell(new Paragraph(" Academic Year :" + bio.getAcademicYear() + "Grade:" + bio.getGrade() + bio.getSection(), subtitle));
-            leftCell5.setBorder(Rectangle.NO_BORDER);
-            leftCell5.setHorizontalAlignment(Element.ALIGN_LEFT);
+            PdfPCell leftCellStudentYearAndGradeValue = new PdfPCell(new Paragraph(" A/Year :" + bio.getAcademicYear() + "Grade:" + bio.getGrade() + bio.getSection(), fontOfStudentBiograpy));
+            leftCellStudentYearAndGradeValue.setBorder(Rectangle.NO_BORDER);
+            leftCellStudentYearAndGradeValue.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-            PdfPCell rightcell6 = new PdfPCell(new Paragraph("Semester II Rank: " + bio.getSemesterTwoRank(), subtitle));
-            rightcell6.setBorder(Rectangle.NO_BORDER);
-            rightcell6.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            PdfPCell rightCellStudentSemesterIIValue = new PdfPCell(new Paragraph("Semester II: " + bio.getSemesterTwoRank(), fontOfStudentBiograpy));
+            rightCellStudentSemesterIIValue.setBorder(Rectangle.NO_BORDER);
+            rightCellStudentSemesterIIValue.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-            row3.addCell(leftCell5);
-            row3.addCell(rightcell6);
-            document.add(row3);
-
+            rowOfStudentYearAndGrade.addCell(leftCellStudentYearAndGradeValue);
+            rowOfStudentYearAndGrade.addCell(rightCellStudentSemesterIIValue);
+            document.add(rowOfStudentYearAndGrade);
 
             // Adding line break
-            document.add(new Paragraph(Chunk.NEWLINE));
+            // document.add(new Paragraph(Chunk.NEWLINE));
 
             // Create table with three column TODO make dynamic later on
             PdfPTable trows = new PdfPTable(6);
             trows.setWidthPercentage(100);
+            trows.setSummary("How can I add a summary ?");
+            trows.setSkipFirstHeader(true);
+            trows.setSpacingBefore(4);
 
             // Table header
             Stream.of("Subject", "Quarter-I", "Quarter-II", "Quarter-III", "Quarter-IV", "Year Avg.").forEach(h -> {
@@ -218,44 +242,40 @@ public class StudentRecordService {
                 trows.addCell(String.valueOf((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0));
             }
             double totalSum = (bio.getQuarterFourSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
+
             // sum and quarter ranks
             Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), totalSum).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("Sec Rank", bio.getQuarterOneRank(), bio.getQuarterTwoRank(), bio.getQuarterThreeRank(), bio.getQuarterFourRank(), 0).forEach(d -> {
+            Stream.of("Section rank", bio.getQuarterOneRank(), bio.getQuarterTwoRank(), bio.getQuarterThreeRank(), bio.getQuarterFourRank(), 0).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("All Sec Rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
+            Stream.of("All section rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("# of Student", bio.getQ1StudentCount(), bio.getQ2StudentCount(), bio.getQ3StudentCount(), bio.getQ4StudentCount(), bio.getQ4StudentCount()).forEach(d -> {
+            Stream.of("Total students", bio.getQ1StudentCount(), bio.getQ2StudentCount(), bio.getQ3StudentCount(), bio.getQ4StudentCount(), bio.getQ4StudentCount()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
             document.add(trows);
             document.add(Chunk.NEWLINE);
-            Paragraph p = new Paragraph("Report generated on " + new java.util.Date(), FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY));
-            document.add(p);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(new Paragraph("Disclaimer : \n \t \tPrinting this report without the proper access, is violation of privacy.", FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY)));
-            document.add(new Paragraph(""));
-            document.add(new Paragraph(" @2025 Report generated by School of Mieraf Academy Student Records & Management Systems.", FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY)));
+
+            // Add footer manually at the bottom of the page
+            PdfContentByte canvas = writer.getDirectContent();
+            // Footer text
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Paragraph(reportFooterCompleteMessage, footerFont), (document.right() + document.left()) / 4, document.bottom() - 30, 0);
+            // close the document that was opened at the begining
             document.close();
 
             // Send the PDF as a response
             pdfBytes = byteArrayOutputStream.toByteArray();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

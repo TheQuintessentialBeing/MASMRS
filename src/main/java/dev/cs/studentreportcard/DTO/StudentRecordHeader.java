@@ -1,14 +1,23 @@
 package dev.cs.studentreportcard.DTO;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 import dev.cs.studentreportcard.models.StudentRecord;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-
 import java.util.Date;
 import java.util.List;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+//@Entity // make it JPA entity
+//@Table(name = "Students") // change to any name in database from here
+//@FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
+//@SequenceGenerator(name = "studentNumber_Seq", initialValue = 1000, allocationSize = 1)
+@Getter
+@Setter
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_NULL)  // Ignore null value
+// @JsonInclude(JsonInclude.Include.NON_NULL)  // Ignore null value
 public class StudentRecordHeader {
     private Integer studentId;
     private String firstName;
@@ -16,111 +25,83 @@ public class StudentRecordHeader {
     private String lastName;
     private Date dateOfBirth;
 
-   //TODO restrinct to one character
+    //TODO optional restrinct to one character on student table
     private Character gender;
-
     private String academicYear;
     private Integer grade;
 
-    // TODO this could be changed to like gender to Character
+    // TODO optional this could be changed to like gender to Character above
     private String section;
-
-    // Calculated fields
+    // Calculated fields using query Rank , Dense_Rank ... functions
     private Integer numberOfSubjects;
-
     // quarter 1 semester 1
     private double quarterOneSum;
     private Integer quarterOneRank;
-
     // quarter  2 semester 1
     private double quarterTwoSum;
     private Integer quarterTwoRank;
     private Integer semesterOneRank;
-
     // quarter 3 semester 2
     private double quarterThreeSum;
     private Integer quarterThreeRank;
-
     // quarter 4  semester 2
     private double quarterFourSum;
     private Integer quarterFourRank;
     private Integer semesterTwoRank;
-
     // rank from all section and percentile
     private Integer allSectionRank;
     private Integer totalNumberOfStudents;
     private Integer allSectionPercentile;
-
     // student photo and status
     private byte[] photo;
     private boolean isActive;
-
     private Integer Q1StudentCount;
-
     private Integer Q2StudentCount;
-
     private Integer Q3StudentCount;
-
     private Integer Q4StudentCount;
-    private  Integer Q1AllSectionRank;
-    private  Integer Q2AllSectionRank;
-    private  Integer Q3AllSectionRank;
-    private  Integer Q4AllSectionRank;
+    private Integer Q1AllSectionRank;
+    private Integer Q2AllSectionRank;
+    private Integer Q3AllSectionRank;
+    private Integer Q4AllSectionRank;
+    private List<StudentRecord> detailrows;
 
-    private List<StudentRecord> detailrows ;
-    public StudentRecordHeader() {
-
-    }
-
-    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender,
-                               String academicYear, Integer grade, String section,
-                               Integer numberOfSubjects, double quarterOneSum,
-                               Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank,
-                               Integer semesterOneRank, double quarterThreeSum,
-                               Integer quarterThreeRank, double quarterFourSum,
-                               Integer quarterFourRank, Integer semesterTwoRank,
-                               Integer allSectionRank, Integer totalNumberOfStudents,
-                               Integer allSectionPercentile, byte[] photo, boolean isActive,
-                               Integer Q1StudentCount,
-                               Integer Q2StudentCount, Integer Q3StudentCount, Integer Q4StudentCount ,
-                               Integer Q1AllSectionRank ,Integer Q2AllSectionRank,Integer Q3AllSectionRank,Integer Q4AllSectionRank
-    ) {
-        this.studentId = studentId;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.academicYear = academicYear;
-        this.grade = grade;
-        this.section = section;
-        this.numberOfSubjects = numberOfSubjects;
-        this.quarterOneSum = quarterOneSum;
-        this.quarterOneRank = quarterOneRank;
-        this.quarterTwoSum = quarterTwoSum;
-        this.quarterTwoRank = quarterTwoRank;
-        this.semesterOneRank = semesterOneRank;
-        this.quarterThreeSum = quarterThreeSum;
-        this.quarterThreeRank = quarterThreeRank;
-        this.quarterFourSum = quarterFourSum;
-        this.quarterFourRank = quarterFourRank;
-        this.semesterTwoRank = semesterTwoRank;
-        this.allSectionRank = allSectionRank;
+    public StudentRecordHeader(Integer studentId, String firstName, String middleName, String lastName, Date dateOfBirth, Character gender, String academicYear, Integer grade, String section, Integer numberOfSubjects, double quarterOneSum, Integer quarterOneRank, double quarterTwoSum, Integer quarterTwoRank, Integer semesterOneRank, double quarterThreeSum, Integer quarterThreeRank, double quarterFourSum, Integer quarterFourRank, Integer semesterTwoRank, Integer allSectionRank, Integer totalNumberOfStudents, Integer allSectionPercentile, byte[] photo, boolean isActive, Integer Q1StudentCount, Integer Q2StudentCount, Integer Q3StudentCount, Integer Q4StudentCount, Integer Q1AllSectionRank, Integer Q2AllSectionRank, Integer Q3AllSectionRank, Integer Q4AllSectionRank) {
+        this.studentId             = studentId;
+        this.firstName             = firstName;
+        this.middleName            = middleName;
+        this.lastName              = lastName;
+        this.dateOfBirth           = dateOfBirth;
+        this.gender                = gender;
+        this.academicYear          = academicYear;
+        this.grade                 = grade;
+        this.section               = section;
+        this.numberOfSubjects      = numberOfSubjects;
+        this.quarterOneSum         = quarterOneSum;
+        this.quarterOneRank        = quarterOneRank;
+        this.quarterTwoSum         = quarterTwoSum;
+        this.quarterTwoRank        = quarterTwoRank;
+        this.semesterOneRank       = semesterOneRank;
+        this.quarterThreeSum       = quarterThreeSum;
+        this.quarterThreeRank      = quarterThreeRank;
+        this.quarterFourSum        = quarterFourSum;
+        this.quarterFourRank       = quarterFourRank;
+        this.semesterTwoRank       = semesterTwoRank;
+        this.allSectionRank        = allSectionRank;
         this.totalNumberOfStudents = totalNumberOfStudents;
-        this.allSectionPercentile = allSectionPercentile;
-        this.photo = photo;
-        this.isActive = isActive;
-       this.Q1StudentCount= Q1StudentCount;
-    this.Q2StudentCount= Q2StudentCount;
-    this.Q3StudentCount= Q3StudentCount;
-    this.Q4StudentCount= Q4StudentCount;
+        this.allSectionPercentile  = allSectionPercentile;
+        this.photo                 = photo;
+        this.isActive              = isActive;
+        this.Q1StudentCount        = Q1StudentCount;
+        this.Q2StudentCount        = Q2StudentCount;
+        this.Q3StudentCount        = Q3StudentCount;
+        this.Q4StudentCount        = Q4StudentCount;
 
-    this.Q1AllSectionRank= Q1AllSectionRank;
-        this.Q2AllSectionRank= Q2AllSectionRank;
+        this.Q1AllSectionRank = Q1AllSectionRank;
+        this.Q2AllSectionRank = Q2AllSectionRank;
 
-        this.Q3AllSectionRank= Q3AllSectionRank;
+        this.Q3AllSectionRank = Q3AllSectionRank;
 
-        this.Q4AllSectionRank= Q4AllSectionRank;
+        this.Q4AllSectionRank = Q4AllSectionRank;
 
     }
 
@@ -395,7 +376,6 @@ public class StudentRecordHeader {
     public void setDetailrows(List<StudentRecord> detailrows) {
         this.detailrows = detailrows;
     }
-
 
 }
 
