@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 @Controller
 @RequestMapping("/students")
 public class StudentController {
@@ -28,13 +29,30 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    public StudentController() {
+    }
+    // top student from every class
+    /*This method shows all students POSTMAN*/
+/*
+    @GetMapping("/list")
+    public ResponseEntity<List<Student>> showAllStudents(){
+        List<Student> students= new ArrayList<>();
+        students = studentService.listAllStudents();
+        System.out.println("Testing Student conteroller list if it returns anything");
+        return new  ResponseEntity<>(students,HttpStatus.OK);
+    }
+*/
+
+
     public StudentController(StudentService studentService, CSVDataLoadingService csvDataLoadingService) {
         this.studentService        = studentService;
         this.csvDataLoadingService = csvDataLoadingService;
     }
 
-    public StudentController() {
-    }
 
     // top student from every class
     /*This method shows all students POSTMAN*/

@@ -8,3 +8,5 @@
 8. score if it was last year
 9. Standared Exception handling
 10. Student CRUD + Advance
+11. Add total section and total all section students
+12. Report footer dates and notes
