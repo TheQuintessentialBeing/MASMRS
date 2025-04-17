@@ -1,3 +1,0 @@
-student_id, academic_year, grade,subject  ,  section, q1,  q2, q3, q4, updated_by, comment
-1001,2014,9,English,A,1,2,77,80,1,2025-04-13, Admitted in 2014
-1002,2014,9,Math,A,3,4,80,80,1,2025-04-15,Admitted in 2014
