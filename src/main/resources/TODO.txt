@@ -1,12 +1,24 @@
-1. move the add records in student repository ( done)
-2. use properties file to change file names
-3. stat that is all sections
+TODO - Musts
+11. Add total number of students from all section
+12. Report footer dates and notes ( done)
+13. Clean up logs added in controller and services
+14. remove script files not needed from resource folder
+15. report page footer shall be a little up from bottom
+16.  http://localhost:8081/records/search header should remove Online Shopping instead add the logo of mieraf academy and pictures like the homepage
+17.  add mieraf academy logo on report
+18. drawbacks currently data loading don't check if data is already there or not so it could be duplicated
+18.1 solution - run delete duplicate records after loading or
+   18.2. check records for semester and current year.
+19. year section rank should be calculated and added on the report currently it is 0
+
+
+TODO-Optionals
+
+3. statistics student count by section and year ( report for admin)
 4. utilize sessions
 5. Deployment
-6. git repo
-7. top student from every class by gender
-8. score if it was last year
+7. top student from every class by gender ( report for admin)
+8. rank of student compared to last year students' result ( for student )
 9. Standared Exception handling
 10. Student CRUD + Advance
-11. Add total section and total all section students
-12. Report footer dates and notes
+12. AllTime scorer by subject by year; by gender
