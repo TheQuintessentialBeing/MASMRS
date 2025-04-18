@@ -41,28 +41,30 @@
            padding-bottom: 10px;"
         > School of Mieraf Academy Student's Report</p>
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-            <!-- Left side: Student name -->
-            <div style="">
-                <span> [[${header.lastName}]] , [[${header.firstName}]] [[${header.middleName}]]</span>
-                <span th:text="${printingDate}"></span>
-                <p><span> Dob: [[${header.dateOfBirth}]] Gender: [[${header.gender}]]</span>
-                    <span> A/Y: [[${header.academicYear}]] Grade: [[${header.grade}]]- [[${header.section}]] </span>
+            <!-- Left side: Student information -->
+            <div>
+                <p><span
+                        style="padding:10px;">[[${header.firstName}]] [[${header.middleName}]] [[${header.lastName}]] </span>
+                </p>
+                <p><span
+                        style="padding:10px "> Date of Birth: [[${header.dateOfBirth}]] Gender: [[${header.gender}]]</span>
+                </p>
+                <p><span style="padding:10px "> Academic Year: [[${header.academicYear}]] Grade: [[${header.grade}]][[${header.section}]] </span>
                 </p>
             </div>
-            <!-- Right side: Buttons -->
+            <!-- Right side: Buttons for actions -->
             <div style="padding:20px; color:black;">
-                <button class="btn btn-light cs-action-button" id="printbtn" onclick="printPDF()" th:disabled
-                        type="button">
-                    Print/Download
-                </button>
-                <a href="/records/download" target="_blank">
-                    <button class="btn btn-light cs-action-button" type="button">
-                        Email (pdf)
+                <p>Today's date: <span style="padding 150px;" th:text="${printingDate}"></span></p>
+                <p>
+                    <button class="btn btn-light cs-action-button" id="printbtn" onclick="printPDF()" th:disabled
+                            type="button">Print Report
                     </button>
-                </a>
-                <button onclick="emailInvoice()">Email Me the Invoice</button>
-
-
+                    <a href="/records/download" target="_blank">
+                        <button class="btn btn-light cs-action-button" onclick="emailInvoice()" type="button">
+                            Email Report
+                        </button>
+                    </a>
+                </p>
             </div>
         </div>
         <table class="table .table-bordered">
@@ -89,13 +91,16 @@
             </tr>
             <tr>
                 <td>Rank</td>
-                <td> [[${header.quarterOneRank}]] / [[${header.numberOfSubjects}]]</td>
-                <td> [[${header.quarterTwoRank}]] / [[${header.numberOfSubjects}]]</td>
-                <td> [[${header.quarterThreeRank}]] / [[${header.numberOfSubjects}]]</td>
-                <td> [[${header.quarterFourRank}]] / [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterOneRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterTwoRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterThreeRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterFourRank}]] of [[${header.numberOfSubjects}]]</td>
             </tr>
         </table>
-        <p><b> Ranks </b> Semester I : [[${header.semesterOneRank}]] Semester II: [[${header.semesterTwoRank}]] All
+        <p><b> Ranks </b>
+        <p> Semester I : [[${header.semesterOneRank}]] </p>
+        <p> Semester II: [[${header.semesterTwoRank}]] </p>
+        <p> All
             Section : [[${header.allSectionRank}]] </p>
         <p>Disclaimer : Printing this report or viewing it without the proper access, is violation of privacy. </p>
     </div>
@@ -109,7 +114,7 @@
                pdfWindow.print();
            };
        }
-
+          <!--TODO-->
         function emailInvoice() {
                    fetch('/records/email', {
                        method: 'POST'

@@ -17,14 +17,9 @@
         <input id="inputAcademicYear" class="form-control rounded "  placeholder="Academic Year eg. 2017" aria-label="Search"
                aria-describedby="search-addon"/>
         <button id="reportbtn" onclick="searchTerm()" type="button" class="btn btn-light cs-action-button">
-            View Report
+            Search
         </button>
 
-        <a href="/records/load-csv" target="_blank">
-            <button  type="button" class="btn btn-light cs-action-button">
-                LoadData
-            </button>
-        </a>
        </div>
     </div>
     <script>
@@ -67,11 +62,10 @@
     </script>
 
    <div>
-        <p>No results displayed until you search and click search button </p>
+        <p>No results displayed until you enter your info and click search button </p>
     </div>
 </div>
 
-<!--<div th:replace="base :: footer " id="testme"></div>-->
 <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
