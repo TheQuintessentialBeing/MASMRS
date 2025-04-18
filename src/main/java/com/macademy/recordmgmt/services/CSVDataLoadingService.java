@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -96,7 +95,6 @@ public class CSVDataLoadingService {
     }
 
     public void loadCsvStudentDataFile() {
-        System.out.println("loadcsvdata method is called ");
 
         try {
 
@@ -143,7 +141,7 @@ public class CSVDataLoadingService {
                 String gender = line[5].trim();                                     // 6
                 // String row2 = line[6].trim();
                 LocalDate registrationDate = LocalDate.parse(line[6].trim());       // 7
-                byte[] photo = line[7].getBytes(StandardCharsets.UTF_8);            // 8
+                String photo = line[7];                                             // 8
                 String kifleKetema = line[8];                                       // 9
                 String kebele = line[9];                                            // 10
                 String houseNumber = line[10];                                      // 11

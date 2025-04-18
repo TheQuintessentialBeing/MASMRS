@@ -32,9 +32,9 @@ public class Student {
     String gender;
     @Column(nullable = false)
     LocalDate registrationDate;
-    @Lob
-    @Column(name = "Photo", columnDefinition = "LONGBLOB")
-    byte[] photo;
+
+    @Column(name = "photo")
+    String photo;
     @Column(nullable = false, length = 50)
     String kifleKetema;
     @Column(columnDefinition = "varchar(50) default NULL")

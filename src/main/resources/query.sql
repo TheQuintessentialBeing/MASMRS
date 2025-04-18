@@ -1,4 +1,12 @@
 use nowdb;
+-- users data
+select u.first_name, u.last_name, u.email ,r.name
+from user u
+inner join users_roles ur on u.id = ur.user_id
+inner join role r on r.id = ur.role_id
+
+
+
 -- STUDENTS_RECORDS Should be deleted first but student should be loaded first ( reverse)
 -- 0
 select r.student_id, s.student_id, s.first_name, r.q1 from student_records r
@@ -32,13 +40,13 @@ select * from student_records where record_id > 0;
 -- alter table users_roles drop foreign key FKgd3iendaoyh04b95ykqise6qh
 -- Check the view
 -- 1
-SELECT  * FROM  nowdb.vw_student_records_header
+select  * from  nowdb.vw_student_records_header
 
 DROP VIEW `nowdb`.`vw_student_records_header`
 
 select * from nowdb.student_records;
 
-SELECT
+select
              s.student_id /* ,s.first_name,s.middle_name,s.last_name,s.date_of_birth,s.gender */ ,r.academic_year,r.grade,r.section
             ,count(*) NumberOfSubjects
             ,sum(r.q1) Q1Sum
@@ -63,14 +71,14 @@ GROUP BY r.academic_year ,r.grade ,r.section
 
 use nowdb
 
-SELECT  r.academic_year , r.grade , r.section , r.student_id , r.subject
+select  r.academic_year , r.grade , r.section , r.student_id , r.subject
 , r.q1
 , r.q2
 , r.q3
 , r.q4
-FROM student_records r
-WHERE  r.academic_year IN ('2016','2017')
-ORDER BY r.academic_year , r.grade , r.section , r.student_id , r.subject
+from student_records r
+where  r.academic_year in ('2016','2017')
+order by r.academic_year , r.grade , r.section , r.student_id , r.subject
 
 
 

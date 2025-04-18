@@ -20,6 +20,10 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+    // @Value("${student.upload.dir}")
+    // private String uploadDir;
+
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
