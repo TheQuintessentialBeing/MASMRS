@@ -53,7 +53,7 @@ public class StudentRecordController {
     // DONE ? is wildcard and extending Object is optional
     @GetMapping("/search/{studentId}/{academicYear}")
     public String showAllReports(@PathVariable("studentId") Integer studentId, @PathVariable("academicYear") String academicYear, Model model) {
-        StudentRecordHeader hr = studentRecordService.generateStudentGradeReport(1001, "2014");
+        StudentRecordHeader hr = studentRecordService.generateStudentGradeReport(studentId, academicYear);
         // Add both of them even if they are nulls
         model.addAttribute("header", hr);
         model.addAttribute("detail", (hr != null) ? hr.getDetailrows() : null);

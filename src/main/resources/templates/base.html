@@ -29,7 +29,8 @@
                     Student<br><small>Records</small></a>
                 <img alt="Miraf Logo" border-radius="50%" height="60px" object-fit=cover src="../img/miraf.jpg"
                      width="60px">
-                <button aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                <button aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
                         data-target="#ftco-nav" data-toggle="collapse" type="button">
                     <span class="oi oi-menu"></span> Menu
                 </button>
@@ -59,8 +60,9 @@
         <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar
                    bg-dark ftco-navbar-light" id="ftco-navbar2">
             <div class="container">
-                <a class="navbar-brand" href="/"><span class="mr-1"></span>Online<br><small>Shopping</small></a>
-                <button aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                <a class="navbar-brand" href="/"><span class="mr-1"></span>Student<br><small>Records</small></a>
+                <button aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler"
                         data-target="#ftco-nav" data-toggle="collapse" type="button">
                     <span class="oi oi-menu"></span> Menu
                 </button>
@@ -72,7 +74,7 @@
                         </li>
                         <!-- Students Only -->
                         <li class="nav-item" sec:authorize="hasRole('ROLE_STUDENT')">
-                            <a class="nav-link" href="/records/search">Records</a>
+                            <a class="nav-link" href="/records/search">Search</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_STUDENT')">
                             <a class="nav-link" href="/contactus">Contact us</a>
@@ -85,7 +87,8 @@
                         <li sec:authorize="hasRole('ROLE_TEACHER')">
 
                             <div class="dropdown" style="display: inline!important;">
-                                <button aria-expanded="false" class="btn btn-secondary dropdown-toggle css-custom-dbcolor"
+                                <button aria-expanded="false"
+                                        class="btn btn-secondary dropdown-toggle css-custom-dbcolor"
                                         data-bs-toggle="dropdown"
                                         type="button">
                                     Student Record Dashboard
@@ -108,12 +111,13 @@
                         <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_DIRECTORS')">
                             <a class="nav-link" href="student/statistics">Student Stats </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">Log out</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" sec:authentication="name"></a>
                             <!-- the above line is from spring framework auhentication name is read from the login automatically -->
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/logout}">Log out</a>
                         </li>
 
                     </ul>
