@@ -7,6 +7,7 @@ import com.macademy.recordmgmt.DTO.StudentRecordHeader;
 import com.macademy.recordmgmt.models.StudentRecord;
 import com.macademy.recordmgmt.repositories.StudentRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ import java.util.stream.Stream;
 public class StudentRecordService {
     @Autowired
     private final JavaMailSender mailSender;
+    @Value("${localCalenderOfEthiopianYear}")
+    public int localCalenderOfEthiopianYear;
     @Autowired
     StudentRecordRepository studentRecordRepository;
     @Autowired
@@ -110,18 +113,6 @@ public class StudentRecordService {
     }
 
     public byte[] prepareReport() throws DocumentException {
-        // TODO can we move this code to a service - we need to make sure the session is sharable b/n search and dow
-       /* response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=sales-report.pdf");
-        */
-        // Ethiopian calander adjustment - it could be further analayzed for months or use Ethiopian Calander API
-        // we can also add this in properties file
-        final int ethiopianCalenderAdjustment = 8;
-        int copyRightFromYear = LocalDate.now().minusYears(ethiopianCalenderAdjustment).getYear();
-        LocalDate reportDate = LocalDate.now().minusYears(ethiopianCalenderAdjustment);
-        Font footerFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY);
-        String reportFooterCompleteMessage = "Copy Right @ " + copyRightFromYear + " - " + (copyRightFromYear + 1) + " by SMASR & Management Systems. Report generated date " + reportDate + " E.C ";
-
         // this method is to prepare a pdf report and add a functionality to download
         byte[] pdfBytes = null;
         final int rowWidthPercentage = 100;
@@ -136,13 +127,9 @@ public class StudentRecordService {
             // Fetch the student record header report data from a session set by records/search page
             StudentRecordHeader bio = (StudentRecordHeader) httpSession.getAttribute("hr");
 
-            // Define custom font
-            // Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE);
-            // Chunk nameChunk = new Chunk("Name: John Doe", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
-
             // Title
             Paragraph schoolName = new Paragraph("School of Mieraf Academy ", FontFactory.getFont(FontFactory.TIMES, 18, BaseColor.BLACK));
-            // schoolName.setSpacingAfter(20f);
+            schoolName.setSpacingAfter(20f);
             schoolName.setAlignment(Element.ALIGN_CENTER);
             document.add(schoolName);
 
@@ -151,13 +138,11 @@ public class StudentRecordService {
             reportName.setAlignment(Element.ALIGN_CENTER);
             document.add(reportName);
 
-
-            //SolidBorder solidBorder = new SolidBorder(2);
             // adding a header line
-            LineSeparator lineSeparator = new LineSeparator();
-            lineSeparator.setLineColor(BaseColor.BLACK);
-            lineSeparator.setLineWidth(2);
-            document.add(lineSeparator);
+            LineSeparator headerLine = new LineSeparator();
+            headerLine.setLineColor(BaseColor.BLACK);
+            headerLine.setLineWidth(1);
+            document.add(headerLine);
             document.add(new Paragraph(Chunk.NEWLINE));
 
             // student header biograpy
@@ -169,7 +154,6 @@ public class StudentRecordService {
 
 
             PdfPCell leftCellStudentName = new PdfPCell(new Paragraph(bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName(), fontOfStudentBiograpy));
-            // Remove borders (optional)
             leftCellStudentName.setBorder(Rectangle.NO_BORDER);
             leftCellStudentName.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -185,7 +169,6 @@ public class StudentRecordService {
             PdfPTable rowOfStudentDobAndGender = new PdfPTable(2);
             rowOfStudentDobAndGender.setWidthPercentage(rowWidthPercentage); // take full width
 
-            // Remove borders (optional)
             PdfPCell leftCellStudentDobAndGenderValue = new PdfPCell(new Paragraph("DoB:" + bio.getDateOfBirth() + " Gender: " + bio.getGender(), fontOfStudentBiograpy));
             leftCellStudentDobAndGenderValue.setBorder(Rectangle.NO_BORDER);
             leftCellStudentDobAndGenderValue.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -199,11 +182,9 @@ public class StudentRecordService {
             rowOfStudentDobAndGender.addCell(rightCellSemesterOneRank);
             document.add(rowOfStudentDobAndGender);
 
-            // row 3
             PdfPTable rowOfStudentYearAndGrade = new PdfPTable(2);
             rowOfStudentYearAndGrade.setWidthPercentage(rowWidthPercentage); // take full width
 
-            // Remove borders (optional)
             PdfPCell leftCellStudentYearAndGradeValue = new PdfPCell(new Paragraph(" A/Year :" + bio.getAcademicYear() + "Grade:" + bio.getGrade() + bio.getSection(), fontOfStudentBiograpy));
             leftCellStudentYearAndGradeValue.setBorder(Rectangle.NO_BORDER);
             leftCellStudentYearAndGradeValue.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -217,14 +198,9 @@ public class StudentRecordService {
             document.add(rowOfStudentYearAndGrade);
 
             // Adding line break
-            // document.add(new Paragraph(Chunk.NEWLINE));
-
-            // Create table with three column TODO make dynamic later on
+            document.add(new Paragraph(Chunk.NEWLINE));
             PdfPTable trows = new PdfPTable(6);
-            trows.setWidthPercentage(100);
-            trows.setSummary("How can I add a summary ?");
-            trows.setSkipFirstHeader(true);
-            trows.setSpacingBefore(4);
+            trows.setWidthPercentage(100); // the table side width
 
             // Table header
             Stream.of("Subject", "Quarter-I", "Quarter-II", "Quarter-III", "Quarter-IV", "Year Avg.").forEach(h -> {
@@ -235,7 +211,7 @@ public class StudentRecordService {
 
             for (StudentRecord r : bio.getDetailrows()) {
                 trows.addCell(r.getSubject());
-                trows.addCell(String.format("%.1f", r.getQ1()));
+                trows.addCell(String.format("%.1f", r.getQ1())); // format marks like 90.5
                 trows.addCell(String.format("%.1f", r.getQ2()));
                 trows.addCell(String.format("%.1f", r.getQ3()));
                 trows.addCell(String.valueOf(r.getQ4()));
@@ -267,10 +243,25 @@ public class StudentRecordService {
             document.add(trows);
             document.add(Chunk.NEWLINE);
 
-            // Add footer manually at the bottom of the page
-            PdfContentByte canvas = writer.getDirectContent();
-            // Footer text
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Paragraph(reportFooterCompleteMessage, footerFont), (document.right() + document.left()) / 4, document.bottom() - 30, 0);
+            // Add footer manually at the bottom of the page , footer text position including line break
+            // PdfContentByte canvas = writer.getDirectContent();
+            PdfContentByte canvas = writer.getDirectContentUnder();
+            canvas.setLineWidth(0.75f); // thickness of the line
+            canvas.moveTo(30, 60); // (x1,y1) starting point of the line Note Pdf coordinates from bottom_left corner
+            canvas.lineTo(559, 60); // ending point of the line so it is a horizontal line starting from x=30 to x=559 at y=60 ( y value should not change for horizontal line)
+            // 559-30 then x's length 529 ; note A4 page is 595
+            canvas.setColorStroke(BaseColor.RED);// the color of the line
+            canvas.stroke(); // line will not appear if this is forgotten
+
+
+            // Footer Area
+            int copyRightFromYear = LocalDate.now().minusYears(localCalenderOfEthiopianYear).getYear();
+            LocalDate reportDate = LocalDate.now().minusYears(localCalenderOfEthiopianYear);
+            Font footerFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 10, BaseColor.GRAY);
+            String reportFooterCompleteMessage = "Copy right @" + copyRightFromYear + "-" + (copyRightFromYear + 1) + " Developed by SMASR Systems. printed on ... " + reportDate + " E.C ";
+
+            // ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Paragraph(reportFooterCompleteMessage, footerFont), (document.right() + document.left()) / 4, document.bottom() - 5, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(reportFooterCompleteMessage), 100.0f, 50, 0);
             // close the document that was opened at the begining
             document.close();
 

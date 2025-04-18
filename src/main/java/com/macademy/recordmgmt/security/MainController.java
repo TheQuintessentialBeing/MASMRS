@@ -12,32 +12,23 @@ public class MainController {
     //ProductService productService;
     @GetMapping("/")
     public String root() {
-        //   productService.clearVirtualCart();
-        System.out.println("Tobe Deleted For testing only:- INDEX CONTROLLER PAGE IS CALLED ...");
         return "index";
     }
 
     @GetMapping("/login")
     public String login(Model model) {
-        //   productService.clearVirtualCart();
-        System.out.println("Tobe Deleted For testing only:- LOGOUT CONTROLLER PAGE IS CALLED ...");
         return "login";
     }
 
     @GetMapping("/aboutus")
-    public String placeholder(Model model) {
-        //   productService.clearVirtualCart();
-        System.out.println("Tobe Deleted For testing only:-  PLACEHOLDER CONTROLLER PAGE IS CALLED ...");
+    public String aboutus() {
         return "aboutus";
     }
 
     @GetMapping("/contactus")
-    public String contactus(Model model) {
-        //   productService.clearVirtualCart();
-        System.out.println("Tobe Deleted For testing only:- CONTCT US CONTROLLER PAGE IS CALLED ...");
+    public String contactus() {
         return "contactus";
     }
-
 
     @GetMapping("/user")
     public String userIndex() {

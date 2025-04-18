@@ -36,34 +36,6 @@ public class StudentController {
 
     public StudentController() {
     }
-    // top student from every class
-    /*This method shows all students POSTMAN*/
-
-/*    @GetMapping("/list")
-    public ResponseEntity<List<Student>> showAllStudentsP() {
-        List<Student> students = new ArrayList<>();
-        students = studentService.listAllStudents();
-        System.out.println("Testing Student conteroller list if it returns anything");
-        return new ResponseEntity<>(students, HttpStatus.OK);
-    }*/
-
-
-    // top student from every class
-    /*This method shows all students POSTMAN*/
-// Working post man
-    @GetMapping("/loadstudents")
-    public ResponseEntity<String> loadStudentCsv() throws IOException {
-        csvDataLoadingService.loadCsvStudentDataFile();
-        System.out.println("Controller called for Student Record data....");
-        return ResponseEntity.ok("Student data inserted successfully!");
-    }
-
-    // Working post man
-    @GetMapping("/loadstudentrecords")
-    public ResponseEntity<String> loadStudentRecordCsv() throws IOException {
-        csvDataLoadingService.loadStudentRecordDataFile();
-        return ResponseEntity.ok("Student record data inserted successfully!");
-    }
 
     //  TODO  CRUD - Create
     @PostMapping("/add")
@@ -116,6 +88,8 @@ public class StudentController {
         model.addAttribute("students", studentService.listAllStudentsToPage(PageRequest.of(page, size)));
         return "students";
     }
+
+
     // TODO CRUD - update
 //  TODO  CRUD - Delete
 //  TODO  Advanced - Search
@@ -123,4 +97,31 @@ public class StudentController {
 //  TODO Top Student
 //  TODO  Forever Scorer by Subject this or across the years ( 1 or more)
 
+    /*This method shows all students POSTMAN*/
+    // TODO DONE
+/*    @GetMapping("/list")
+    public ResponseEntity<List<Student>> showAllStudentsP() {
+        List<Student> students = new ArrayList<>();
+        students = studentService.listAllStudents();
+        System.out.println("Testing Student conteroller list if it returns anything");
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }*/
+
+
+    // top student from every class
+    /*This method shows all students POSTMAN*/
+// Working post man
+    @GetMapping("/loadstudents")
+    public ResponseEntity<String> loadStudentCsv() throws IOException {
+        csvDataLoadingService.loadCsvStudentDataFile();
+        System.out.println("Controller called for Student Record data....");
+        return ResponseEntity.ok("Student data inserted successfully!");
+    }
+
+    // Working post man
+    @GetMapping("/loadstudentrecords")
+    public ResponseEntity<String> loadStudentRecordCsv() throws IOException {
+        csvDataLoadingService.loadStudentRecordDataFile();
+        return ResponseEntity.ok("Student record data inserted successfully!");
+    }
 }
