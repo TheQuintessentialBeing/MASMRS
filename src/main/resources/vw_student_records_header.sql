@@ -1,4 +1,4 @@
-use nowdb;
+use studentdb;
 
 -- select * from students;
 -- select * from student_records;
@@ -21,7 +21,7 @@ FROM student_records r
 GROUP BY r.fk_student_id, r.academic_year ,r.grade ,r.section
 -- ORDER BY r.academic_year ,r.grade, r.section;
 
--- CALL `nowdb`.`spLoadTestData`();
+-- CALL `studentdb`.`spLoadTestData`();
 -- Select * from vw_student_records_header;
 
 /*

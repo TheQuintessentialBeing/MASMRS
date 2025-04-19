@@ -1,4 +1,4 @@
-use nowdb;
+use studentdb;
 -- users data
 select u.first_name, u.last_name, u.email ,r.name
 from user u
@@ -25,24 +25,24 @@ delete  from students where student_id > 0;
 -- 5
 select *  from students;
 -- 6
-CALL PROCEDURE `nowdb`.`spLoadTestData` ();
+CALL PROCEDURE `studentdb`.`spLoadTestData` ();
 -- 7
 select *  from students;
 -- 8
 select * from student_records where record_id > 0;
 -- 9
-CALL `nowdb`. `spLoadStudentRecordTestData` ();
+CALL `studentdb`. `spLoadStudentRecordTestData` ();
 -- 10
 select * from student_records where record_id > 0;
 
 -- alter table users_roles drop foreign key FKgd3iendaoyh04b95ykqise6qh
 -- Check the view
 -- 1
-select  * from  nowdb.vw_student_records_header
+select  * from  studentdb.vw_student_records_header
 
-DROP VIEW `nowdb`.`vw_student_records_header`
+DROP VIEW `studentdb`.`vw_student_records_header`
 
-select * from nowdb.student_records;
+select * from studentdb.student_records;
 
             select s.student_id ,         -- //  0
                    s.first_name ,         -- //  1
@@ -116,7 +116,7 @@ select * from nowdb.student_records;
 //
 
 
-          use nowdb
+          use studentdb
            select s.student_id ,         -- //  0
                    s.first_name ,         -- //  1
                    s.middle_name ,        -- //  2
