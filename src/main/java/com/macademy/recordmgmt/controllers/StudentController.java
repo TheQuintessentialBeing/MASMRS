@@ -4,16 +4,12 @@ import com.macademy.recordmgmt.models.Student;
 import com.macademy.recordmgmt.services.CSVDataLoadingService;
 import com.macademy.recordmgmt.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,24 +33,35 @@ public class StudentController {
     public StudentController() {
     }
 
-    //  TODO  CRUD - Create
-    @PostMapping("/add")
-    public String saveStudent(@ModelAttribute("Student") Student Student, BindingResult result, Model model) {
-        //TODO exception handling if Student already exists
-        studentService.saveStudent(Student);
-        model.addAttribute("Student", new Student());
-        // model.addAttribute("Studentlines", Studentcodes);
-        return "redirect:/Student/admin";
+
+    //  TODO CRUD - Read works
+    @GetMapping("/list")
+    public ResponseEntity<List<Student>> showAllStudentspp() {
+        List<Student> students = studentService.listAllStudents();
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{Studentcode}")
-    public String deleteStudent(@PathVariable Integer Studentcode) {
-        studentService.deleteStudent(Studentcode);
-        return "redirect:/Student/admin";
+
+    //  TODO  CRUD - Create
+    @PostMapping("/add")
+    public Student createStudent(@RequestBody Student Student) {
+        return Student;
+    }
+
+    @PutMapping("/update/{StudentId}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Integer StudentId, @RequestBody Student updatedStudent) {
+
+        for (Student s : studentService.getAllStudents()) {
+            if (s.getStudentId() == StudentId) {
+                s.setComment(updatedStudent.getComment());
+                return ResponseEntity.ok(s);
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/edit/{Studentcode}")
-    public ModelAndView editStudent(@PathVariable("StudentId") Integer Studentcode) {
+    public ModelAndView updateStudent(@PathVariable("StudentId") Integer Studentcode) {
         ModelAndView editview = new ModelAndView("Studentadd");
         Set<String> Studentcodes = new HashSet<>();
         //for (StudentLine pl : StudentLineService.findAllStudentLine()) {
@@ -75,7 +82,7 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
+   /* @GetMapping("/list")
     public String showAllStudents(HttpServletRequest request, Model model) {
         int page = 0;
         int size = 5;
@@ -87,7 +94,7 @@ public class StudentController {
         }
         model.addAttribute("students", studentService.listAllStudentsToPage(PageRequest.of(page, size)));
         return "students";
-    }
+    }*/
 
 
     // TODO CRUD - update

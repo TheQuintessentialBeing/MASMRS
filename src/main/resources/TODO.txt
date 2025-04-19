@@ -1,17 +1,21 @@
 TODO - Musts
-1. db change photo data type to string
-11. Add total number of students from all section
-12. Report footer dates and notes ( done)
+
+ // (r[23] != null) ? (String) r[23] : null,                                     // 23 s.photo
 13. Clean up logs added in controller and services
 14. remove script files not needed from resource folder
-15. report page footer shall be a little up from bottom
+
 16.  http://localhost:8081/records/search header should remove Online Shopping instead add the logo of mieraf academy and pictures like the homepage
 17.  add mieraf academy logo on report
 18. drawbacks currently data loading don't check if data is already there or not so it could be duplicated
 18.1 solution - run delete duplicate records after loading or
    18.2. check records for semester and current year.
-19. year section rank should be calculated and added on the report currently it is 0
+
    // top student from every class
+12. Report footer dates and notes ( Done)
+1. db change photo data type to string ( Done)
+15. report page footer shall be a little up from bottom (Done)
+11. Add total number of students from all section (Done)
+19. year section rank should be calculated and added on the report currently it is 0 (Done)
 
 TODO-Optionals
 
