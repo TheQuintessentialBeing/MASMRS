@@ -1,4 +1,4 @@
-use nowdb;
+use studentdb;
 -- again join this header to get all the details
 
 select q2.*, f.subject,f.q1,f.q2,f.q3,f.q4

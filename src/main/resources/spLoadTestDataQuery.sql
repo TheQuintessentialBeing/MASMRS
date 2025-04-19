@@ -1,5 +1,5 @@
-use nowdb;
-CREATE PROCEDURE `nowdb`.`spLoadTestData` ()
+use studentdb;
+CREATE PROCEDURE `studentdb`.`spLoadTestData` ()
 -- check if Student table has no records already - display appropraite messages
 -- BEGIN
 -- DECLARE students_row_count INT;
@@ -15,7 +15,7 @@ CREATE PROCEDURE `nowdb`.`spLoadTestData` ()
 -- SET SQL_SAFE_UPDATE =0;
 -- Delete  from students where record_id >0;
 
-insert into nowdb.students (student_id, first_name, middle_name, last_name, date_of_birth, gender, registration_date, photo, kifle_ketema, kebele, house_number, phone, comment,is_active)
+insert into studentdb.students (student_id, first_name, middle_name, last_name, date_of_birth, gender, registration_date, photo, kifle_ketema, kebele, house_number, phone, comment,is_active)
 values
  (1001, 'Kidus', 'Kagnew', 'Eshetu', '1993-02-03', 'M', '2005-10-24', null, 'Bole', 1, 'kebele 12', '0911-354-520', '4/9/2020',true)
 ,(1002, 'Betel', 'Hailu', 'Tegegne', '1995-10-02', 'F', '2018-12-06', null, 'Bole', 2, 'kebele 12', '0912-282-1592', '5/5/2021',true)

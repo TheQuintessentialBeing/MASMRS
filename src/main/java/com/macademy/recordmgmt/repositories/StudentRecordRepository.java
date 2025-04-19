@@ -31,7 +31,7 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
                    RANK() OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY sum(r.q3) DESC) Q3Rank , -- // 16
                    sum(r.q4) Q4Sum , -- // 17
                    RANK() OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY sum(r.q4) DESC) Q4Rank , -- // 18
-                   DENSE_RANK() OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY sum(q1+ q2 +q3 + q4) DESC) Sem2Rank , -- // 19
+                   DENSE_RANK() OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY sum(q3 + q4) DESC) Sem2Rank , -- // 19
                    DENSE_RANK() OVER (PARTITION BY r.academic_year, r.grade ORDER BY sum(q1+ q2 +q3 + q4) DESC) OverAllRank , -- // 20
                    COUNT(*) OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY 1 DESC) TotalNumber , -- // 21
                    NTILE(4) OVER (PARTITION BY r.academic_year, r.grade ORDER BY sum(q1+ q2 +q3 + q4) DESC) Over25NTileRank , -- //22

@@ -1,8 +1,6 @@
 TODO - Musts
 
- // (r[23] != null) ? (String) r[23] : null,// 23 s.photo
- fix yearly average format to limit 2 digits after .
-check if session is really needed in service ; curretnly it is both in service and controller
+ // (r[23] != null) ? (String) r[23] : null,                                     // 23 s.photo
 13. Clean up logs added in controller and services
 14. remove script files not needed from resource folder
 
@@ -11,13 +9,8 @@ check if session is really needed in service ; curretnly it is both in service a
 18. drawbacks currently data loading don't check if data is already there or not so it could be duplicated
 18.1 solution - run delete duplicate records after loading or
    18.2. check records for semester and current year.
-
+19 Update the readme file (objectives, team members, etc...)
    // top student from every class
-12. Report footer dates and notes ( Done)
-1. db change photo data type to string ( Done)
-15. report page footer shall be a little up from bottom (Done)
-11. Add total number of students from all section (Done)
-19. year section rank should be calculated and added on the report currently it is 0 (Done)
 
 TODO-Optionals
 
@@ -26,6 +19,7 @@ TODO-Optionals
 5. Deployment
 7. top student from every class by gender ( report for admin)
 8. rank of student compared to last year students' result ( for student )
-9. Standared Exception handling / Error
+9. Standared Exception handling
 10. Student CRUD + Advance
-12. AllTime high scorer by subject by year; by gender
+12. AllTime scorer by subject by year; by gender
+13. Restrict user email domains to MirafAcademy.com
