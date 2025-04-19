@@ -73,7 +73,7 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
                      r.grade,
                      r.section
             """, nativeQuery = true)
-    List<Object[]> getAllStudentRecordByYearGradeSection();
+    List<Object[]> getAllStudentRecordByYearAndGrade();
 
     @Query(value = """
             SELECT *

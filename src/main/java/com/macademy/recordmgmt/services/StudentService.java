@@ -63,19 +63,22 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public Student findStudentByStudentId(Integer studentId) {
+   /* public List<Student> findStudentByStudentId(Integer studentId) {
         return studentRepository.findByStudentId(studentId);
-    }
+    }*/
 
     public void deleteStudent(Integer studentId) {
-        studentRepository.delete(findByStudentId(studentId));
+        //studentRepository.delete(findByStudentId(studentId));
+
+        // we need to delete using where clause
+
     }
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    private Student findByStudentId(Integer studentId) {
+    public Student findByStudentId(Integer studentId) {
         return studentRepository.findByStudentId(studentId);
     }
 

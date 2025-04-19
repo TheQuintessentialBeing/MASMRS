@@ -41,12 +41,22 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
+    @GetMapping("/find/{StudentId}")
+    public ResponseEntity<Student> findStudent(@PathVariable Integer StudentId) {
+        System.out.println("TESTING: find Student by id ");
+        Student student = studentService.findByStudentId(StudentId);
+        if (student != null) {
+            return ResponseEntity.ok(student);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     //  TODO  CRUD - Create
     @PostMapping("/add")
     public Student createStudent(@RequestBody Student Student) {
         return Student;
     }
+
 
     @PutMapping("/update/{StudentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable Integer StudentId, @RequestBody Student updatedStudent) {
@@ -66,10 +76,10 @@ public class StudentController {
         Set<String> Studentcodes = new HashSet<>();
         //for (StudentLine pl : StudentLineService.findAllStudentLine()) {
         //    Studentcodes.add(pl.getStudentLine());
-        // }
+        // }/**/
         editview.addObject("Studentlines", Studentcodes);
-        Student Student = studentService.findStudentByStudentId(Studentcode);
-        editview.addObject("Student", Student);
+        // Student Student = studentService.findStudentByStudentId(Studentcode);
+        //editview.addObject("Student", Student);
         return editview;
     }
 
@@ -96,7 +106,6 @@ public class StudentController {
         return "students";
     }*/
 
-
     // TODO CRUD - update
 //  TODO  CRUD - Delete
 //  TODO  Advanced - Search
@@ -114,8 +123,6 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }*/
 
-
-    // top student from every class
     /*This method shows all students POSTMAN*/
 // Working post man
     @GetMapping("/loadstudents")

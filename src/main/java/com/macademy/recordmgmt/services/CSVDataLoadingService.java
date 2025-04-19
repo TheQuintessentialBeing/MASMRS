@@ -32,6 +32,7 @@ public class CSVDataLoadingService {
         this.studentRecordRepository = studentRecordRepository;
     }
 
+
     public void loadStudentRecordDataFile() {
         try {
             // ClassPathResource refers that everything under resource files will be included in the jar file of this project
@@ -42,16 +43,16 @@ public class CSVDataLoadingService {
             String[] line;
             boolean isHeader = true;
             while ((line = reader.readNext()) != null) {
-                if (isHeader) {
+                if (isHeader) { // it means isHeader == true
                     isHeader = false;
-                    continue;
+                    continue; // bring the execution back to while testing condition
                 }
                 // Optionally, also skip lines where all fields are blank eg. the last line w/c is blank
                 boolean allBlank = true;
                 for (String field : line) {
                     if (field != null && !field.trim().isEmpty()) {
                         allBlank = false;
-                        break;
+                        break; // exits the for loop ; and continue next section
                     }
                 }
                 if (allBlank)
@@ -70,8 +71,7 @@ public class CSVDataLoadingService {
                 LocalDate updateDate = LocalDate.parse(line[10].trim());
                 String comment = line[11].trim();
 // we used setters here instead of passing to constructor b/c recordid is pk and assigned by dbase.
-                StudentRecord s = new StudentRecord();
-
+                StudentRecord s = new StudentRecord(); // default contstructor - with no argument
                 s.setStudentId(studentId);
                 s.setSubject(subject);
                 s.setAcademicYear(academicYear);
@@ -84,7 +84,7 @@ public class CSVDataLoadingService {
                 s.setUpdatedBy(updatedBy);
                 s.setUpdateDate(updateDate);
                 s.setComment(comment);
-                System.out.println(" & s :" + s);
+
                 studentRecordRepository.save(s);
             }
         } catch (NumberFormatException nfe) {
@@ -131,15 +131,11 @@ public class CSVDataLoadingService {
                 if (allBlank)
                     continue;
                 Integer studentId = Integer.parseInt(line[0]);                      // 1
-                //System.out.println("1 studentid " + studentId);
                 String firstName = line[1].trim();                                  // 2
                 String middleName = line[2].trim();                                 // 3
                 String lastName = line[3].trim();                                   // 4
-                // String rawdate = line[4].trim();
-                /*  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");*/
                 LocalDate dateOfBirth = LocalDate.parse(line[4].trim());            // 5
                 String gender = line[5].trim();                                     // 6
-                // String row2 = line[6].trim();
                 LocalDate registrationDate = LocalDate.parse(line[6].trim());       // 7
                 String photo = line[7];                                             // 8
                 String kifleKetema = line[8];                                       // 9
@@ -149,7 +145,6 @@ public class CSVDataLoadingService {
                 String comment = line[12];                                          // 13
                 boolean isActive = Boolean.parseBoolean(line[13]);                  // 14
                 Student student = new Student(studentId, firstName, middleName, lastName, dateOfBirth, gender, registrationDate, photo, kifleKetema, kebele, houseNumber, phone, comment, isActive);
-                System.out.println("ID : " + student.getStudentId() + " & " + student);
                 studentRepository.save(student);
             }
         } catch (NumberFormatException nfe) {

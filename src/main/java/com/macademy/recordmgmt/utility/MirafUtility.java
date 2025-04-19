@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-public final class MierafUtility {
+public final class MirafUtility {
     public static LocalDate requiredDate() {
-        LocalDate deliveryDate = LocalDate.now().plusDays(MierafUtility.generateDeliveryLagDate());
+        LocalDate deliveryDate = LocalDate.now().plusDays(MirafUtility.generateDeliveryLagDate());
         return deliveryDate;
 
     }
