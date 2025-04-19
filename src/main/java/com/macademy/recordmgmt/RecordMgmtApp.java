@@ -1,6 +1,6 @@
 package com.macademy.recordmgmt;
 
-import com.macademy.recordmgmt.utility.MierafUtility;
+import com.macademy.recordmgmt.utility.MirafUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "com.macademy.recordmgmt")
 public class RecordMgmtApp {
     public static void main(String[] args) {
-        System.out.println("[School Management & Recording System Application is loading ..........] " + MierafUtility.orderDate());
+        System.out.println("[School Management & Recording System Application is loading ..........] " + MirafUtility.orderDate());
         SpringApplication.run(RecordMgmtApp.class, args);
     }
 }

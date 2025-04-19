@@ -72,5 +72,6 @@ public class StudentRecord { /*TODO entities shall be singular but db names shal
     // studentId is the primary key of the parent table i,e Student
     // Student student;
     // studnet is here to navigate b/n the tables
+
 }
 

@@ -25,13 +25,13 @@ import java.util.stream.Stream;
 @Service
 public class StudentRecordService {
     @Autowired
-    private final JavaMailSender mailSender;
+    private final JavaMailSender mailSender; // for mail sending
     @Value("${localCalenderOfEthiopianYear}")
     public int localCalenderOfEthiopianYear;
     @Autowired
     StudentRecordRepository studentRecordRepository;
     @Autowired
-    HttpSession httpSession;
+    HttpSession httpSession; // to hold object and access later on
 
     @Autowired
     public StudentRecordService(StudentRecordRepository studentRecordRepository, JavaMailSender mailSender) {
@@ -41,9 +41,9 @@ public class StudentRecordService {
 
     public StudentRecordHeader generateStudentGradeReport(Integer studentId, String academicYear) {
 
-        List<Object[]> headers = studentRecordRepository.getAllStudentRecordByYearGradeSection();
+        List<Object[]> headers = studentRecordRepository.getAllStudentRecordByYearAndGrade(); // from repository
 
-        // mapping fields of Object[] to List<> collection
+        // mapping fields of Object[] to List<StudentRecordHeader> collection
         List<StudentRecordHeader> allHeaders = getAllStudentRecordHeaders(headers);
 
         if (allHeaders == null)
@@ -75,7 +75,7 @@ public class StudentRecordService {
         //  gender and section can be a single character to save database size
         //  another option is limit them to 1 and see if they have value of string or character and cast accordingly
         List<StudentRecordHeader> allStudentRecordHeaders = headers.stream().map(r -> new StudentRecordHeader((Integer) r[0],                                                              // 0 s.student_id
-                (r[1] != null) ? (String) r[1] : null,                                       // 1 s.first_name
+                (r[1] != null) ? (String) r[1] : null,                                       // 1 s.first_name // if first name is not null then give me fisrt name else (is null) give me null
                 (r[2] != null) ? (String) r[2] : null,                                       // 2 s.middle_name
                 (r[3] != null) ? (String) r[3] : null,                                       // 3 s.last_name
                 (Date) r[4],                                                                 // 4 s.date_of_birth
@@ -129,10 +129,10 @@ public class StudentRecordService {
             StudentRecordHeader bio = (StudentRecordHeader) httpSession.getAttribute("hr");
 
             // Title
-            Paragraph schoolName = new Paragraph("School of Mieraf Academy ", FontFactory.getFont(FontFactory.TIMES, 18, BaseColor.BLACK));
+            Paragraph schoolName = new Paragraph("School of Miraf Academy ", FontFactory.getFont(FontFactory.TIMES, 18, BaseColor.BLACK));
             schoolName.setSpacingAfter(20f);
             schoolName.setAlignment(Element.ALIGN_CENTER);
-            document.add(schoolName);
+            document.add(schoolName); // writing to the document
 
             Paragraph reportName = new Paragraph("Detailed Progress Student Report", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK));
             reportName.setSpacingAfter(20f);
@@ -198,7 +198,7 @@ public class StudentRecordService {
             rowOfStudentYearAndGrade.addCell(rightCellStudentSemesterIIValue);
             document.add(rowOfStudentYearAndGrade);
 
-            // Adding line break
+            // Adding line break and add another table for the details
             document.add(new Paragraph(Chunk.NEWLINE));
             PdfPTable trows = new PdfPTable(6);
             trows.setWidthPercentage(100); // the table side width
@@ -215,20 +215,20 @@ public class StudentRecordService {
                 trows.addCell(String.format("%.1f", r.getQ1())); // format marks like 90.5
                 trows.addCell(String.format("%.1f", r.getQ2()));
                 trows.addCell(String.format("%.1f", r.getQ3()));
-                trows.addCell(String.valueOf(r.getQ4()));
-                trows.addCell(String.valueOf((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0));
+                trows.addCell(String.format("%.1f", r.getQ4()));
+                trows.addCell(String.format("%.1f", ((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0)));
             }
-            double totalSum = (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
+            double yearlySum = (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
 
             // sum , average and quarter ranks
-            Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), totalSum).forEach(d -> {
+            Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), yearlySum).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
 
 
-            Stream.of("Average", bio.getQuarterOneSum() / bio.getNumberOfSubjects(), bio.getQuarterTwoSum() / bio.getNumberOfSubjects(), bio.getQuarterThreeSum() / bio.getNumberOfSubjects(), bio.getQuarterFourSum() / bio.getNumberOfSubjects(), totalSum / bio.getNumberOfSubjects()).forEach(d -> {
+            Stream.of("Average", bio.getQuarterOneSum() / bio.getNumberOfSubjects(), bio.getQuarterTwoSum() / bio.getNumberOfSubjects(), bio.getQuarterThreeSum() / bio.getNumberOfSubjects(), bio.getQuarterFourSum() / bio.getNumberOfSubjects(), yearlySum / bio.getNumberOfSubjects()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);

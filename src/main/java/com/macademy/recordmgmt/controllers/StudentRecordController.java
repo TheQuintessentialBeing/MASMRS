@@ -3,7 +3,7 @@ package com.macademy.recordmgmt.controllers;
 import com.macademy.recordmgmt.DTO.StudentRecordHeader;
 import com.macademy.recordmgmt.repositories.StudentRepository;
 import com.macademy.recordmgmt.services.StudentRecordService;
-import com.macademy.recordmgmt.utility.MierafUtility;
+import com.macademy.recordmgmt.utility.MirafUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -56,13 +56,14 @@ public class StudentRecordController {
         StudentRecordHeader hr = studentRecordService.generateStudentGradeReport(studentId, academicYear);
         // Add both of them even if they are nulls
         model.addAttribute("header", hr);
-        model.addAttribute("detail", (hr != null) ? hr.getDetailrows() : null);
+        model.addAttribute("detail", (hr != null) ? hr.getDetailrows() : null); // separate from above line b/c thymeleaf was problematic
         model.addAttribute("studentId", studentId);
         model.addAttribute("academicYear", academicYear);
-        model.addAttribute("printingDate", MierafUtility.orderDate());
+        model.addAttribute("printingDate", MirafUtility.orderDate());
         if (hr == null || hr.getDetailrows() == null) {
             model.addAttribute("errorMessage", "No records found for student Id (" + studentId + ") in academic year (" + academicYear + ") please search with the correct id and academic year");
         }
+        // TODO to be checkd if it is needed only here or both here and in service class
         session.setAttribute("hr", hr);
         return "rsearchresult";
     }
@@ -74,7 +75,7 @@ public class StudentRecordController {
             StudentRecordHeader bio = (StudentRecordHeader) session.getAttribute("hr");
 
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-            final String reportName = bio.getFirstName().charAt(0) + bio.getLastName().charAt(0) + "_" + bio.getStudentId() + "_" + bio.getAcademicYear() + "_" + bio.getGrade() + bio.getSection() + "_" + timestamp;
+            final String reportName = bio.getFirstName() + "_" + bio.getLastName() + "_" + bio.getStudentId() + "_" + bio.getAcademicYear() + "_" + bio.getGrade() + bio.getSection() + "_" + timestamp;
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
