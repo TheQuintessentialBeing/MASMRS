@@ -153,13 +153,13 @@ public class CSVDataLoadingService {
                 studentRepository.save(student);
             }
         } catch (NumberFormatException nfe) {
-            // System.out.println("Invalid number format on line: " + Arrays.toString(line));
             nfe.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    //TODO remove this method if we decide to go with csv file loading -
     public void loadJSONStudentDataFile() throws IOException {
         // TODO - currently not functional but if needed to laod data from Json format instead of a csv
         // https://csvjson.com/csv2json is where we can convert csv to json

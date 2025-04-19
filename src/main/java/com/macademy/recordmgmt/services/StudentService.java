@@ -37,6 +37,11 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    public void saveStudent(Student student) {
+        studentRepository.save(student);
+    }
+
+
     public Page<Student> listAllStudentsToPage(PageRequest pageRequest) {
 
 
@@ -52,9 +57,6 @@ public class StudentService {
         return studentRepository.findAll(pageRequest);
     }
 
-    public void saveStudent(Student student) {
-        studentRepository.save(student);
-    }
 
     // TODO explored
     public void updateStudent(Integer studentId, Student student) {
@@ -67,6 +69,10 @@ public class StudentService {
 
     public void deleteStudent(Integer studentId) {
         studentRepository.delete(findByStudentId(studentId));
+    }
+
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
     private Student findByStudentId(Integer studentId) {

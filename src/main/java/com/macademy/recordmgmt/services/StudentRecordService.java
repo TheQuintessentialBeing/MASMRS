@@ -73,7 +73,7 @@ public class StudentRecordService {
     public List<StudentRecordHeader> getAllStudentRecordHeaders(List<Object[]> headers) {
         //  TODO we need to decide on : -
         //  gender and section can be a single character to save database size
-        // another option is limit them to 1 and see if they have value of string or character and cast accordingly
+        //  another option is limit them to 1 and see if they have value of string or character and cast accordingly
         List<StudentRecordHeader> allStudentRecordHeaders = headers.stream().map(r -> new StudentRecordHeader((Integer) r[0],                                                              // 0 s.student_id
                 (r[1] != null) ? (String) r[1] : null,                                       // 1 s.first_name
                 (r[2] != null) ? (String) r[2] : null,                                       // 2 s.middle_name
@@ -97,16 +97,17 @@ public class StudentRecordService {
                 (r[20] != null) ? ((Number) r[20]).intValue() : null,                        // 20 DENSE_RANK() OverAllRank
                 (r[21] != null) ? ((Number) r[21]).intValue() : null,                        // 21 COUNT(*)     TotalNumber
                 (r[22] != null) ? ((Number) r[22]).intValue() : null,                        // 22 NTILE()      Over25NTileRank
-                null,                                               // 23 s.photo
+                // (r[23] != null) ? (String) r[23] : null,                                     // 23 s.photo
+                null,                                     // 23 s.photo
                 (r[24] != null) ? ((Boolean) r[24]).booleanValue() : null,                   // 24 s.is_Active
-                (r[25] != null) ? ((Number) r[25]).intValue() : null,                        // 25
-                (r[26] != null) ? ((Number) r[26]).intValue() : null,                        // 26
-                (r[27] != null) ? ((Number) r[27]).intValue() : null,                        // 27
-                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28
-                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28
-                (r[30] != null) ? ((Number) r[30]).intValue() : null,                        // 28
-                (r[31] != null) ? ((Number) r[31]).intValue() : null,                        // 28
-                (r[32] != null) ? ((Number) r[32]).intValue() : null                         // 28
+                (r[25] != null) ? ((Number) r[25]).intValue() : null,                        // 25 Q1StudentCount
+                (r[26] != null) ? ((Number) r[26]).intValue() : null,                        // 26 Q2StudentCount
+                (r[27] != null) ? ((Number) r[27]).intValue() : null,                        // 27 Q3StudentCount
+                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28 Q4TotalStudents
+                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 29 Q1AllSectionRank
+                (r[30] != null) ? ((Number) r[30]).intValue() : null,                        // 30 Q2AllSectionRank
+                (r[31] != null) ? ((Number) r[31]).intValue() : null,                        // 31 Q3AllSectionRank
+                (r[32] != null) ? ((Number) r[32]).intValue() : null                         // 32 Q4AllSectionRank
 
         )).collect(Collectors.toList());
         return allStudentRecordHeaders;
@@ -153,7 +154,7 @@ public class StudentRecordService {
             rowOfStudentName.setWidthPercentage(rowWidthPercentage); // 100 takes full width
 
 
-            PdfPCell leftCellStudentName = new PdfPCell(new Paragraph(bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName(), fontOfStudentBiograpy));
+            PdfPCell leftCellStudentName = new PdfPCell(new Paragraph("Name: " + bio.getFirstName() + " " + bio.getMiddleName() + " " + bio.getLastName() + " Student Id: " + bio.getStudentId(), fontOfStudentBiograpy));
             leftCellStudentName.setBorder(Rectangle.NO_BORDER);
             leftCellStudentName.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -169,7 +170,7 @@ public class StudentRecordService {
             PdfPTable rowOfStudentDobAndGender = new PdfPTable(2);
             rowOfStudentDobAndGender.setWidthPercentage(rowWidthPercentage); // take full width
 
-            PdfPCell leftCellStudentDobAndGenderValue = new PdfPCell(new Paragraph("DoB:" + bio.getDateOfBirth() + " Gender: " + bio.getGender(), fontOfStudentBiograpy));
+            PdfPCell leftCellStudentDobAndGenderValue = new PdfPCell(new Paragraph("Date of Birth: " + bio.getDateOfBirth() + " Gender: " + bio.getGender(), fontOfStudentBiograpy));
             leftCellStudentDobAndGenderValue.setBorder(Rectangle.NO_BORDER);
             leftCellStudentDobAndGenderValue.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -185,7 +186,7 @@ public class StudentRecordService {
             PdfPTable rowOfStudentYearAndGrade = new PdfPTable(2);
             rowOfStudentYearAndGrade.setWidthPercentage(rowWidthPercentage); // take full width
 
-            PdfPCell leftCellStudentYearAndGradeValue = new PdfPCell(new Paragraph(" A/Year :" + bio.getAcademicYear() + "Grade:" + bio.getGrade() + bio.getSection(), fontOfStudentBiograpy));
+            PdfPCell leftCellStudentYearAndGradeValue = new PdfPCell(new Paragraph(" A/Year: " + bio.getAcademicYear() + " Grade: " + bio.getGrade() + bio.getSection(), fontOfStudentBiograpy));
             leftCellStudentYearAndGradeValue.setBorder(Rectangle.NO_BORDER);
             leftCellStudentYearAndGradeValue.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -217,20 +218,29 @@ public class StudentRecordService {
                 trows.addCell(String.valueOf(r.getQ4()));
                 trows.addCell(String.valueOf((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0));
             }
-            double totalSum = (bio.getQuarterFourSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
+            double totalSum = (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
 
-            // sum and quarter ranks
+            // sum , average and quarter ranks
             Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), totalSum).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("Section rank", bio.getQuarterOneRank(), bio.getQuarterTwoRank(), bio.getQuarterThreeRank(), bio.getQuarterFourRank(), 0).forEach(d -> {
+
+
+            Stream.of("Average", bio.getQuarterOneSum() / bio.getNumberOfSubjects(), bio.getQuarterTwoSum() / bio.getNumberOfSubjects(), bio.getQuarterThreeSum() / bio.getNumberOfSubjects(), bio.getQuarterFourSum() / bio.getNumberOfSubjects(), totalSum / bio.getNumberOfSubjects()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("All section rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
+
+
+            Stream.of("Section Rank", bio.getQuarterOneRank(), bio.getQuarterTwoRank(), bio.getQuarterThreeRank(), bio.getQuarterFourRank(), bio.getQuarterFourRank()).forEach(d -> {
+                PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
+                k.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                trows.addCell(k);
+            });
+            Stream.of("All Sec. Rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
@@ -240,6 +250,7 @@ public class StudentRecordService {
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
+
             document.add(trows);
             document.add(Chunk.NEWLINE);
 
@@ -265,7 +276,7 @@ public class StudentRecordService {
             // close the document that was opened at the begining
             document.close();
 
-            // Send the PDF as a response
+            // Send the PDF as a response to controller
             pdfBytes = byteArrayOutputStream.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();

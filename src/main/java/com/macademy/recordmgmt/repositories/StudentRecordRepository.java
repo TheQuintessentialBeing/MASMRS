@@ -35,16 +35,16 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
                    DENSE_RANK() OVER (PARTITION BY r.academic_year, r.grade ORDER BY sum(q1+ q2 +q3 + q4) DESC) OverAllRank , -- // 20
                    COUNT(*) OVER (PARTITION BY r.academic_year, r.grade, r.section ORDER BY 1 DESC) TotalNumber , -- // 21
                    NTILE(4) OVER (PARTITION BY r.academic_year, r.grade ORDER BY sum(q1+ q2 +q3 + q4) DESC) Over25NTileRank , -- //22
-                   s.photo, -- // 23
-                   s.is_Active , -- //24
-                   sub.Q1TotalStudents Q1StudentCount , -- //25
-                   sub.Q2TotalStudents Q2StudentCount , -- //26
-                   sub.Q3TotalStudents Q3StudentCount , -- //27
-                   sub.Q4TotalStudents Q4TotalStudents ,  -- //28
-                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q1)Desc) Q1AllSectionRank, -- // 29
-                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q2)Desc) Q2AllSectionRank, -- // 30
-                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q3)Desc) Q3AllSectionRank, -- // 31
-                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q4)Desc) Q4AllSectionRank  -- // 32
+                   s.photo, -- // 23 photo
+                   s.is_Active , -- //24  is_Active
+                   sub.Q1TotalStudents Q1StudentCount , -- //25 Q1StudentCount
+                   sub.Q2TotalStudents Q2StudentCount , -- //26 Q2StudentCount
+                   sub.Q3TotalStudents Q3StudentCount , -- //27 Q3StudentCount
+                   sub.Q4TotalStudents Q4TotalStudents ,  -- //28 Q4TotalStudents
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q1)Desc) Q1AllSectionRank, -- // 29 Q1AllSectionRank
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q2)Desc) Q2AllSectionRank, -- // 30 Q2AllSectionRank
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q3)Desc) Q3AllSectionRank, -- // 31 Q3AllSectionRank
+                   RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q4)Desc) Q4AllSectionRank  -- // 32 Q4AllSectionRank
             FROM students s
             LEFT JOIN student_records r ON s.student_id = r.student_id
             INNER JOIN
@@ -61,16 +61,14 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
                                          WHEN r.q4 > 0 THEN r.student_id
                                      END) Q4TotalStudents ,
                       r.academic_year,
-                      r.grade,
-                      r.section
+                      r.grade
                FROM student_records r
                GROUP BY r.academic_year,
-                        r.grade,
-                        r.section) sub
+                        r.grade
+                        ) sub
             WHERE sub.academic_year=r.academic_year
               AND sub.grade= r.grade
-              AND sub.section = r.section
-            GROUP BY r.student_id,
+              GROUP BY r.student_id,
                      r.academic_year,
                      r.grade,
                      r.section
