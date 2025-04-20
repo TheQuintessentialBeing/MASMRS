@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class CSVDataLoadingService {
+public class TestDataCSVLoadService {
     private final StudentRepository studentRepository;
     private final StudentRecordRepository studentRecordRepository;
     @Value("${student.csv.file.name}")
@@ -27,7 +27,7 @@ public class CSVDataLoadingService {
     @Value("${student.record.csv.file.name}")
     private String studentrecordcsvfilename;
 
-    public CSVDataLoadingService(StudentRepository studentRepository, StudentRecordRepository studentRecordRepository) {
+    public TestDataCSVLoadService(StudentRepository studentRepository, StudentRecordRepository studentRecordRepository) {
         this.studentRepository       = studentRepository;
         this.studentRecordRepository = studentRecordRepository;
     }

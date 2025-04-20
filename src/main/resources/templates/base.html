@@ -74,7 +74,7 @@
                         </li>
                         <!-- Students Only -->
                         <li class="nav-item" sec:authorize="hasRole('ROLE_STUDENT')">
-                            <a class="nav-link" href="/records/search">Search</a>
+                            <a class="nav-link" href="/record/search">Search</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_STUDENT')">
                             <a class="nav-link" href="/contactus">Contact us</a>
@@ -99,7 +99,7 @@
                                     <li><a class="nav-link css-custom-color" href="/student/edit">Edit</a></li>
                                     <li><a class="nav-link css-custom-color" href="/student/delete">Delete</a>
                                     </li>
-                                    <li><a class="nav-link css-custom-color" href="/student/delete">View</a></li>
+                                    <li><a class="nav-link css-custom-color" href="/student/list">View</a></li>
                                 </ul>
                             </div>
                         </li>

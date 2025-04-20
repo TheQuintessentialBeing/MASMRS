@@ -21,7 +21,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 @Controller
-@RequestMapping("/records")
+@RequestMapping("/record")
 public class StudentRecordController {
     // @Autowired creates the beans or objects ( new ...) by spring framework
     @Autowired
