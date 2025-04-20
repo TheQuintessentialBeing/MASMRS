@@ -1,12 +1,13 @@
 package com.macademy.recordmgmt.controllers;
 
 import com.macademy.recordmgmt.models.Student;
-import com.macademy.recordmgmt.services.CSVDataLoadingService;
 import com.macademy.recordmgmt.services.StudentService;
+import com.macademy.recordmgmt.services.TestDataCSVLoadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,33 +18,35 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
-    private CSVDataLoadingService csvDataLoadingService;
+    private final TestDataCSVLoadService testDataCSVLoadService;
     @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    public StudentController(StudentService studentService, CSVDataLoadingService csvDataLoadingService) {
-        this.studentService        = studentService;
-        this.csvDataLoadingService = csvDataLoadingService;
+    public StudentController(StudentService studentService, TestDataCSVLoadService testDataCSVLoadService) {
+        this.studentService         = studentService;
+        this.testDataCSVLoadService = testDataCSVLoadService;
     }
-
-    public StudentController() {
-    }
-
 
     //  TODO CRUD - Read works
-    @GetMapping("/list")
-    public ResponseEntity<List<Student>> showAllStudentspp() {
+    @GetMapping("/listpm")
+    public ResponseEntity<List<Student>> showAllStudentspm() {
         List<Student> students = studentService.listAllStudents();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
+    @GetMapping("/list")
+    public String showAllStudents(Model model) {
+        List<Student> students = studentService.listAllStudents();
+        model.addAttribute("student", students);
+        return "studentlist";
+    }
+
     @GetMapping("/find/{StudentId}")
     public ResponseEntity<Student> findStudent(@PathVariable Integer StudentId) {
-        System.out.println("TESTING: find Student by id ");
         Student student = studentService.findByStudentId(StudentId);
         if (student != null) {
             return ResponseEntity.ok(student);
@@ -127,7 +130,7 @@ public class StudentController {
 // Working post man
     @GetMapping("/loadstudents")
     public ResponseEntity<String> loadStudentCsv() throws IOException {
-        csvDataLoadingService.loadCsvStudentDataFile();
+        testDataCSVLoadService.loadCsvStudentDataFile();
         System.out.println("Controller called for Student Record data....");
         return ResponseEntity.ok("Student data inserted successfully!");
     }
@@ -135,7 +138,7 @@ public class StudentController {
     // Working post man
     @GetMapping("/loadstudentrecords")
     public ResponseEntity<String> loadStudentRecordCsv() throws IOException {
-        csvDataLoadingService.loadStudentRecordDataFile();
+        testDataCSVLoadService.loadStudentRecordDataFile();
         return ResponseEntity.ok("Student record data inserted successfully!");
     }
 }

@@ -75,7 +75,7 @@
                 <th>Quarter III</th>
                 <th>Quarter IV</th>
             </tr>
-            <tr th:each="c: ${detail}">
+            <tr .css-odd-rows th:each="c: ${detail}">
                 <td>[[${c.subject}]]</td>
                 <td>[[${c.q1}]]</td>
                 <td>[[${c.q2}]]</td>

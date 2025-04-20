@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parent Management</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Student Management</title>
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        <h2>Student Registration</h2>
+
+        <input id="searchInput" placeholder="Search by first name..." type="text"/>
+
+        <form id="studentForm">
+            <input id="studentId" type="hidden">
+            <input id="firstName" placeholder="First Name" required type="text">
+            <input id="middleName" placeholder="Middle Name" type="text">
+            <input id="lastName" placeholder="Last Name" required type="text">
+            <input id="dateOfBirth" placeholder="Date of Birth" type="date">
+            <select id="gender" required>
+                <option value="">Gender</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <input id="registrationDate" required type="date">
+            <input id="kifleKetema" placeholder="Kifle Ketema" required type="text">
+            <input id="kebele" placeholder="Kebele" type="text">
+            <input id="houseNumber" placeholder="House Number" required type="text">
+            <input id="phone" placeholder="Phone" required type="text">
+            <input id="comment" placeholder="Comment" type="text">
+            <label><input id="isActive" type="checkbox"> Active</label>
+
+            <div class="btn-group">
+                <button type="submit">Save</button>
+                <button onclick="clearForm()" type="reset">Clear</button>
+            </div>
+        </form>
+
+        <h3>Student List</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="studentTableBody"></tbody>
+        </table>
+    </div>
+
+
+    </body>
+    </html>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
