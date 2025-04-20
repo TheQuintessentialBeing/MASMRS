@@ -91,18 +91,41 @@
                                         class="btn btn-secondary dropdown-toggle css-custom-dbcolor"
                                         data-bs-toggle="dropdown"
                                         type="button">
-                                    Student Record Dashboard
+                                    Student Mgt TL
                                 </button>
-
+                                <!--TODO in JS case the ff 4 buttons will be served in one page but for convince can be 4-->
                                 <ul class="dropdown-menu">
                                     <li><a class="nav-link css-custom-color" href="/student/add">Add</a></li>
                                     <li><a class="nav-link css-custom-color" href="/student/edit">Edit</a></li>
                                     <li><a class="nav-link css-custom-color" href="/student/delete">Delete</a>
                                     </li>
                                     <li><a class="nav-link css-custom-color" href="/student/list">View</a></li>
+
                                 </ul>
                             </div>
                         </li>
+
+
+                        <li sec:authorize="hasRole('ROLE_TEACHER')">
+
+                            <div class="dropdown" style="display: inline!important;">
+                                <button aria-expanded="false"
+                                        class="btn btn-secondary dropdown-toggle css-custom-dbcolor"
+                                        data-bs-toggle="dropdown"
+                                        type="button">
+                                    Student Mgt JS
+                                </button>
+                                <!-- TODO   Note 1. if we need to add the 4 buttons like abve we can duplicate the line if not Js is displaying every thing in index.html-->
+                                <!-- TODO Note 2. we dont need to refer the href="/student/list" b/c index.html is in static folder and spring boot searches automatically -->
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="nav-link css-custom-color" href="index.html">View JS </a></li>
+                                </ul>
+
+                            </div>
+                        </li>
+
+
                         <!-- Admins & HR Only Note for multiple roles use hasAnyRole -->
                         <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_HR')">
                             <a class="nav-link" href="/employees">Employees</a>

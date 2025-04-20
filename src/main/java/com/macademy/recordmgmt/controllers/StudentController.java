@@ -17,8 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/*@RequiredArgsConstructor*/ // will automaticall create constructors
 @Controller
-@RequestMapping("/student")
+@RequestMapping("api/students")
 public class StudentController {
 
     @Autowired
@@ -31,6 +32,13 @@ public class StudentController {
         this.testDataCSVLoadService = testDataCSVLoadService;
     }
 
+    @GetMapping()
+    public List<Student> listStudents() {
+        System.out.println("JS is being called");
+        return studentService.getAllStudents();
+    }
+
+
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
     public ResponseEntity<List<Student>> showAllStudentspm() {
@@ -38,6 +46,16 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
+   /* // Working in thymeleaf
+    @GetMapping("/list")
+    public String showAllStudentsJS(Model model) {
+        List<Student> students = studentService.listAllStudents();
+        model.addAttribute("student", students);
+        return "studentlist";
+    }
+*/
+
+    // Working in thymeleaf
     @GetMapping("/list")
     public String showAllStudents(Model model) {
         List<Student> students = studentService.listAllStudents();
