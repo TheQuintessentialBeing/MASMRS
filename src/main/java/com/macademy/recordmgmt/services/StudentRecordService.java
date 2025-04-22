@@ -104,7 +104,7 @@ public class StudentRecordService {
                 (r[26] != null) ? ((Number) r[26]).intValue() : null,                        // 26 Q2StudentCount
                 (r[27] != null) ? ((Number) r[27]).intValue() : null,                        // 27 Q3StudentCount
                 (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 28 Q4TotalStudents
-                (r[28] != null) ? ((Number) r[28]).intValue() : null,                        // 29 Q1AllSectionRank
+                (r[29] != null) ? ((Number) r[29]).intValue() : null,                        // 29 Q1AllSectionRank
                 (r[30] != null) ? ((Number) r[30]).intValue() : null,                        // 30 Q2AllSectionRank
                 (r[31] != null) ? ((Number) r[31]).intValue() : null,                        // 31 Q3AllSectionRank
                 (r[32] != null) ? ((Number) r[32]).intValue() : null                         // 32 Q4AllSectionRank
@@ -218,8 +218,10 @@ public class StudentRecordService {
                 trows.addCell(String.format("%.1f", r.getQ4()));
                 trows.addCell(String.format("%.1f", ((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0)));
             }
-            double yearlySum = (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum()) / 4.0;
-
+            double yearlySum = (
+                            (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum())
+                            / 4.00);
+            //Todo  double roundedResult = Math.round(result * 100.0) / 100.0;
             // sum , average and quarter ranks
             Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), yearlySum).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
@@ -228,7 +230,11 @@ public class StudentRecordService {
             });
 
 
-            Stream.of("Average", bio.getQuarterOneSum() / bio.getNumberOfSubjects(), bio.getQuarterTwoSum() / bio.getNumberOfSubjects(), bio.getQuarterThreeSum() / bio.getNumberOfSubjects(), bio.getQuarterFourSum() / bio.getNumberOfSubjects(), yearlySum / bio.getNumberOfSubjects()).forEach(d -> {
+            Stream.of("Average", bio.getQuarterOneSum() / bio.getNumberOfSubjects(),
+                    bio.getQuarterTwoSum() / bio.getNumberOfSubjects(),
+                    bio.getQuarterThreeSum() / bio.getNumberOfSubjects(),
+                    bio.getQuarterFourSum() / bio.getNumberOfSubjects(),
+                   yearlySum / bio.getNumberOfSubjects()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
@@ -240,7 +246,12 @@ public class StudentRecordService {
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);
             });
-            Stream.of("All Sec. Rank", bio.getQ1AllSectionRank(), bio.getQ2AllSectionRank(), bio.getQ3AllSectionRank(), bio.getQ4AllSectionRank(), bio.getAllSectionRank()).forEach(d -> {
+            Stream.of("All Sec. Rank",
+                    bio.getQ1AllSectionRank(),
+                    bio.getQ2AllSectionRank(),
+                    bio.getQ3AllSectionRank(),
+                    bio.getQ4AllSectionRank(),
+                    bio.getAllSectionRank()).forEach(d -> {
                 PdfPCell k = new PdfPCell(new Phrase(String.valueOf(d)));
                 k.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 trows.addCell(k);

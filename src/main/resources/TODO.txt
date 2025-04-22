@@ -4,8 +4,8 @@ TODO - Musts
 13. Clean up logs added in controller and services
 14. remove script files not needed from resource folder
 
-16.  http://localhost:8081/records/search header should remove Online Shopping instead add the logo of mieraf academy and pictures like the homepage
-17.  add mieraf academy logo on report
+16.  http://localhost:8081/records/search header should remove Online Shopping instead add the logo of miraf academy and pictures like the homepage
+17.  add miraf academy logo on report
 18. drawbacks currently data loading don't check if data is already there or not so it could be duplicated
 18.1 solution - run delete duplicate records after loading or
    18.2. check records for semester and current year.
