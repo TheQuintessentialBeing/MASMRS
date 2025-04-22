@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: baseheader">
+    <title>Product List</title>
+</head>
+<style>
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .printable-page {
+        width: 8.27in; /* A4 width */
+        height: 11.69in; /* A4 height */
+        padding: 1in;
+        border: 2px solid black;
+        box-sizing: border-box;
+        page-break-after: always;
+      }
+    }
+    .printable-page {
+      margin: 20px auto;
+      background: white;
+    }
+</style>
+<body>
+<div th:replace="base :: navlinks"></div>
+<!--<div class="container" class="printable-page">-->
+<div class="printable-page">
+    <div th:if="${errorMessage !=null }">
+        <p style="color:red;" th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${errorMessage == null }">
+        <p style="
+           text-align: center;
+           font-weight: 800;
+           font-size: 32px;
+           margin-bottom: 20px;
+           border-bottom: 2px solid #ccc; /* adds subtle underline */
+           padding-bottom: 10px;"
+        > School of Miraf Academy Student's Report</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+            <!-- Left side: Student information -->
+            <div>
+                <p><span
+                        style="padding:10px;">[[${header.firstName}]] [[${header.middleName}]] [[${header.lastName}]] </span>
+                </p>
+                <p><span
+                        style="padding:10px "> Date of Birth: [[${header.dateOfBirth}]] Gender: [[${header.gender}]]</span>
+                </p>
+                <p><span style="padding:10px "> Academic Year: [[${header.academicYear}]] Grade: [[${header.grade}]][[${header.section}]] </span>
+                </p>
+            </div>
+            <!-- Right side: Buttons for actions -->
+            <div style="padding:20px; color:black;">
+                <p>Today's date: <span style="padding 150px;" th:text="${printingDate}"></span></p>
+                <p>
+                    <button class="btn btn-light cs-action-button" id="printbtn" onclick="printPDF()" th:disabled
+                            type="button">Print Report
+                    </button>
+                    <a href="/record/download" target="_blank">
+                        <button class="btn btn-light cs-action-button" onclick="emailInvoice()" type="button">
+                            Email Report
+                        </button>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <table class="table .table-bordered">
+            <tr>
+                <th>Subject(s)</th>
+                <th>Quarter I</th>
+                <th>Quarter II</th>
+                <th>Quarter III</th>
+                <th>Quarter IV</th>
+            </tr>
+            <tr .css-odd-rows th:each="c: ${detail}">
+                <td>[[${c.subject}]]</td>
+                <td>[[${c.q1}]]</td>
+                <td>[[${c.q2}]]</td>
+                <td>[[${c.q3}]]</td>
+                <td>[[${c.q4}]]</td>
+            </tr>
+            <tr>
+                <td>Sum</td>
+                <td> [[${header.quarterOneSum}]]</td>
+                <td> [[${header.quarterTwoSum}]]</td>
+                <td> [[${header.quarterThreeSum}]]</td>
+                <td> [[${header.quarterFourSum}]]</td>
+            </tr>
+            <tr>
+                <td>Rank</td>
+                <td> [[${header.quarterOneRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterTwoRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterThreeRank}]] of [[${header.numberOfSubjects}]]</td>
+                <td> [[${header.quarterFourRank}]] of [[${header.numberOfSubjects}]]</td>
+            </tr>
+        </table>
+        <p><b> Ranks </b>
+        <p> Semester I : [[${header.semesterOneRank}]] </p>
+        <p> Semester II: [[${header.semesterTwoRank}]] </p>
+        <p> All
+            Section : [[${header.allSectionRank}]] </p>
+        <p>Disclaimer : Printing this report or viewing it without the proper access, is violation of privacy. </p>
+    </div>
+    <script>
+        function printPDF() {
+           const pdfWindow = window.open("/record/download", "_blank");
+           pdfWindow.focus();
+
+           // Wait for the PDF to load before printing
+           pdfWindow.onload = () => {
+               pdfWindow.print();
+           };
+       }
+          <!--TODO-->
+        function emailInvoice() {
+                   fetch('/record/email', {
+                       method: 'POST'
+                   })
+                   .then(response => response.text())
+                   .then(data => alert(data))
+                   .catch(err => alert('Error: ' + err));
+               }
+
+    </script>
+    <script th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}" type="text/javascript"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" type="text/javascript"></script>
+</div>
+<p>Copyright @2025 Report generated by School of Miraf Academy Student Records & Management Systems. </p>
+</body>
+</html>

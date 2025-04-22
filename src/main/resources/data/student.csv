@@ -1,0 +1,109 @@
+student_id, first_name, middle_name, last_name,  date_of_birth, gender, registration_date,photo, kifle_ketema, kebele, house_number,phone,comment,is_active
+1001, Kidus, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-520, Optional,true
+1002, Betel, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1003, Abebe, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1004, Mattie, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1005, Sara, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1006, Teshome, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1007, Mefkere, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1008, Woini, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1009, Martha, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1010, Solomon, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1011, Bank, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1012, Tab, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1013, Yichalal, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1014, Fetene, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1015, Simret, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1016, Teshome, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1017, Wondimu, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1018, Hakim, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1019, Hana, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1020, Aklilu , Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1021, Amen, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1022, Tru, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1023, Bruk, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1024, Tekle, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1025, Shemsit, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1026, Lakew, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1027, Senay, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1028, Nahu, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1029, Omar, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1030, Mike, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1031, Young, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1032, Sewyew, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1033, Jemal, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1034, Tiktok, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1035, Mengestu, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1036, Chemrew, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1037, Demere, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1038, Aynu, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1039, Minit, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1040, Tadese, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1041, Gezu, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1042, Temarit, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1043, Kedame, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1044, Belay, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1045, Miskir, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1046, Masresha, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1047, Sitotaw, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1048, Birtukan, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1049, Tsedale, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1050, Zerihun, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1051, Tizta, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1052, Betel, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1053,   Abebe, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1054, Mattie, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1055, Sara, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1056, Teshome, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1057, Mefkere, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1058, Woini, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1059, Martha, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1060, Solomon, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1061, Bank, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1062, Tab, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1063, Yichalal, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1064, Fetene, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1065, Simret, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1066, Teshome, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1067, Wondimu, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1068, Hakim, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1069, Hana, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1070, Aklilu , Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1071, Amen, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1072, Tru, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1073, Bruk, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1074, Tekle, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1075, Shemsit, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1076, Lakew, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1077, Senay, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1078, Nahu, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1079, Omar, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1080, Mike, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1081, Young, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1082, Sewyew, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1083, Jemal, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1084, Tiktok, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1085, Mengestu, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1086, Chemrew, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1087, Demere, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1088, Aynu, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1089, Minit, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1090, Tadese, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1091, Gezu, Kagnew, Eshetu, 1993-02-03, M, 2005-10-24, null, Bole, 1, kebele 12, 0911-354-5277, Optional,true
+1092, Temarit, Hailu, Tegegne, 1995-10-02, F, 2018-12-06, null, Bole, 2, kebele 12, 0912-282-1592, Club affilated,true
+1093, Kedame, Goje, Kelelegn, 1992-03-10, M, 2022-11-06, null, Piazza, 3, kebele 13, 0963-546-9306, Normal,true
+1094, Belay, Debebe, Amicho, 1993-02-03, M, 2005-10-24, null, Shegole, 1, kebele 14, 0978-354-5277, Optional,true
+1095, Miskir, Kebede, Naod, 1995-10-02, F, 2018-12-06, null, Kirkos, 2, kebele 10, 0911-282-1592, Club affilated,true
+1096, Masresha, Abiy, Woldu, 1992-03-10, M, 2022-11-06, null, Arat Killo, 3, kebele 11, 0936-546-9306, Normal,true
+1097, Sitotaw, Seab, Adam, 1993-02-03, M, 2005-10-24, null, France, 1, kebele 10, 0949-354-5277, Optional,true
+1098, Birtukan, Hagos, Birhan, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 1, 0991-282-1592, Club affilated,true
+1099, Tsedale, Bulo, Ahmed, 1995-10-02, F, 2018-12-06, null, Yeka, 2, kebele 2, 0191-282-1592, Club affilated,true
+1100, Zerihun, Fentaw, Muluneh, 1992-03-10, M, 2022-11-06, null, Mexico, 3, kebele 1, 0974-546-9306, Normal,true
+1101, Tizta,     Fentaw,   Muluneh,       1992-03-10,   M,   2022-11-06       , null, Mexico    , 3     , kebele 1  , 0974-546-9306, Normal,true
+1102, Aynalem ,  Tasachew, Tsegaw        ,1992-03-10  , M  , 2022-11-06       , null, Mexico    , 3     , kebele 1  , 0974-546-9306, Normal,true
+1103, Hagere  ,   Solomon, Muluneh        ,1992-03-10 , M   , 2022-11-06       , null, Mexico    , 3     , kebele 1  , 0974-546-9306, Need Ass,true
+1104, Hagere  ,   Solomon, Muluneh        ,1992-03-10 , M   , 2022-11-06       , null, Mexico    , 3     , kebele 1  , 0974-546-9306, Need Ass,true
+
+
+
+

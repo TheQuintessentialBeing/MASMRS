@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head th:replace="base :: baseheader">
+    <title>Product List</title>
+
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+
+<div class="container">
+    <h4>Student Records View</h4>
+    <div class="input-group" style="width: 60%; margin-right: 20px">
+
+        <input id="inputStudentId" class="form-control rounded "  placeholder="Student Id eg.1001" aria-label="Search"
+               aria-describedby="search-addon"/>
+
+        <input id="inputAcademicYear" class="form-control rounded "  placeholder="Academic Year eg. 2017" aria-label="Search"
+               aria-describedby="search-addon"/>
+        <button id="reportbtn" onclick="searchTerm()" type="button" class="btn btn-light cs-action-button">
+            Search
+        </button>
+
+       </div>
+    </div>
+    <script>
+        // Function to handle the click event for searching
+        function searchTerm() {
+            // Get the inputstudentId value
+
+            let inputstudentIdValue = inputStudentIdVal();
+            let inputAcademicYearValue   =inputAcademicYearVal();
+            console.log("This is inside searchTerm");
+            // Check if the inputstudentId value is not empty
+            if (inputstudentIdValue.length != 0 && inputAcademicYearValue !=0) {
+                // Use a confirmation dialog to ask the user if they want to proceed
+                const userConfirmed = window.confirm("Confirm to proceed searching for : " + inputstudentIdValue + " & " + inputAcademicYearValue + "?");
+
+                // If the user clicks "OK" (confirmed), proceed with the action
+                if (userConfirmed) {
+                    // alert('Search was confirmed!');
+                    // Redirect to the search page with the inputstudentId value & inputAcademicYear value
+                    window.location.href = "/record/search/" + inputstudentIdValue + "/" + inputAcademicYearValue;
+                } else {
+                     alert("You cancelled the search for Student Id :" + inputstudentIdValue());
+                }
+            } else {
+                // Optional: Add an alert for empty inputstudentId when trying to search
+                alert("Please enter Student Id eg. 1234 format.");
+            }
+        }
+        // Function to get the value from the input field with id "input"
+        function inputStudentIdVal() {
+          console.log("This is inside inputStudentIdVal()");
+            return document.getElementById("inputStudentId").value;  // Return the value of the student Id field
+        }
+
+         // Function to get the value from the input field with id "input"
+        function inputAcademicYearVal() {
+          console.log("This is inside inputStudentIdVal()");
+            return document.getElementById("inputAcademicYear").value;  // Return the value of the student Id field
+        }
+    </script>
+
+   <div>
+        <p>No results displayed until you enter your info and click search button </p>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
