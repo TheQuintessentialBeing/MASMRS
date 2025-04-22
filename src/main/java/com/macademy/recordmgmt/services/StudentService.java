@@ -37,6 +37,12 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    public List<Student> findByFirstNameContainingIgnoreCase(String search) {
+
+        return studentRepository.findByFirstNameContainingIgnoreCase(search);
+    }
+
+
     public void saveStudent(Student student) {
         studentRepository.save(student);
     }

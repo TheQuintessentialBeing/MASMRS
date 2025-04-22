@@ -1,4 +1,4 @@
-let students = [];
+/*let students = [];
 let currentPage = 1;
 const pageSize = 5;
 
@@ -97,7 +97,7 @@ function renderStudents() {
   );
   const pageStudents = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-  studentTable.innerHTML = "";
+  studentTable.innerHTML = "TODO what is this ";
   pageStudents.forEach(s => {
     const row = `<tr>
       <td>${s.firstName} ${s.middleName ?? ''} ${s.lastName}</td>
@@ -157,141 +157,8 @@ async function loadStudents() {
   } catch (error) {
     console.error("Load error:", error);
   }
-}
+}*/
 
-
-
-/*
-        let students = [];
-        let currentPage = 1;
-        const pageSize = 5;
-
-        const studentForm = document.getElementById("studentForm");
-        const studentTable = document.getElementById("studentTable");
-
-        studentForm.addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const student = getFormData();
-          const method = student.studentId ? "PUT" : "POST";
-          const url = student.studentId ? `/api/students/${student.studentId}` : "/api/students";
-
-          await fetch(url, {
-            method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(student)
-          });
-
-          await loadStudents();
-          resetForm();
-          bootstrap.Modal.getInstance(document.getElementById('studentModal')).hide();
-        });
-
-        function getFormData() {
-          return {
-            studentId: document.getElementById("studentId").value,
-            firstName: document.getElementById("firstName").value,
-            middleName: document.getElementById("middleName").value,
-            lastName: document.getElementById("lastName").value,
-            dateOfBirth: document.getElementById("dob").value,
-            gender: document.getElementById("gender").value,
-            registrationDate: document.getElementById("regDate").value,
-            kifleKetema: document.getElementById("kifleKetema").value,
-            kebele: document.getElementById("kebele").value,
-            houseNumber: document.getElementById("houseNumber").value,
-            phone: document.getElementById("phone").value,
-            comment: document.getElementById("comment").value,
-            photo: document.getElementById("photo").value,
-            isActive: document.getElementById("isActive").checked
-          };
-        }
-
-        function previewImage(event) {
-          const reader = new FileReader();
-          reader.onload = function () {
-            const output = document.getElementById("photoPreview");
-            output.src = reader.result;
-            output.style.display = "block";
-          };
-          reader.readAsDataURL(event.target.files[0]);
-        }
-
-        function resetForm() {
-          studentForm.reset();
-          document.getElementById("studentId").value = "";
-          document.getElementById("photoPreview").style.display = "none";
-        }
-
-        function openAddModal() {
-          resetForm();
-          document.getElementById("studentModalLabel").textContent = "Add Student";
-        }
-
-        function openEditModal(student) {
-          for (let key in student) {
-            const field = document.getElementById(key);
-            if (field) field.value = student[key];
-          }
-          document.getElementById("isActive").checked = student.isActive;
-          document.getElementById("studentModalLabel").textContent = "Edit Student";
-          new bootstrap.Modal(document.getElementById("studentModal")).show();
-        }
-
-        function renderStudents() {
-          const search = document.getElementById("searchInput").value.toLowerCase();
-          const filtered = students.filter(s => (s.firstName + s.lastName).toLowerCase().includes(search));
-          const pageStudents = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-          studentTable.innerHTML = "";
-          pageStudents.forEach(s => {
-            const row = `<tr>
-              <td>${s.firstName} ${s.middleName ?? ''} ${s.lastName}</td>
-              <td>${s.dateOfBirth ?? ''}</td>
-              <td>${s.gender}</td>
-              <td>${s.registrationDate}</td>
-              <td>${s.phone}</td>
-              <td>${s.kifleKetema}, ${s.kebele ?? ''}, ${s.houseNumber}</td>
-              <td>${s.isActive ? 'Yes' : 'No'}</td>
-              <td><img src="${s.photo}" class="img-preview"/></td>
-              <td>
-                <button class="btn btn-sm btn-warning" onclick='openEditModal(${JSON.stringify(s)})'>Edit</button>
-                <button class="btn btn-sm btn-danger" onclick='deleteStudent(${s.studentId})'>Delete</button>
-              </td>
-            </tr>`;
-            studentTable.insertAdjacentHTML("beforeend", row);
-          });
-          renderPagination(filtered.length);
-        }
-
-        function renderPagination(totalItems) {
-          const totalPages = Math.ceil(totalItems / pageSize);
-          const pagination = document.getElementById("pagination");
-          pagination.innerHTML = "";
-          for (let i = 1; i <= totalPages; i++) {
-            pagination.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-              <a class="page-link" href="#" onclick="setPage(${i})">${i}</a></li>`;
-          }
-        }
-
-        function setPage(page) {
-          currentPage = page;
-          renderStudents();
-        }
-
-        async function deleteStudent(id) {
-          await fetch(`/api/students/${id}`, { method: 'DELETE' });
-          await loadStudents();
-        }
-
-        async function loadStudents() {
-          const response = await fetch("/api/students");
-          students = await response.json();
-          renderStudents();
-        }
-
-        loadStudents();
-        ///////////////////////////////////////////
-
-        <script>
             const API = "/api/students";
 
             document.addEventListener("DOMContentLoaded", () => {
@@ -308,6 +175,7 @@ async function loadStudents() {
                 .then(data => {
                   const tbody = document.getElementById("studentTableBody");
                   tbody.innerHTML = "";
+                  console.log("data:" + data)
                   data.forEach(s => {
                     const row = document.createElement("tr");
                     row.innerHTML = `
@@ -380,7 +248,7 @@ async function loadStudents() {
               document.getElementById("studentForm").reset();
               document.getElementById("studentId").value = "";
             }
-        </script>
 
 
-        */
+
+

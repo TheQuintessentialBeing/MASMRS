@@ -14,12 +14,12 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Student Management</h2>
+    <h2>Student Management -1</h2>
     <div class="d-flex justify-content-between mb-3">
         <input class="form-control w-50" id="searchInput" onkeyup="renderStudents()" placeholder="Search by name"
                type="text">
         <button class="btn btn-primary" data-bs-target="#studentModal" data-bs-toggle="modal" onclick="openAddModal()">
-            Add Student
+            Add Student-1
         </button>
     </div>
 
@@ -36,8 +36,10 @@
             <th>Photo</th>
             <th>Actions</th>
         </tr>
-        </thead>
-        <tbody id="studentTable"></tbody>
+        </thead><!--
+        <tbody id="studentTable"></tbody>-->
+        <tbody id="studentTableBody"></tbody>
+
     </table>
     <nav>
         <ul class="pagination" id="pagination"></ul>

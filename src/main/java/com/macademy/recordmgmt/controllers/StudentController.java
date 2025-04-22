@@ -31,13 +31,22 @@ public class StudentController {
         this.studentService         = studentService;
         this.testDataCSVLoadService = testDataCSVLoadService;
     }
-
+/*
     @GetMapping()
     public List<Student> listStudents() {
         System.out.println("JS is being called");
         return studentService.getAllStudents();
-    }
+    }*/
 
+    @GetMapping()
+    public List<Student> searchStudents(@RequestParam(required = false) String search) {
+        System.out.println("search" + search);
+        if (search == null || search.isEmpty()) {
+            return studentService.listAllStudents();
+        } else {
+            return studentService.findByFirstNameContainingIgnoreCase("Kidus");
+        }
+    }
 
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
