@@ -9,10 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@Entity // make it JPA entity
-//@Table(name = "Students") // change to any name in database from here
-//@FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
-//@SequenceGenerator(name = "studentNumber_Seq", initialValue = 1000, allocationSize = 1)
 @Getter
 @Setter
 

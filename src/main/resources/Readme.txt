@@ -5,14 +5,15 @@ Note: this document should grow as a user's manual written in word and later to 
 1. look for the properties file - db name
 2. check (change) username and password of your database
 3. load student data (first) -- files are in resources/data folder
- 3. 1 user post man to load  localhost:8081/students/loadstudent
+ 3. 1 user post man to load  localhost:8081/students/loadstudents
 4. load student record data (second) -- files are in resources/data folder
  4,1 use post man to load localhost:8081/students/loadstudentrecords
 5. use the queries included in query.sql file to verify step 3 and 4 are successful.
 6. then run the project
 7.  register users - like Kidus's detail with email and password
+7.0 You can change manually userimplservice.java file line 35
 7.1 log in again using email and password
-7.2 click "Records" button
+7.2 click "search" button
    7.2.1 will open localhost:8081/records/search page will open
 7.3 Enter student id { eg. 1001, and a/year 2014)
  7.3.1 will open http://localhost:8081/records/search/1001/2014 page will open
@@ -26,8 +27,8 @@ TODO
 =Role Types                     |Purpose                                                                                          =
 ===================================================================================================================================
 = 1.ROLE_STUDENT               | search reports by id and year & able to print ; send message on contact us and use about us page =
-= 2.ROLE_TEACHER               | add / delete / edit / read records of the grade and sections assigned                            =
-= 3.ROLE_ADMIN                 | can register add / delete(flag) / edit / read students                                           =
+= 2.ROLE_TEACHER               | add / delete / edit / read records of the grade and sections they are assigned                            =
+= 3.ROLE_ADMIN                 | can register / delete(flag) / edit / read students                                           =
 = 4.ROLE_HR                    | can work with employess & student payments ( future purpose )                                    =
 = 5.ROLE_DIRECTORS             | see important statistics of total students , top students .....                                  =
 ===================================================================================================================================
@@ -49,11 +50,7 @@ from user u
 inner join users_roles ur on u.id = ur.user_id
 inner join role r on r.id = ur.user_id
 
-
-How we can create those roles - our program always register students two ways to do this
-1. change the hard code at .... class find this later on
-2. register all of them as student but change it in the database table
-
+roles and pages
 1. <!-- section 1: Profile (For all NOT logged-in or visitor users)-->
        sec:authorize="!isAuthenticated()">
 
