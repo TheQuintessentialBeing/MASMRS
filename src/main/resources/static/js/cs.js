@@ -159,7 +159,7 @@ async function loadStudents() {
   }
 }*/
 
-            const API = "/api/students";
+            const API = "/student";
 
             document.addEventListener("DOMContentLoaded", () => {
               loadStudents();

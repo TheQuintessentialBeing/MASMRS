@@ -1,5 +1,5 @@
 # SMRS- High School management and recording system 
-Case of Mieraf Academy 
+Case of Miraf Academy 
 Full description:
 Purpose 
 How to use 

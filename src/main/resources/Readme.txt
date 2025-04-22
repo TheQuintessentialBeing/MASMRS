@@ -35,11 +35,11 @@ TODO
 SAMPLE USERS
 id             email                           first_name           last_name       password         Role
 ========================================================================================================================================
-1              student@mierafacademy.com        student             student         student          ROLE_STUDENT    ( app does by default)
-3              teacher@@mierafacademy.com       teacher             teacher         teacher          ROLE_TEACHER    ( need update from student to teacher )
-5              admin@mierafacademy.com          admin               admin           admin            ROLE_ADMIN      ( need update from student to admin )
-7              hr@mierafacademy.com             hr                  hr              hr               ROLE_HR         ( need update from student to hr )
-9              directors@mierafacademy.com     directors            directors       directors        ROLE_DIRECTORS  ( need update from student to directors )
+1              student@mirafacademy.com        student             student         student          ROLE_STUDENT    ( app does by default)
+3              teacher@@mirafacademy.com       teacher             teacher         teacher          ROLE_TEACHER    ( need update from student to teacher )
+5              admin@mirafacademy.com          admin               admin           admin            ROLE_ADMIN      ( need update from student to admin )
+7              hr@mirafacademy.com             hr                  hr              hr               ROLE_HR         ( need update from student to hr )
+9              directors@mirafacademy.com     directors            directors       directors        ROLE_DIRECTORS  ( need update from student to directors )
 sample update statment
 update role set name = 'ROLE_TEACHER' where id =8; //
 

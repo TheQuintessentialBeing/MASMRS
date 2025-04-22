@@ -9123,7 +9123,7 @@ instanceKlass  @bci org/springframework/boot/logging/LoggingSystemFactory fromSp
 instanceKlass org/springframework/boot/logging/DelegatingLoggingSystemFactory
 instanceKlass org/springframework/boot/logging/LoggingSystemFactory
 instanceKlass org/springframework/boot/logging/LoggingSystem
-instanceKlass com/macademy/recordmgmt/utility/MierafUtility
+instanceKlass com/macademy/recordmgmt/utility/MirafUtility
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x0000000800c81c00
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x0000000800c81800
 # instanceKlass java/lang/invoke/LambdaForm$MH+0x0000000800c81400
@@ -9557,7 +9557,7 @@ instanceKlass java/time/chrono/ChronoLocalDate
 instanceKlass java/time/temporal/TemporalAdjuster
 instanceKlass java/time/temporal/Temporal
 instanceKlass java/time/temporal/TemporalAccessor
-instanceKlass com/macademy/recordmgmt/utility/MierafUtility
+instanceKlass com/macademy/recordmgmt/utility/MirafUtility
 instanceKlass ch/qos/logback/classic/util/LoggerNameUtil
 instanceKlass ch/qos/logback/classic/selector/DefaultContextSelector
 instanceKlass ch/qos/logback/core/util/StatusPrinter

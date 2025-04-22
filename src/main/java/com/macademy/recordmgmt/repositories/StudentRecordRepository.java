@@ -46,7 +46,7 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
                    RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q3)Desc) Q3AllSectionRank, -- // 31 Q3AllSectionRank
                    RANK() OVER (PARTITION By r.academic_year, r.grade Order by sum(r.q4)Desc) Q4AllSectionRank  -- // 32 Q4AllSectionRank
             FROM students s
-            LEFT JOIN student_records r ON s.student_id = r.student_id
+            INNER JOIN student_records r ON s.student_id = r.student_id
             INNER JOIN
               (SELECT COUNT(DISTINCT CASE
                                          WHEN r.q1 > 0 THEN r.student_id
@@ -70,8 +70,7 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
               AND sub.grade= r.grade
               GROUP BY r.student_id,
                      r.academic_year,
-                     r.grade,
-                     r.section
+                     r.grade
             """, nativeQuery = true)
     List<Object[]> getAllStudentRecordByYearAndGrade();
 

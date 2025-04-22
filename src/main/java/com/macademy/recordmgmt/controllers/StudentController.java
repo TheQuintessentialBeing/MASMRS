@@ -19,7 +19,7 @@ import java.util.Set;
 
 /*@RequiredArgsConstructor*/ // will automaticall create constructors
 @Controller
-@RequestMapping("api/students")
+@RequestMapping("student")
 public class StudentController {
 
     @Autowired
@@ -31,14 +31,14 @@ public class StudentController {
         this.studentService         = studentService;
         this.testDataCSVLoadService = testDataCSVLoadService;
     }
-/*
+
     @GetMapping()
     public List<Student> listStudents() {
         System.out.println("JS is being called");
         return studentService.getAllStudents();
-    }*/
+    }
 
-    @GetMapping()
+    /* @GetMapping()
     public List<Student> searchStudents(@RequestParam(required = false) String search) {
         System.out.println("search" + search);
         if (search == null || search.isEmpty()) {
@@ -46,7 +46,7 @@ public class StudentController {
         } else {
             return studentService.findByFirstNameContainingIgnoreCase("Kidus");
         }
-    }
+    } */
 
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
@@ -55,14 +55,6 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-   /* // Working in thymeleaf
-    @GetMapping("/list")
-    public String showAllStudentsJS(Model model) {
-        List<Student> students = studentService.listAllStudents();
-        model.addAttribute("student", students);
-        return "studentlist";
-    }
-*/
 
     // Working in thymeleaf
     @GetMapping("/list")
