@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping()
 public class MainController {
     @Autowired
-    //ProductService productService;
     @GetMapping("/")
     public String root() {
         return "index";

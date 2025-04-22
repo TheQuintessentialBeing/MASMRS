@@ -41,22 +41,6 @@
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
-<div class="container">
-    <h2 class="mb-4">Product Detail</h2>
-    <h5>Name: </h5> <span th:text="${product.productName}"></span>
-    <h5> Product Scale:</h5>
-    <span th:text="${product.productScale}"></span>
-    <h5> Product Vendor:</h5>
-    <span th:text="${product.productVendor}"></span>
-    <h5> MSRP:</h5>
-    <span th:text="${product.MSRP}"></span>
-    <h5> Description: </h5>
-    <p th:text="${product.productDescription}"></p>
-    <a class="btn btn-light cs-action-button" th:href="@{/product/}"></i>
-        <!--        <i class="bi bi-backspace"></i>-->
-        Back To Product
-    </a>
-</div>
 <footer>
     <p class="css-footer-items">&copy; 2022 Java Fullstack Training offered by Per Scholas & TekSystems
         <!--            <i class="bi bi-facebook"></i><i class="bi bi-twitter"></i><i class="bi bi-instagram"></i>-->

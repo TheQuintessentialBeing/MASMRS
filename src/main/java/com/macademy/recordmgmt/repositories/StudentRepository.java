@@ -10,21 +10,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
-    /*@Query(name = "sqlSearchProductByProductCode")
-    Product findByProductCode(@Param("productcode") String productCode);
-    @Modifying
-    @Transactional
-    @Query("UPDATE Product p set p.quantityInStock= p.quantityInStock - 1  Where p.productCode=:productcode")
-    void decreaseStockQuantity(@Param("productcode") String productcode);
-    @Modifying
-    @Transactional
-    @Query("UPDATE Product p set p.quantityInStock= p.quantityInStock + 1 Where p.productCode=:productcode")
-    void increaseStockQuantity(@Param("productcode") String productcode);
-    @Modifying
-    @Transactional
-    @Query("UPDATE Product p set p.quantityInStock= p.quantityInStock +:quantityInStock Where p.productCode=:productcode")
-    void increaseStockQuantityBatch(@Param("quantityInStock") short quantityInStock, @Param("productcode") String productcode);
-*/
     // student
 
     @Query(name = "SqlSearchStudentByStudentId")

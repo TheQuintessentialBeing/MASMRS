@@ -216,11 +216,9 @@ public class StudentRecordService {
                 trows.addCell(String.format("%.1f", r.getQ2()));
                 trows.addCell(String.format("%.1f", r.getQ3()));
                 trows.addCell(String.format("%.1f", r.getQ4()));
-                trows.addCell(String.format("%.1f", ((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0)));
+                trows.addCell(String.format("%.2f", ((r.getQ1() + r.getQ2() + r.getQ3() + r.getQ4()) / 4.0)));
             }
-            double yearlySum = (
-                            (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum())
-                            / 4.00);
+            double yearlySum = (bio.getQuarterOneSum() + bio.getQuarterTwoSum() + bio.getQuarterThreeSum() + bio.getQuarterFourSum())/ 4.0;
             //Todo  double roundedResult = Math.round(result * 100.0) / 100.0;
             // sum , average and quarter ranks
             Stream.of("Total", bio.getQuarterOneSum(), bio.getQuarterTwoSum(), bio.getQuarterThreeSum(), bio.getQuarterFourSum(), yearlySum).forEach(d -> {
