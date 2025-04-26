@@ -30,8 +30,14 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query(name = "SqlSearchStudentByStudentId")
     Student findByStudentId(@Param("studentId") Integer studentId);
 
-    List<Student> findByFirstNameContainingIgnoreCase(String name);
 
-    // List<Student> findByEmailContainingIgnoreCase(String email);
+    @Query(value = """
+            SELECT * FROM Students
+            WHERE first_name LIKE CONCAT('%', :searchTerm, '%')
+            OR  middle_name LIKE CONCAT('%', :searchTerm, '%')
+            OR  last_name LIKE CONCAT('%', :searchTerm, '%')
+            OR  student_id = :searchTerm
+            """, nativeQuery = true)
+    List<Student> findByStudentIdOrNameContainingIgnoreCase(@Param("searchTerm") String searchTerm);
 
 }

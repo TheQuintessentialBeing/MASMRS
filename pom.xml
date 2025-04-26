@@ -11,11 +11,14 @@
     <groupId>dev.cs</groupId>
     <artifactId>SMSApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ShoppingApp</name>
-    <description>ShoppingApp</description>
+    <name>StudentApp</name>
+    <description>StudentApp</description>
     <properties>
-        <java.version>18</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <!-- iText 5 (PDF generation) -->
         <dependency>
@@ -23,13 +26,6 @@
             <artifactId>itextpdf</artifactId>
             <version>5.5.13.3</version>
         </dependency>
-
-        <!--Itext 7-->
-        <!-- <dependency>
-             <groupId>com.itextpdf</groupId>
-             <artifactId>itext7-core</artifactId>
-             <version>7.2.5</version> &lt;!&ndash; or latest &ndash;&gt;
-         </dependency>-->
 
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -53,10 +49,10 @@
             <artifactId>tomcat-embed-core</artifactId>
 
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-el</artifactId>
-
         </dependency>
 
         <dependency>
@@ -85,6 +81,13 @@
             <version>5.9</version>
         </dependency>
 
+        <!-- Lombok for compile-time annotations -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!--    above added for maven test auto detect-->
         <dependency>
@@ -151,30 +154,33 @@
             <artifactId>bootstrap</artifactId>
             <version>3.3.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.2.1</version>
         </dependency>
-
-        <!--        dependency for security ends here -->
     </dependencies>
-
     <build>
         <plugins>
+            <!-- Compiler plugin for JDK 21 -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <release>17</release>
+                    <annotationProcessorPaths>
+                        <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                            <version>1.18.30</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
