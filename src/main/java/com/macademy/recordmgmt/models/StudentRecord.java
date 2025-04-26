@@ -65,13 +65,5 @@ public class StudentRecord { /*TODO entities shall be singular but db names shal
     LocalDate updateDate;
     @Column(length = 150)
     String comment;
-
-    // @ManyToOne // StudentRecord(many records) will match (One Student) Remember : Student Id must exist in Student Table before it is used/insert in StudentRecord table
-    // @JoinColumn( name= "FK_StudentId", referencedColumnName = "studentId")// in production this should be set , nullable = true)
-    // FK_StudentId is name of the foreign key
-    // studentId is the primary key of the parent table i,e Student
-    // Student student;
-    // studnet is here to navigate b/n the tables
-
 }
 

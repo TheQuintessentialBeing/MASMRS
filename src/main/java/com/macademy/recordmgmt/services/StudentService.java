@@ -37,14 +37,15 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Student> findByFirstNameContainingIgnoreCase(String search) {
-
-        return studentRepository.findByFirstNameContainingIgnoreCase(search);
+    public List<Student> searchByStudentIdOrEmailOrNameContainingIgnoreCase(String search) {
+        System.out.println("service I am called with " + search);
+        return studentRepository.findByStudentIdOrNameContainingIgnoreCase(search);
     }
 
 
-    public void saveStudent(Student student) {
+    public Student saveStudent(Student student) {
         studentRepository.save(student);
+        return student;
     }
 
 

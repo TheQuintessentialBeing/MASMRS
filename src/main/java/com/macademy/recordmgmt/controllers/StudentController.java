@@ -6,7 +6,6 @@ import com.macademy.recordmgmt.services.TestDataCSVLoadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 /*@RequiredArgsConstructor*/ // will automaticall create constructors
-@Controller
+// @Controller
+@RestController
 @RequestMapping("student")
 public class StudentController {
 
@@ -32,21 +32,33 @@ public class StudentController {
         this.testDataCSVLoadService = testDataCSVLoadService;
     }
 
-    @GetMapping()
-    public List<Student> listStudents() {
-        System.out.println("JS is being called");
-        return studentService.getAllStudents();
-    }
-
-    /* @GetMapping()
+    @GetMapping("/test")
     public List<Student> searchStudents(@RequestParam(required = false) String search) {
         System.out.println("search" + search);
+        List<Student> temp;
         if (search == null || search.isEmpty()) {
             return studentService.listAllStudents();
         } else {
-            return studentService.findByFirstNameContainingIgnoreCase("Kidus");
+            temp = studentService.searchByStudentIdOrEmailOrNameContainingIgnoreCase(search);
+            System.out.printf("temp size :" + temp.size());
+            System.out.println("first object in temp ;" + temp.get(0).getStudentId() + " " + temp.get(0).getFirstName());
+
+            //return studentService.searchByStudentIdOrEmailOrNameContainingIgnoreCase(search);
         }
-    } */
+
+        return temp;
+    }
+
+    @PostMapping("/test/save")
+    public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+        System.out.println("saving" + student);
+        Integer studentStudentId = student.getStudentId();
+        System.out.printf("student id: " + student.getStudentId() + " " + student.getFirstName());
+        Student saveStudent = studentService.saveStudent(student);
+        studentService.saveStudent(student);
+        return ResponseEntity.ok(saveStudent);
+    }
+
 
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
@@ -54,7 +66,6 @@ public class StudentController {
         List<Student> students = studentService.listAllStudents();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
-
 
     // Working in thymeleaf
     @GetMapping("/list")
