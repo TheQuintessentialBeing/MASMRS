@@ -3,8 +3,8 @@ TODO - Musts
  // (r[23] != null) ? (String) r[23] : null,// 23 s.photo
  fix yearly average format to limit 2 digits after .
 check if session is really needed in service ; curretnly it is both in service and controller
-13. Clean up logs added in controller and services
-14. remove script files not needed from resource folder
+13. Clean up logs added in controller and services (done)
+14. remove script files not needed from resource folder (done)
 
 16.  http://localhost:8081/records/search header should remove Online Shopping instead add the logo of miraf academy and pictures like the homepage
 17.  add miraf academy logo on report

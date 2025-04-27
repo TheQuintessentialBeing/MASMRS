@@ -1,3 +1,4 @@
+
 -- Check if the students table exists
 -- Check if the students table exists
 SET @exists := (select count(*)
@@ -14,4 +15,6 @@ EXECUTE stmt;
 
 -- Clean up the prepared statement
 DEALLOCATE PREPARE stmt;
+
+// This is read by springboot.
 
