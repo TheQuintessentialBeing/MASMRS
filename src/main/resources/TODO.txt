@@ -11,7 +11,12 @@ check if session is really needed in service ; curretnly it is both in service a
 18. drawbacks currently data loading don't check if data is already there or not so it could be duplicated
 18.1 solution - run delete duplicate records after loading or
    18.2. check records for semester and current year.
-
+Add a page to assign teacher as home room teacher for grades and sections
+Display teacher's name and ID (hidden) and grade and sections in a dropdown box
+    (student_records table updated by field from teachers' id from the session)
+Teachers only see their assigned grades and sections
+Teachers can do CRUD to assigned grades and sections (student_records table by quarter field )
+Update statement on the database
    // top student from every class
 12. Report footer dates and notes ( Done)
 1. db change photo data type to string ( Done)
