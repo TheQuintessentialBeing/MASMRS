@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/*@RequiredArgsConstructor*/ // will automaticall create constructors
+/*@RequiredArgsConstructor*/ // will automatically create constructors
 // @Controller
 @RestController
 @RequestMapping("student")
@@ -34,26 +34,16 @@ public class StudentController {
 
     @GetMapping("/test")
     public List<Student> searchStudents(@RequestParam(required = false) String search) {
-        System.out.println("search" + search);
-        List<Student> temp;
         if (search == null || search.isEmpty()) {
             return studentService.listAllStudents();
         } else {
-            temp = studentService.searchByStudentIdOrEmailOrNameContainingIgnoreCase(search);
-            System.out.printf("temp size :" + temp.size());
-            System.out.println("first object in temp ;" + temp.get(0).getStudentId() + " " + temp.get(0).getFirstName());
 
-            //return studentService.searchByStudentIdOrEmailOrNameContainingIgnoreCase(search);
+            return studentService.searchByStudentIdOrEmailOrNameContainingIgnoreCase(search);
         }
-
-        return temp;
     }
 
     @PostMapping("/test/save")
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
-        System.out.println("saving" + student);
-        Integer studentStudentId = student.getStudentId();
-        System.out.printf("student id: " + student.getStudentId() + " " + student.getFirstName());
         Student saveStudent = studentService.saveStudent(student);
         studentService.saveStudent(student);
         return ResponseEntity.ok(saveStudent);
@@ -161,7 +151,6 @@ public class StudentController {
     @GetMapping("/loadstudents")
     public ResponseEntity<String> loadStudentCsv() throws IOException {
         testDataCSVLoadService.loadCsvStudentDataFile();
-        System.out.println("Controller called for Student Record data....");
         return ResponseEntity.ok("Student data inserted successfully!");
     }
 

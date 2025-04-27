@@ -38,7 +38,6 @@ public class StudentService {
     }
 
     public List<Student> searchByStudentIdOrEmailOrNameContainingIgnoreCase(String search) {
-        System.out.println("service I am called with " + search);
         return studentRepository.findByStudentIdOrNameContainingIgnoreCase(search);
     }
 
