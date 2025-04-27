@@ -12,7 +12,7 @@
                    document.getElementById('studentForm').addEventListener('submit', async function(event) {
                             event.preventDefault(); // prevent default form submit behavior
                                 const student = {
-                               //  studentId : 1112,
+                               //  studentId is a PK so the dbase will take care of it.
                                 firstName: document.getElementById('firstName').value,
                                 middleName: document.getElementById('middleName').value,
                                 lastName: document.getElementById('lastName').value,
@@ -136,7 +136,7 @@
                   .then(() => loadStudents());
               }
             }
-
+          // clear form
             function clearForm() {
               document.getElementById("studentForm").reset();
               document.getElementById("studentId").value = "";

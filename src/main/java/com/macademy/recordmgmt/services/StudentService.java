@@ -43,6 +43,11 @@ public class StudentService {
         return student;
     }
 
+    public void deleteStudent(Integer studentId) {
+        studentRepository.deleteById(studentId);
+
+    }
+
 
     public Page<Student> listAllStudentsToPage(PageRequest pageRequest) {
 
@@ -69,12 +74,6 @@ public class StudentService {
         return studentRepository.findByStudentId(studentId);
     }*/
 
-    public void deleteStudent(Integer studentId) {
-        //studentRepository.delete(findByStudentId(studentId));
-
-        // we need to delete using where clause
-
-    }
 
     public List<Student> getAllStudents() {
         return studentRepository.findAll();

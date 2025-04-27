@@ -49,6 +49,13 @@ public class StudentController {
         return ResponseEntity.ok(saveStudent);
     }
 
+    @DeleteMapping("/test/{id}")
+    public ResponseEntity<Student> deleteStudent(@RequestParam Integer studnetId) {
+        Student deletedStudent = studentService.findByStudentId(studnetId);
+
+        studentService.deleteStudent(deletedStudent);
+        return ResponseEntity.ok(deleteStudent);
+    }
 
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
@@ -81,7 +88,7 @@ public class StudentController {
     }
 
 
-    @PutMapping("/update/{StudentId}")
+/*    @PutMapping("/update/{StudentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable Integer StudentId, @RequestBody Student updatedStudent) {
 
         for (Student s : studentService.getAllStudents()) {
@@ -91,7 +98,7 @@ public class StudentController {
             }
         }
         return ResponseEntity.notFound().build();
-    }
+    }*/
 
     @GetMapping("/edit/{Studentcode}")
     public ModelAndView updateStudent(@PathVariable("StudentId") Integer Studentcode) {
