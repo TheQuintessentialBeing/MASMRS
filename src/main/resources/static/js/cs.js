@@ -12,7 +12,7 @@
                    document.getElementById('studentForm').addEventListener('submit', async function(event) {
                             event.preventDefault(); // prevent default form submit behavior
                                 const student = {
-                                studentId : 1111,
+                               //  studentId : 1112,
                                 firstName: document.getElementById('firstName').value,
                                 middleName: document.getElementById('middleName').value,
                                 lastName: document.getElementById('lastName').value,
@@ -38,7 +38,7 @@
                                 });
 
                                 if (response.ok) {
-                                    alert('Student saved successfully!');
+                                    alert('Student saved successfully!' );
                                     document.getElementById('studentForm').reset(); // clear the form
                                     // optionally close the modal here if needed
                                     location.reload(); // or refresh the table data dynamically

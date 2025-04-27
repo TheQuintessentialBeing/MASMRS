@@ -1,4 +1,4 @@
-use studentdb;
+use nowdb;
 -- users data
 select u.first_name, u.last_name, u.email ,r.name
 from user u

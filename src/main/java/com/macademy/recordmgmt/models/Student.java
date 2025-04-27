@@ -12,17 +12,19 @@ import java.time.LocalDate;
 @Entity // make it JPA entity
 @Table(name = "Students") // change to any name in database from here
 @FieldDefaults(level = AccessLevel.PRIVATE) //make all fields access specifier private
-@SequenceGenerator(name = "studentNumber_Seq", initialValue = 1000, allocationSize = 1)
+// @SequenceGenerator(name = "studentNumber_Seq", initialValue = 100, allocationSize = 1)
 @Getter
 @Setter
 public class Student {
     @Id
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentNumber_Seq")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentNumber_Seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "studentNumber_Seq")
+
     @Setter(AccessLevel.PRIVATE)
     Integer studentId;
     @Column(nullable = false, length = 50)
     String firstName;
-    @Column(nullable = true, length = 50)
+    @Column(nullable = false, length = 50)
     String middleName;
     @Column(nullable = false, length = 50)
     String lastName;

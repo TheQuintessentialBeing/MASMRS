@@ -130,22 +130,35 @@ public class TestDataCSVLoadService {
                 }
                 if (allBlank)
                     continue;
-                Integer studentId = Integer.parseInt(line[0]);                      // 1
-                String firstName = line[1].trim();                                  // 2
-                String middleName = line[2].trim();                                 // 3
-                String lastName = line[3].trim();                                   // 4
-                LocalDate dateOfBirth = LocalDate.parse(line[4].trim());            // 5
-                String gender = line[5].trim();                                     // 6
-                LocalDate registrationDate = LocalDate.parse(line[6].trim());       // 7
-                String photo = line[7];                                             // 8
-                String kifleKetema = line[8];                                       // 9
-                String kebele = line[9];                                            // 10
-                String houseNumber = line[10];                                      // 11
-                String phone = line[11];                                            // 12
-                String comment = line[12];                                          // 13
-                boolean isActive = Boolean.parseBoolean(line[13]);                  // 14
-                Student student = new Student(studentId, firstName, middleName, lastName, dateOfBirth, gender, registrationDate, photo, kifleKetema, kebele, houseNumber, phone, comment, isActive);
-                studentRepository.save(student);
+                //Integer studentId = Integer.parseInt(line[0]);                      // 1
+                String firstName = line[0].trim();                                  // 2
+                String middleName = line[1].trim();                                 // 3
+                String lastName = line[2].trim();                                   // 4
+                LocalDate dateOfBirth = LocalDate.parse(line[3].trim());            // 5
+                String gender = line[4].trim();                                     // 6
+                LocalDate registrationDate = LocalDate.parse(line[5].trim());       // 7
+                String photo = line[6];                                             // 8
+                String kifleKetema = line[7];                                       // 9
+                String kebele = line[8];                                            // 10
+                String houseNumber = line[9];                                      // 11
+                String phone = line[10];                                            // 12
+                String comment = line[11];                                          // 13
+                boolean isActive = Boolean.parseBoolean(line[12]);                  // 14
+                Student s = new Student();
+                s.setFirstName(firstName);
+                s.setMiddleName(middleName);
+                s.setLastName(lastName);
+                s.setDateOfBirth(dateOfBirth);
+                s.setGender(gender);
+                s.setRegistrationDate(registrationDate);
+                s.setPhoto(photo);
+                s.setKifleKetema(kifleKetema);
+                s.setKebele(kebele);
+                s.setHouseNumber(houseNumber);
+                s.setPhone(phone);
+                s.setComment(comment);
+                s.setActive(isActive);
+                studentRepository.save(s);
             }
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
