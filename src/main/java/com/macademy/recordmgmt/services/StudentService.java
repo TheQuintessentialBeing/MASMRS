@@ -16,17 +16,12 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    // @Value("${student.upload.dir}")
-    // private String uploadDir;
-
-
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public StudentService() {
     }
-
 
     //CRUD
     public List<Student> listAllStudents() {
@@ -44,6 +39,12 @@ public class StudentService {
     }
 
 
+    public void deleteStudent(Integer studentId) {
+      studentRepository.deleteById(studentId);
+
+    }
+
+
     public Page<Student> listAllStudentsToPage(PageRequest pageRequest) {
 
 
@@ -58,31 +59,37 @@ public class StudentService {
     public Page<Student> listAllStudents(PageRequest pageRequest) {
         return studentRepository.findAll(pageRequest);
     }
-
-
-    // TODO explored
-    public void updateStudent(Integer studentId, Student student) {
-        studentRepository.save(student);
-    }
-
-   /* public List<Student> findStudentByStudentId(Integer studentId) {
-        return studentRepository.findByStudentId(studentId);
-    }*/
-
-    public void deleteStudent(Integer studentId) {
-        //studentRepository.delete(findByStudentId(studentId));
-
-        // we need to delete using where clause
-
-    }
-
-    public List<Student> getAllStudents() {
+     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
     public Student findByStudentId(Integer studentId) {
         return studentRepository.findByStudentId(studentId);
     }
+
+    public Student updateStudent(Integer studentId, Student updatedStudent) {
+        Student e = studentRepository.findById(studentId)
+               .orElseThrow(() -> new RuntimeException("Student not found"));
+
+
+        e.setFirstName(updatedStudent.getFirstName());
+        e.setMiddleName(updatedStudent.getMiddleName());
+        e.setLastName(updatedStudent.getLastName());
+        e.setDateOfBirth(updatedStudent.getDateOfBirth());
+        e.setGender(updatedStudent.getGender());
+        e.setRegistrationDate(updatedStudent.getRegistrationDate());
+        e.setPhone(updatedStudent.getPhone());
+        e.setKifleKetema(updatedStudent.getKifleKetema());
+        e.setKebele(updatedStudent.getKebele());
+        e.setHouseNumber(updatedStudent.getHouseNumber());
+        e.setComment(updatedStudent.getComment());
+        e.setActive(updatedStudent.getIsActive());
+        System.out.println("e" + e);
+        System.out.println("updated" + updatedStudent);
+        return studentRepository.save(e);
+    }
+
+
 
     public int numberOfStudentsInSchool() {
         int size = studentRepository.findAll().size();

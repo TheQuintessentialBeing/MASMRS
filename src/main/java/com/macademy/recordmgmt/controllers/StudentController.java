@@ -4,12 +4,14 @@ import com.macademy.recordmgmt.models.Student;
 import com.macademy.recordmgmt.services.StudentService;
 import com.macademy.recordmgmt.services.TestDataCSVLoadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,6 +51,25 @@ public class StudentController {
         return ResponseEntity.ok(saveStudent);
     }
 
+    @Transactional
+    @DeleteMapping("/test/{studentId}")
+    public void deleteStudent(@PathVariable Integer studentId) {
+
+        System.out.println("delete is called for " + studentId);
+        Student student = studentService.findByStudentId(studentId);
+        if (student != null) {
+            studentService.deleteStudent(studentId);
+        }
+    }
+
+
+    @PutMapping("/test/{studentId}")
+    public ResponseEntity<Student> updateStudent(@PathVariable Integer studentId, @RequestBody Student updatedStudent) {
+
+        Student student = studentService.updateStudent(studentId, updatedStudent);
+        return ResponseEntity.ok(student);
+    }
+
 
     //  TODO CRUD - Read works
     @GetMapping("/listpm")
@@ -81,7 +102,7 @@ public class StudentController {
     }
 
 
-    @PutMapping("/update/{StudentId}")
+   /* @PutMapping("/update/{StudentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable Integer StudentId, @RequestBody Student updatedStudent) {
 
         for (Student s : studentService.getAllStudents()) {
@@ -91,7 +112,7 @@ public class StudentController {
             }
         }
         return ResponseEntity.notFound().build();
-    }
+    }*/
 
     @GetMapping("/edit/{Studentcode}")
     public ModelAndView updateStudent(@PathVariable("StudentId") Integer Studentcode) {

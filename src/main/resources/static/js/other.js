@@ -159,95 +159,156 @@ async function loadStudents() {
   }
 }*/
 
-            const API = "/student";
+const API = "student/test"; // Base API path
 
-            document.addEventListener("DOMContentLoaded", () => {
-              loadStudents();
-              document.getElementById("studentForm").addEventListener("submit", handleSubmit);
-              document.getElementById("searchInput").addEventListener("input", () => {
-                loadStudents(document.getElementById("searchInput").value);
-              });
-            });
+// When page is ready
+document.addEventListener("DOMContentLoaded", () => {
+  loadStudents(); // Load student list initially
+  document.getElementById("studentForm").addEventListener("submit", saveStudent);
+  document.getElementById("searchInput").addEventListener("input", () => {
+    loadStudents(document.getElementById("searchInput").value);
+  });
+});
 
-            function loadStudents(search = "") {
-              fetch(`${API}?search=${encodeURIComponent(search)}`)
-                .then(res => res.json())
-                .then(data => {
-                  const tbody = document.getElementById("studentTableBody");
-                  tbody.innerHTML = "";
-                  console.log("data:" + data)
-                  data.forEach(s => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                      <td>${s.studentId}</td>
-                      <td>${s.firstName} ${s.middleName || ""} ${s.lastName}</td>
-                      <td>${s.gender}</td>
-                      <td>${s.phone}</td>
-                      <td>
-                        <button onclick='editStudent(${JSON.stringify(s)})'>Edit</button>
-                        <button onclick='deleteStudent(${s.studentId})'>Delete</button>
-                      </td>
-                    `;
-                    tbody.appendChild(row);
-                  });
-                });
-            }
+// Fetch and load students (with optional search filter)
+function loadStudents(search = "") {
+  fetch(`${API}?search=${encodeURIComponent(search)}`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById("studentTableBody");
+      tbody.innerHTML = "";
+      data.forEach(s => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${s.firstName} ${s.middleName || ""} ${s.lastName}</td>
+          <td>${s.dateOfBirth}</td>
+          <td>${s.gender}</td>
+          <td>${s.registrationDate}</td>
+          <td>${s.phone}</td>
+          <td>${s.kifleKetema} ${s.kebele}</td>
+          <td>${s.isActive}</td>
+          <td>
+            <button onclick='editStudent(${JSON.stringify(s)})'>Edit</button>
 
-            function handleSubmit(e) {
-              e.preventDefault();
-              const student = {
-                studentId: document.getElementById("studentId").value || null,
-                firstName: document.getElementById("firstName").value,
-                middleName: document.getElementById("middleName").value,
-                lastName: document.getElementById("lastName").value,
-                dateOfBirth: document.getElementById("dateOfBirth").value,
-                gender: document.getElementById("gender").value,
-                registrationDate: document.getElementById("registrationDate").value,
-                kifleKetema: document.getElementById("kifleKetema").value,
-                kebele: document.getElementById("kebele").value,
-                houseNumber: document.getElementById("houseNumber").value,
-                phone: document.getElementById("phone").value,
-                comment: document.getElementById("comment").value,
-                isActive: document.getElementById("isActive").checked
-              };
+            <button onclick='deleteStudent(${s.studentId})'>Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    });
+}
 
-              const method = student.studentId ? "PUT" : "POST";
-              const url = student.studentId ? `${API}/${student.studentId}` : API;
+// Handle Save / Update (submit button)
+async function saveStudent(event) {
+  event.preventDefault();
+  const studentId = document.getElementById("studentId").value; // hidden field
+  const student = {
+    studentId: studentId ? Number(studentId) : undefined,
+    firstName: document.getElementById('firstName').value,
+    middleName: document.getElementById('middleName').value,
+    lastName: document.getElementById('lastName').value,
+    dateOfBirth: document.getElementById('dob').value,
+    gender: document.getElementById('gender').value,
+    registrationDate: document.getElementById('regDate').value,
+    photo: document.getElementById('photo')?.value || "", // assuming photo input
+    kifleKetema: document.getElementById('kifleKetema').value,
+    kebele: document.getElementById('kebele').value,
+    houseNumber: document.getElementById('houseNumber').value,
+    phone: document.getElementById('phone').value,
+    comment: document.getElementById('comment').value,
+    isActive: document.getElementById('isActive').checked
+  };
 
-              fetch(url, {
-                method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(student)
-              }).then(() => {
-                clearForm();
-                loadStudents();
-              });
-            }
+  try {
+    const method = studentId ? 'PUT' : 'POST';
+    const url = studentId ? `${API}/${studentId}` : `${API}/save`;
 
-            function editStudent(s) {
-              for (const key in s) {
-                const field = document.getElementById(key);
-                if (field) {
-                  if (field.type === "checkbox") {
-                    field.checked = s[key];
-                  } else {
-                    field.value = s[key];
-                  }
-                }
-              }
-            }
+    const response = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(student)
+    });
 
-            function deleteStudent(id) {
-              if (confirm("Are you sure to delete this student?")) {
-                fetch(`${API}/${id}`, { method: "DELETE" })
-                  .then(() => loadStudents());
-              }
-            }
+    if (response.ok) {
+      alert('Student saved successfully!');
+      clearForm();
+      loadStudents();
+      bootstrap.Modal.getInstance(document.getElementById("studentModal"))?.hide();
+    } else {
+      const errorData = await response.json();
+      alert('Error: ' + (errorData.message || 'Failed to save student.'));
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong while saving.');
+  }
+}
 
-            function clearForm() {
-              document.getElementById("studentForm").reset();
-              document.getElementById("studentId").value = "";
-            }
+// Populate form for editing
+function editStudent(s) {
+  console.log("edit is clicked");
+  debugger;
+  console.log("s", s);
+
+  for (const key in s) {
+    const field = document.getElementById(key);
+    console.log("field :", field);
+    if (field) {
+      if (field.type === "checkbox") {
+        field.checked = s[key];
+      } else if (field.type !== "file") {   // ⬅️ Skip file inputs
+        field.value = s[key];
+      }
+    }
+    document.getElementById("searchInput").value = '';
+    loadStudents();
+  }
+
+  document.getElementById("studentModalLabel").textContent = "Edit Student";
+  new bootstrap.Modal(document.getElementById("studentModal")).show();
+}
+
+
+// Delete a student
+function deleteStudent(studentId) {
+  if (confirm("Are you sure to delete this student?")) {
+    fetch(`${API}/${studentId}`, { method: "DELETE" })
+      .then(response => {
+        if (response.ok) {
+          alert('Student deleted successfully!');
+          document.getElementById("searchInput").value = '';
+          loadStudents();
+        } else {
+          alert('Failed to delete student.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+}
+
+// Clear the form after saving
+function clearForm() {
+  document.getElementById("studentForm").reset();
+  document.getElementById("studentId").value = "";
+  document.getElementById("photoPreview").style.display = "none";
+}
+
+// Open modal for adding a new student
+function openAddModal() {
+  resetForm();
+  document.getElementById("studentModalLabel").textContent = "Add Student";
+  new bootstrap.Modal(document.getElementById("studentModal")).show();
+}
+
+// Reset form (used when opening Add modal)
+function resetForm() {
+  document.getElementById("studentForm").reset();
+  document.getElementById("studentId").value = "";
+  document.getElementById("photoPreview").style.display = "none";
+}
+
 
 
 
