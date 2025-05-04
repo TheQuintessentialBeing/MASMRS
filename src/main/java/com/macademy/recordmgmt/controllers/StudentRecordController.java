@@ -1,25 +1,26 @@
 package com.macademy.recordmgmt.controllers;
 
+import com.macademy.recordmgmt.DTO.TopRankStudents;
 import com.macademy.recordmgmt.DTO.StudentRecordHeader;
 import com.macademy.recordmgmt.repositories.StudentRepository;
 import com.macademy.recordmgmt.services.StudentRecordService;
 import com.macademy.recordmgmt.utility.MirafUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 @Controller
 @RequestMapping("/record")
 public class StudentRecordController {
@@ -95,7 +96,21 @@ public class StudentRecordController {
         }
         return ResponseEntity.status(500).body("Error: " + str);
     }
-};
+
+    @GetMapping("/topstudent/{subject}")
+  //  @GetMapping("/topstudent/{subject}/{rank}")
+    public ResponseEntity<? extends Object> getTopRanked(
+            @RequestParam String subject,
+            @RequestParam(defaultValue = "3") Integer rank
+    ) {
+        System.out.println("Testing: /records/topstudent/subject/rank is hit");
+        System.out.println("subject: " + subject + " rank: " + rank );
+     //   var v = studentRecordService.getTopRankedStudents(subject, rank);
+        var v = studentRecordService.getTopRankedStudents( "Physics", 3);
+        System.out.println("v: " + v.size() + ":" + v.toString() );
+        return new ResponseEntity<>(v, HttpStatus.OK);
+    }
+
 /*  @GetMapping("/search/{studentid}{academicyear}")
     public String searchRecords(@PathVariable("studentid") Integer studentId, Model model) {
         System.out.println("/TBDeleted - Testing: /records/search/studendId is hit");
@@ -134,3 +149,4 @@ public class StudentRecordController {
 
 
 */
+}

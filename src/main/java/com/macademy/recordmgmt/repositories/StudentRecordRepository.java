@@ -3,6 +3,7 @@ package com.macademy.recordmgmt.repositories;
 import com.macademy.recordmgmt.models.StudentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -80,4 +81,42 @@ public interface StudentRecordRepository extends JpaRepository<StudentRecord, In
             Where r.student_id = :student_id
             AND r.academic_year = :academic_year""", nativeQuery = true)
     List<StudentRecord> findStudentRecordByIdAndAcademicYear(@PathVariable("student_id") Integer student_id, @PathVariable("academic_year") String academic_year);
+
+
+@Query(value = """
+        SELECT 
+            s.first_name,
+            s.last_name,
+            sub.academic_year,
+            sub.grade,
+            sub.section,
+            sub.subject,
+            sub.Ranks,
+            sub.Average
+        FROM students s
+        INNER JOIN (
+            SELECT  
+                student_id,
+                academic_year,
+                grade,
+                section,
+                subject,
+                ((q1 + q2 + q3 + q4) / 4.0) AS Average,
+                RANK() OVER (
+                    PARTITION BY academic_year, grade, section, subject
+                    ORDER BY (q1 + q2 + q3 + q4) DESC
+                ) AS Ranks
+            FROM student_records
+            WHERE LOWER(subject) = LOWER(:subject)
+        ) sub ON s.student_id = sub.student_id
+        WHERE sub.Ranks <= :rank
+        ORDER BY 
+            sub.academic_year,
+            sub.grade,
+            sub.section,
+            sub.subject,
+            sub.Ranks
+        """, nativeQuery = true)
+List<Object[]> findTopRankedStudents(@Param("subject") String subject, @Param("rank") Integer rank);
+
 }

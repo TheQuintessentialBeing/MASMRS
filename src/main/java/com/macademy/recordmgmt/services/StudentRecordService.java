@@ -3,6 +3,7 @@ package com.macademy.recordmgmt.services;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.macademy.recordmgmt.DTO.TopRankStudents;
 import com.macademy.recordmgmt.DTO.StudentRecordHeader;
 import com.macademy.recordmgmt.models.StudentRecord;
 import com.macademy.recordmgmt.repositories.StudentRecordRepository;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +72,22 @@ public class StudentRecordService {
 
     }
 
+    public List<TopRankStudents> getTopRankedStudents(String subject, Integer rank) {
+        List<TopRankStudents> topRankedStudents = new ArrayList<>();
+        List<Object[]> rawResults = studentRecordRepository.findTopRankedStudents(subject, rank);
+        List<TopRankStudents> result = rawResults.stream().map(r -> new TopRankStudents(
+                (r[0] != null) ? (String) r[0] : null,
+                (r[1] != null) ? (String) r[1] : null,
+                (r[2] != null) ? (String) r[2] : null,
+                (String) r[3],
+                (String) r[4],
+                (String) r[5],
+                ((Number) r[6]).intValue(),
+                ((Number) r[7]).doubleValue()
+        )).toList();
+        return result;
+
+}
     public List<StudentRecordHeader> getAllStudentRecordHeaders(List<Object[]> headers) {
         //  TODO we need to decide on : -
         //  gender and section can be a single character to save database size
@@ -320,7 +338,9 @@ public class StudentRecordService {
             return e.getMessage();
         }
     }
-}
+
+
+} // end of class
 
 
 
