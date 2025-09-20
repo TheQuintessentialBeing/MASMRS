@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b9b10e10-7c92-4fb1-b307-4d2ad8e2d57c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/SchoolProj.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recordservice.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" afterPath="$PROJECT_DIR$/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SMRS.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SMSApp.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/DTO/StudentRecordHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/DTO/StudentRecordHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/RecordMgmtApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/RecordServiceApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/controllers/StudentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/controllers/StudentRecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/controllers/StudentRecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/models/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/models/StudentRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/models/StudentRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/repositories/StudentRecordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/repositories/StudentRecordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/repositories/StudentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/FieldMatch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/FieldMatchValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/SecurityConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/UserRegistrationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/UserRegistrationDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/security/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/services/StudentRecordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/services/StudentRecordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/services/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/services/TestDataCSVLoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/services/TestDataCSVLoadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/utility/HQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/utility/HQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/macademy/recordmgmt/utility/MirafUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/academy/recordservice/utility/MirafUtility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/alldata.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/alldata.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="local_branch" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/TheQuintessentialBeing/MASMRS&quot;,
+    &quot;accountId&quot;: &quot;4ddafc05-5251-4a87-afcf-2b0bc5fbc346&quot;
+  }
+}</component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2ub6khjFPnnyIx465piNRU6JPUa" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.RecordMgmtApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RecordServiceApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReportCard.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ReportCardApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.com.mierafacademy.studentreportcard.ReportCardApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.recordservice.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SMSApp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SMSApp [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SMSApp [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SMSApp [test].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SMSApp [validate].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/bgebru/Desktop/Virtual/School/recordservice&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.42969364&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.build.tools.auto.reload&quot;: &quot;ALL&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.build&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/src/main/resources/studentphoto" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/Analyis" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/resources/testdata" />
+      <recent name="$PROJECT_DIR$/src/main/resources/csvdata" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-18" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="recordservice" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/Library/Java/JavaVirtualMachines/corretto-18.0.2/Contents/Home" />
+      <option name="MAIN_CLASS_NAME" value="com.academy.recordservice.RecordServiceApp" />
+      <module name="SMSApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9b10e10-7c92-4fb1-b307-4d2ad8e2d57c" name="Changes" comment="" />
+      <created>1742505071973</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742505071973</updated>
+      <workItem from="1757527018832" duration="210000" />
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/academy/recordservice/services/TestDataCSVLoadService.java</url>
+          <line>153</line>
+          <properties class="com.academy.recordservice.services.TestDataCSVLoadService" method="loadJSONStudentDataFile">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

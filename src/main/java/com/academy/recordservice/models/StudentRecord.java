@@ -1,4 +1,4 @@
-package com.macademy.recordmgmt.models;
+package com.academy.recordservice.models;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

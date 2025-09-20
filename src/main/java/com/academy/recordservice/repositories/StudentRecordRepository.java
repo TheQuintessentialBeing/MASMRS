@@ -1,6 +1,6 @@
-package com.macademy.recordmgmt.repositories;
+package com.academy.recordservice.repositories;
 
-import com.macademy.recordmgmt.models.StudentRecord;
+import com.academy.recordservice.models.StudentRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

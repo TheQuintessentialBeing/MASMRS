@@ -1,12 +1,9 @@
-package com.macademy.recordmgmt.controllers;
+package com.academy.recordservice.controllers;
 
-import com.macademy.recordmgmt.DTO.StudentRecordHeader;
-import com.macademy.recordmgmt.repositories.StudentRepository;
-import com.macademy.recordmgmt.services.StudentRecordService;
+import com.academy.recordservice.DTO.StudentRecordHeader;
+import com.academy.recordservice.services.StudentRecordService;
 import com.macademy.recordmgmt.utility.MirafUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,28 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("/record")
 public class StudentRecordController {
     // @Autowired creates the beans or objects ( new ...) by spring framework
-    @Autowired
-    private final StudentRepository studentRepository;
-    @Autowired
-    private final StudentRecordService studentRecordService;
 
+    private final StudentRecordService studentRecordService;
 
     // This is to hold student data while we move from page to page eg. from search to download
     // search page put data in session variable and download page read from the same variables
     HttpSession session;
 
     @Autowired
-    public StudentRecordController(StudentRecordService studentRecordService, StudentRepository studentRepository, HttpSession session) {
+    public StudentRecordController(StudentRecordService studentRecordService, HttpSession session) {
 
         this.studentRecordService = studentRecordService;
-        this.studentRepository    = studentRepository;
-        this.session              = session;
+
+        this.session = session;
 
     }
     //This method will have an input textboxes for student id and academic year to search for a report.
@@ -61,28 +53,15 @@ public class StudentRecordController {
         model.addAttribute("academicYear", academicYear);
         model.addAttribute("printingDate", MirafUtility.orderDate());
         if (hr == null || hr.getDetailrows() == null) {
+            if (hr == null)
+                model.addAttribute("header is null for :" + studentId);
+            if (hr.getDetailrows() == null)
+                model.addAttribute("Also header detail is null for : " + studentId);
             model.addAttribute("errorMessage", "No records found for student Id (" + studentId + ") in academic year (" + academicYear + ") please search with the correct id and academic year");
         }
         // TODO to be checkd if it is needed only here or both here and in service class
         session.setAttribute("hr", hr);
         return "rsearchresult";
-    }
-
-    @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadReport() throws Exception {
-        try {
-            byte[] pdfBytes = studentRecordService.prepareReport();
-            StudentRecordHeader bio = (StudentRecordHeader) session.getAttribute("hr");
-
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-            final String reportName = bio.getFirstName() + "_" + bio.getLastName() + "_" + bio.getStudentId() + "_" + bio.getAcademicYear() + "_" + bio.getGrade() + bio.getSection() + "_" + timestamp;
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=" + reportName + ".pdf");
-            return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
     }
 
     @PostMapping("/email")

@@ -1,3 +1,18 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 use studentdb;
 CREATE PROCEDURE `studentdb`.`spLoadTestData` ()
 -- check if Student table has no records already - display appropraite messages

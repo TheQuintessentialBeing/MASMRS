@@ -1,6 +1,6 @@
-package com.macademy.recordmgmt.DTO;
+package com.academy.recordservice.DTO;
 
-import com.macademy.recordmgmt.models.StudentRecord;
+import com.academy.recordservice.models.StudentRecord;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

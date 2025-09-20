@@ -1,11 +1,8 @@
-package com.macademy.recordmgmt.services;
+package com.academy.recordservice.services;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.academy.recordservice.models.StudentRecord;
+import com.academy.recordservice.repositories.StudentRecordRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.macademy.recordmgmt.models.Student;
-import com.macademy.recordmgmt.models.StudentRecord;
-import com.macademy.recordmgmt.repositories.StudentRecordRepository;
-import com.macademy.recordmgmt.repositories.StudentRepository;
 import com.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -16,19 +13,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class TestDataCSVLoadService {
-    private final StudentRepository studentRepository;
+
     private final StudentRecordRepository studentRecordRepository;
     @Value("${student.csv.file.name}")
     private String studentcsvfilename;
     @Value("${student.record.csv.file.name}")
     private String studentrecordcsvfilename;
 
-    public TestDataCSVLoadService(StudentRepository studentRepository, StudentRecordRepository studentRecordRepository) {
-        this.studentRepository       = studentRepository;
+    public TestDataCSVLoadService(StudentRecordRepository studentRecordRepository) {
+
         this.studentRecordRepository = studentRecordRepository;
     }
 
@@ -144,8 +140,8 @@ public class TestDataCSVLoadService {
                 String phone = line[11];                                            // 12
                 String comment = line[12];                                          // 13
                 boolean isActive = Boolean.parseBoolean(line[13]);                  // 14
-                Student student = new Student(studentId, firstName, middleName, lastName, dateOfBirth, gender, registrationDate, photo, kifleKetema, kebele, houseNumber, phone, comment, isActive);
-                studentRepository.save(student);
+                //  Student student = new Student(studentId, firstName, middleName, lastName, dateOfBirth, gender, registrationDate, photo, kifleKetema, kebele, houseNumber, phone, comment, isActive);
+                //  studentRepository.save(student);
             }
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
@@ -165,9 +161,9 @@ public class TestDataCSVLoadService {
             throw new FileNotFoundException("File not found in resources folder");
         }
         // BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        TypeReference<List<Student>> typeRef = new TypeReference<>() {};
-        List<Student> people = mapper.readValue(inputStream, typeRef);
-        studentRepository.saveAll(people);
+        // TypeReference<List<Student>> typeRef = new TypeReference<>() {};
+        // List<Student> people = mapper.readValue(inputStream, typeRef);
+        // studentRepository.saveAll(people);
     }
 }
 
